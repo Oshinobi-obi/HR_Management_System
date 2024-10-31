@@ -6,19 +6,19 @@ Public Class Attendance
     Private employeeSessions As New Dictionary(Of String, Dictionary(Of String, String))()
 
     Public Sub Attendance_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        RFIDtxt.Focus()
+        RFIDTxt.Focus()
     End Sub
 
-    Public Sub RFIDtxt_KeyDown(sender As Object, e As KeyEventArgs) Handles RFIDtxt.KeyDown
+    Public Sub RFIDTxt_KeyDown(sender As Object, e As KeyEventArgs) Handles RFIDTxt.KeyDown
         If e.KeyCode = Keys.Enter Then
-            Dim tappedRFID As String = RFIDtxt.Text.Trim()
+            Dim tappedRFID As String = RFIDTxt.Text.Trim()
             If tappedRFID.Length > 0 Then
                 Try
                     HandleRFIDTap(tappedRFID)
                 Catch ex As Exception
                     MsgBox("Error: " & ex.Message)
                 End Try
-                RFIDtxt.Clear()
+                RFIDTxt.Clear()
             End If
             e.SuppressKeyPress = True
         End If
@@ -65,8 +65,8 @@ Public Class Attendance
             Dim query As String = "SELECT ""EmployeeID"", ""EmployeeName"", ""EmployeePosition"", ""EmployeeDaySchedule"" FROM employee WHERE id = @ID"
             Using cmd As New NpgsqlCommand(query, conn)
                 Select Case rfid
-                    Case "2091286169" : cmd.Parameters.AddWithValue("@ID", 2)
-                    Case "2085555385" : cmd.Parameters.AddWithValue("@ID", 4)
+                    Case "2091286169" : cmd.Parameters.AddWithValue("@ID", 1)
+                    Case "2085555385" : cmd.Parameters.AddWithValue("@ID", 2)
                     Case Else
                         Return Nothing
                 End Select

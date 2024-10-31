@@ -56,6 +56,7 @@ Partial Class AttendancePopUp
         ' 
         ' AttendancePanel
         ' 
+        AttendancePanel.Anchor = AnchorStyles.None
         AttendancePanel.Controls.Add(EMIDTxt)
         AttendancePanel.Controls.Add(EIDTxt)
         AttendancePanel.Controls.Add(TimeOutTxt)
@@ -83,30 +84,36 @@ Partial Class AttendancePopUp
         ' 
         ' EMIDTxt
         ' 
+        EMIDTxt.Anchor = AnchorStyles.None
         EMIDTxt.BorderStyle = BorderStyle.FixedSingle
+        EMIDTxt.Enabled = False
         EMIDTxt.Font = New Font("Corbel", 18F, FontStyle.Bold)
-        EMIDTxt.Location = New Point(428, 101)
+        EMIDTxt.Location = New Point(415, 115)
         EMIDTxt.Name = "EMIDTxt"
         EMIDTxt.Size = New Size(200, 37)
         EMIDTxt.TabIndex = 33
         ' 
         ' EIDTxt
         ' 
+        EIDTxt.Anchor = AnchorStyles.None
         EIDTxt.BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
         EIDTxt.BorderStyle = BorderStyle.None
         EIDTxt.Font = New Font("Corbel", 34.8F, FontStyle.Bold)
-        EIDTxt.Location = New Point(269, 4)
+        EIDTxt.Location = New Point(185, 15)
+        EIDTxt.Multiline = True
         EIDTxt.Name = "EIDTxt"
-        EIDTxt.Size = New Size(459, 57)
+        EIDTxt.Size = New Size(550, 55)
         EIDTxt.TabIndex = 26
         EIDTxt.Text = "STAFF INFORMATION"
         EIDTxt.TextAlign = HorizontalAlignment.Center
         ' 
         ' TimeOutTxt
         ' 
+        TimeOutTxt.Anchor = AnchorStyles.None
         TimeOutTxt.BorderStyle = BorderStyle.FixedSingle
+        TimeOutTxt.Enabled = False
         TimeOutTxt.Font = New Font("Corbel", 18F, FontStyle.Bold)
-        TimeOutTxt.Location = New Point(665, 334)
+        TimeOutTxt.Location = New Point(652, 348)
         TimeOutTxt.Name = "TimeOutTxt"
         TimeOutTxt.Size = New Size(200, 37)
         TimeOutTxt.TabIndex = 32
@@ -114,9 +121,11 @@ Partial Class AttendancePopUp
         ' 
         ' TimeInTxt
         ' 
+        TimeInTxt.Anchor = AnchorStyles.None
         TimeInTxt.BorderStyle = BorderStyle.FixedSingle
+        TimeInTxt.Enabled = False
         TimeInTxt.Font = New Font("Corbel", 18F, FontStyle.Bold)
-        TimeInTxt.Location = New Point(427, 335)
+        TimeInTxt.Location = New Point(414, 349)
         TimeInTxt.Name = "TimeInTxt"
         TimeInTxt.Size = New Size(200, 37)
         TimeInTxt.TabIndex = 31
@@ -124,54 +133,67 @@ Partial Class AttendancePopUp
         ' 
         ' HourShiftTxt
         ' 
+        HourShiftTxt.Anchor = AnchorStyles.None
         HourShiftTxt.BorderStyle = BorderStyle.FixedSingle
+        HourShiftTxt.Enabled = False
         HourShiftTxt.Font = New Font("Corbel", 18F, FontStyle.Bold)
-        HourShiftTxt.Location = New Point(662, 256)
+        HourShiftTxt.Location = New Point(649, 270)
         HourShiftTxt.Name = "HourShiftTxt"
         HourShiftTxt.Size = New Size(200, 37)
         HourShiftTxt.TabIndex = 30
+        HourShiftTxt.TextAlign = HorizontalAlignment.Center
         ' 
         ' DaySchedTxt
         ' 
+        DaySchedTxt.Anchor = AnchorStyles.None
         DaySchedTxt.BorderStyle = BorderStyle.FixedSingle
+        DaySchedTxt.Enabled = False
         DaySchedTxt.Font = New Font("Corbel", 18F, FontStyle.Bold)
-        DaySchedTxt.Location = New Point(427, 256)
+        DaySchedTxt.Location = New Point(414, 270)
         DaySchedTxt.Name = "DaySchedTxt"
         DaySchedTxt.Size = New Size(200, 37)
         DaySchedTxt.TabIndex = 29
         ' 
         ' DateTxt
         ' 
+        DateTxt.Anchor = AnchorStyles.None
         DateTxt.BorderStyle = BorderStyle.FixedSingle
+        DateTxt.Enabled = False
         DateTxt.Font = New Font("Corbel", 18F, FontStyle.Bold)
-        DateTxt.Location = New Point(662, 178)
+        DateTxt.Location = New Point(649, 192)
         DateTxt.Name = "DateTxt"
         DateTxt.Size = New Size(200, 37)
         DateTxt.TabIndex = 28
+        DateTxt.TextAlign = HorizontalAlignment.Center
         ' 
         ' PosTxt
         ' 
+        PosTxt.Anchor = AnchorStyles.None
         PosTxt.BorderStyle = BorderStyle.FixedSingle
+        PosTxt.Enabled = False
         PosTxt.Font = New Font("Corbel", 18F, FontStyle.Bold)
-        PosTxt.Location = New Point(427, 178)
+        PosTxt.Location = New Point(414, 192)
         PosTxt.Name = "PosTxt"
         PosTxt.Size = New Size(200, 37)
         PosTxt.TabIndex = 27
         ' 
         ' ENTxt
         ' 
+        ENTxt.Anchor = AnchorStyles.None
         ENTxt.BorderStyle = BorderStyle.FixedSingle
+        ENTxt.Enabled = False
         ENTxt.Font = New Font("Corbel", 18F, FontStyle.Bold)
-        ENTxt.Location = New Point(662, 101)
+        ENTxt.Location = New Point(649, 115)
         ENTxt.Name = "ENTxt"
         ENTxt.Size = New Size(200, 37)
         ENTxt.TabIndex = 26
         ' 
         ' Label10
         ' 
+        Label10.Anchor = AnchorStyles.None
         Label10.AutoSize = True
         Label10.Font = New Font("Corbel", 25.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label10.Location = New Point(630, 328)
+        Label10.Location = New Point(617, 342)
         Label10.Name = "Label10"
         Label10.Size = New Size(29, 41)
         Label10.TabIndex = 17
@@ -180,9 +202,10 @@ Partial Class AttendancePopUp
         ' 
         ' Label9
         ' 
+        Label9.Anchor = AnchorStyles.None
         Label9.AutoSize = True
         Label9.Font = New Font("Corbel", 16.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label9.Location = New Point(662, 304)
+        Label9.Location = New Point(649, 318)
         Label9.Name = "Label9"
         Label9.Size = New Size(113, 27)
         Label9.TabIndex = 16
@@ -191,9 +214,10 @@ Partial Class AttendancePopUp
         ' 
         ' Label8
         ' 
+        Label8.Anchor = AnchorStyles.None
         Label8.AutoSize = True
         Label8.Font = New Font("Corbel", 16.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label8.Location = New Point(474, 304)
+        Label8.Location = New Point(414, 318)
         Label8.Name = "Label8"
         Label8.Size = New Size(91, 27)
         Label8.TabIndex = 15
@@ -202,20 +226,22 @@ Partial Class AttendancePopUp
         ' 
         ' Label7
         ' 
+        Label7.Anchor = AnchorStyles.None
         Label7.AutoSize = True
         Label7.Font = New Font("Corbel", 16.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label7.Location = New Point(662, 226)
+        Label7.Location = New Point(649, 240)
         Label7.Name = "Label7"
-        Label7.Size = New Size(134, 27)
+        Label7.Size = New Size(154, 27)
         Label7.TabIndex = 14
-        Label7.Text = "HOUR SHIFT"
+        Label7.Text = "WORK HOURS"
         Label7.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' Label6
         ' 
+        Label6.Anchor = AnchorStyles.None
         Label6.AutoSize = True
         Label6.Font = New Font("Corbel", 16.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label6.Location = New Point(423, 226)
+        Label6.Location = New Point(410, 240)
         Label6.Name = "Label6"
         Label6.Size = New Size(167, 27)
         Label6.TabIndex = 13
@@ -224,9 +250,10 @@ Partial Class AttendancePopUp
         ' 
         ' Label5
         ' 
+        Label5.Anchor = AnchorStyles.None
         Label5.AutoSize = True
         Label5.Font = New Font("Corbel", 16.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label5.Location = New Point(662, 148)
+        Label5.Location = New Point(649, 162)
         Label5.Name = "Label5"
         Label5.Size = New Size(66, 27)
         Label5.TabIndex = 12
@@ -235,9 +262,10 @@ Partial Class AttendancePopUp
         ' 
         ' Label4
         ' 
+        Label4.Anchor = AnchorStyles.None
         Label4.AutoSize = True
         Label4.Font = New Font("Corbel", 16.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label4.Location = New Point(423, 148)
+        Label4.Location = New Point(410, 162)
         Label4.Name = "Label4"
         Label4.Size = New Size(111, 27)
         Label4.TabIndex = 11
@@ -246,9 +274,10 @@ Partial Class AttendancePopUp
         ' 
         ' Label3
         ' 
+        Label3.Anchor = AnchorStyles.None
         Label3.AutoSize = True
         Label3.Font = New Font("Corbel", 16.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label3.Location = New Point(662, 71)
+        Label3.Location = New Point(649, 85)
         Label3.Name = "Label3"
         Label3.Size = New Size(189, 27)
         Label3.TabIndex = 10
@@ -257,9 +286,10 @@ Partial Class AttendancePopUp
         ' 
         ' Label2
         ' 
+        Label2.Anchor = AnchorStyles.None
         Label2.AutoSize = True
         Label2.Font = New Font("Corbel", 16.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label2.Location = New Point(423, 71)
+        Label2.Location = New Point(410, 85)
         Label2.Name = "Label2"
         Label2.Size = New Size(149, 27)
         Label2.TabIndex = 9
@@ -268,9 +298,10 @@ Partial Class AttendancePopUp
         ' 
         ' PictureBox3
         ' 
+        PictureBox3.Anchor = AnchorStyles.None
         PictureBox3.BackColor = Color.Transparent
         PictureBox3.BackgroundImageLayout = ImageLayout.Stretch
-        PictureBox3.Location = New Point(72, 71)
+        PictureBox3.Location = New Point(59, 85)
         PictureBox3.Name = "PictureBox3"
         PictureBox3.Size = New Size(300, 300)
         PictureBox3.TabIndex = 0
@@ -278,6 +309,7 @@ Partial Class AttendancePopUp
         ' 
         ' ENTxt1
         ' 
+        ENTxt1.Anchor = AnchorStyles.None
         ENTxt1.BorderStyle = BorderStyle.FixedSingle
         ENTxt1.Font = New Font("Corbel", 18F, FontStyle.Bold)
         ENTxt1.Location = New Point(652, 134)
@@ -288,6 +320,7 @@ Partial Class AttendancePopUp
         ' 
         ' EIDTxt1
         ' 
+        EIDTxt1.Anchor = AnchorStyles.None
         EIDTxt1.BorderStyle = BorderStyle.FixedSingle
         EIDTxt1.Font = New Font("Corbel", 18F, FontStyle.Bold)
         EIDTxt1.Location = New Point(439, 134)
@@ -298,6 +331,7 @@ Partial Class AttendancePopUp
         ' 
         ' alay
         ' 
+        alay.Anchor = AnchorStyles.None
         alay.BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
         alay.BorderStyle = BorderStyle.None
         alay.Font = New Font("Corbel", 18F, FontStyle.Bold)
@@ -310,9 +344,10 @@ Partial Class AttendancePopUp
         ' 
         ' PictureBox1
         ' 
+        PictureBox1.Anchor = AnchorStyles.None
         PictureBox1.BackgroundImageLayout = ImageLayout.Stretch
         PictureBox1.Image = My.Resources.Resources.Logo_100x95_
-        PictureBox1.Location = New Point(12, 12)
+        PictureBox1.Location = New Point(13, 12)
         PictureBox1.Name = "PictureBox1"
         PictureBox1.Size = New Size(100, 95)
         PictureBox1.TabIndex = 1
@@ -320,9 +355,10 @@ Partial Class AttendancePopUp
         ' 
         ' PictureBox2
         ' 
+        PictureBox2.Anchor = AnchorStyles.None
         PictureBox2.BackgroundImageLayout = ImageLayout.Stretch
         PictureBox2.Image = My.Resources.Resources.SPLQ_100x95_
-        PictureBox2.Location = New Point(821, 12)
+        PictureBox2.Location = New Point(822, 12)
         PictureBox2.Name = "PictureBox2"
         PictureBox2.Size = New Size(100, 95)
         PictureBox2.TabIndex = 2
@@ -330,9 +366,10 @@ Partial Class AttendancePopUp
         ' 
         ' Label1
         ' 
+        Label1.Anchor = AnchorStyles.None
         Label1.AutoSize = True
         Label1.Font = New Font("Corbel", 34.8F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label1.Location = New Point(300, 33)
+        Label1.Location = New Point(301, 30)
         Label1.Name = "Label1"
         Label1.Size = New Size(319, 58)
         Label1.TabIndex = 3
@@ -344,7 +381,7 @@ Partial Class AttendancePopUp
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
-        ClientSize = New Size(934, 570)
+        ClientSize = New Size(934, 561)
         Controls.Add(Label1)
         Controls.Add(PictureBox2)
         Controls.Add(PictureBox1)
@@ -355,6 +392,7 @@ Partial Class AttendancePopUp
         Name = "AttendancePopUp"
         StartPosition = FormStartPosition.CenterScreen
         Text = "AttendancePopUp"
+        WindowState = FormWindowState.Maximized
         AttendancePanel.ResumeLayout(False)
         AttendancePanel.PerformLayout()
         CType(PictureBox3, ComponentModel.ISupportInitialize).EndInit()

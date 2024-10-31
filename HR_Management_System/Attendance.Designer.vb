@@ -24,7 +24,7 @@ Partial Class Attendance
     Private Sub InitializeComponent()
         RFIDTap = New PictureBox()
         Label1 = New Label()
-        RFIDtxt = New TextBox()
+        RFIDTxt = New TextBox()
         CType(RFIDTap, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -32,9 +32,8 @@ Partial Class Attendance
         ' 
         RFIDTap.Anchor = AnchorStyles.None
         RFIDTap.BackColor = Color.Transparent
-        RFIDTap.BackgroundImageLayout = ImageLayout.Stretch
         RFIDTap.Image = My.Resources.Resources.Logo_550x500_
-        RFIDTap.Location = New Point(96, 33)
+        RFIDTap.Location = New Point(67, 40)
         RFIDTap.Name = "RFIDTap"
         RFIDTap.Size = New Size(550, 500)
         RFIDTap.TabIndex = 0
@@ -43,30 +42,31 @@ Partial Class Attendance
         ' Label1
         ' 
         Label1.Anchor = AnchorStyles.None
-        Label1.AutoSize = True
-        Label1.Font = New Font("Corbel", 25.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label1.Location = New Point(280, 551)
+        Label1.Font = New Font("Corbel", 30F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label1.Location = New Point(242, 551)
         Label1.Name = "Label1"
-        Label1.Size = New Size(183, 41)
-        Label1.TabIndex = 2
-        Label1.Text = "SCAN RFID"
+        Label1.Size = New Size(200, 50)
+        Label1.TabIndex = 1
+        Label1.Text = "TAP ID"
+        Label1.TextAlign = ContentAlignment.MiddleCenter
         ' 
-        ' RFIDtxt
+        ' RFIDTxt
         ' 
-        RFIDtxt.Location = New Point(317, 55)
-        RFIDtxt.Name = "RFIDtxt"
-        RFIDtxt.Size = New Size(100, 23)
-        RFIDtxt.TabIndex = 1
+        RFIDTxt.Anchor = AnchorStyles.None
+        RFIDTxt.Location = New Point(242, 113)
+        RFIDTxt.Multiline = True
+        RFIDTxt.Name = "RFIDTxt"
+        RFIDTxt.Size = New Size(200, 30)
+        RFIDTxt.TabIndex = 2
         ' 
         ' Attendance
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
-        AutoScaleMode = AutoScaleMode.Font
+        AutoScaleMode = AutoScaleMode.None
         BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
-        ClientSize = New Size(734, 611)
+        ClientSize = New Size(684, 641)
         Controls.Add(Label1)
         Controls.Add(RFIDTap)
-        Controls.Add(RFIDtxt)
+        Controls.Add(RFIDTxt)
         Name = "Attendance"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Attendance"
@@ -77,5 +77,5 @@ Partial Class Attendance
 
     Friend WithEvents RFIDTap As PictureBox
     Friend WithEvents Label1 As Label
-    Friend WithEvents RFIDtxt As TextBox
+    Friend WithEvents RFIDTxt As TextBox
 End Class

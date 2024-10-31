@@ -263,6 +263,7 @@ Partial Class AddStaff
         Controls.Add(Panel1)
         Controls.Add(PictureBox2)
         Controls.Add(PictureBox1)
+        FormBorderStyle = FormBorderStyle.FixedToolWindow
         Name = "AddStaff"
         Text = "AddStaff"
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
