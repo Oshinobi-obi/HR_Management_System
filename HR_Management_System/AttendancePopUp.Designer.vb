@@ -86,10 +86,10 @@ Partial Class AttendancePopUp
         ' 
         EMIDTxt.Anchor = AnchorStyles.None
         EMIDTxt.BorderStyle = BorderStyle.FixedSingle
-        EMIDTxt.Enabled = False
         EMIDTxt.Font = New Font("Corbel", 18F, FontStyle.Bold)
         EMIDTxt.Location = New Point(415, 115)
         EMIDTxt.Name = "EMIDTxt"
+        EMIDTxt.ReadOnly = True
         EMIDTxt.Size = New Size(200, 37)
         EMIDTxt.TabIndex = 33
         ' 
@@ -111,10 +111,10 @@ Partial Class AttendancePopUp
         ' 
         TimeOutTxt.Anchor = AnchorStyles.None
         TimeOutTxt.BorderStyle = BorderStyle.FixedSingle
-        TimeOutTxt.Enabled = False
         TimeOutTxt.Font = New Font("Corbel", 18F, FontStyle.Bold)
         TimeOutTxt.Location = New Point(652, 348)
         TimeOutTxt.Name = "TimeOutTxt"
+        TimeOutTxt.ReadOnly = True
         TimeOutTxt.Size = New Size(200, 37)
         TimeOutTxt.TabIndex = 32
         TimeOutTxt.TextAlign = HorizontalAlignment.Center
@@ -123,10 +123,10 @@ Partial Class AttendancePopUp
         ' 
         TimeInTxt.Anchor = AnchorStyles.None
         TimeInTxt.BorderStyle = BorderStyle.FixedSingle
-        TimeInTxt.Enabled = False
         TimeInTxt.Font = New Font("Corbel", 18F, FontStyle.Bold)
         TimeInTxt.Location = New Point(414, 349)
         TimeInTxt.Name = "TimeInTxt"
+        TimeInTxt.ReadOnly = True
         TimeInTxt.Size = New Size(200, 37)
         TimeInTxt.TabIndex = 31
         TimeInTxt.TextAlign = HorizontalAlignment.Center
@@ -135,10 +135,10 @@ Partial Class AttendancePopUp
         ' 
         HourShiftTxt.Anchor = AnchorStyles.None
         HourShiftTxt.BorderStyle = BorderStyle.FixedSingle
-        HourShiftTxt.Enabled = False
         HourShiftTxt.Font = New Font("Corbel", 18F, FontStyle.Bold)
         HourShiftTxt.Location = New Point(649, 270)
         HourShiftTxt.Name = "HourShiftTxt"
+        HourShiftTxt.ReadOnly = True
         HourShiftTxt.Size = New Size(200, 37)
         HourShiftTxt.TabIndex = 30
         HourShiftTxt.TextAlign = HorizontalAlignment.Center
@@ -147,10 +147,10 @@ Partial Class AttendancePopUp
         ' 
         DaySchedTxt.Anchor = AnchorStyles.None
         DaySchedTxt.BorderStyle = BorderStyle.FixedSingle
-        DaySchedTxt.Enabled = False
         DaySchedTxt.Font = New Font("Corbel", 18F, FontStyle.Bold)
         DaySchedTxt.Location = New Point(414, 270)
         DaySchedTxt.Name = "DaySchedTxt"
+        DaySchedTxt.ReadOnly = True
         DaySchedTxt.Size = New Size(200, 37)
         DaySchedTxt.TabIndex = 29
         ' 
@@ -158,10 +158,10 @@ Partial Class AttendancePopUp
         ' 
         DateTxt.Anchor = AnchorStyles.None
         DateTxt.BorderStyle = BorderStyle.FixedSingle
-        DateTxt.Enabled = False
         DateTxt.Font = New Font("Corbel", 18F, FontStyle.Bold)
         DateTxt.Location = New Point(649, 192)
         DateTxt.Name = "DateTxt"
+        DateTxt.ReadOnly = True
         DateTxt.Size = New Size(200, 37)
         DateTxt.TabIndex = 28
         DateTxt.TextAlign = HorizontalAlignment.Center
@@ -170,10 +170,10 @@ Partial Class AttendancePopUp
         ' 
         PosTxt.Anchor = AnchorStyles.None
         PosTxt.BorderStyle = BorderStyle.FixedSingle
-        PosTxt.Enabled = False
         PosTxt.Font = New Font("Corbel", 18F, FontStyle.Bold)
         PosTxt.Location = New Point(414, 192)
         PosTxt.Name = "PosTxt"
+        PosTxt.ReadOnly = True
         PosTxt.Size = New Size(200, 37)
         PosTxt.TabIndex = 27
         ' 
@@ -181,10 +181,10 @@ Partial Class AttendancePopUp
         ' 
         ENTxt.Anchor = AnchorStyles.None
         ENTxt.BorderStyle = BorderStyle.FixedSingle
-        ENTxt.Enabled = False
         ENTxt.Font = New Font("Corbel", 18F, FontStyle.Bold)
         ENTxt.Location = New Point(649, 115)
         ENTxt.Name = "ENTxt"
+        ENTxt.ReadOnly = True
         ENTxt.Size = New Size(200, 37)
         ENTxt.TabIndex = 26
         ' 

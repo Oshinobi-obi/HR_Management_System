@@ -6,6 +6,8 @@ Imports Npgsql
 
 Public Class AttendancePopUp
 
+    Private isEditable As Boolean = False
+
     Public Sub SetEmployeeData(employeeData As Dictionary(Of String, String))
 
         If employeeData IsNot Nothing Then
@@ -26,8 +28,23 @@ Public Class AttendancePopUp
                 HourShiftTxt.Text = employeeData("HourShift")
             End If
         End If
+
+        For Each ctrl As Control In Me.Controls
+            If TypeOf ctrl Is TextBox Then
+                Dim txtBox As TextBox = CType(ctrl, TextBox)
+                txtBox.ReadOnly = Not isEditable
+                txtBox.BackColor = Color.White
+                txtBox.ForeColor = Color.Black
+            End If
+        Next
+
     End Sub
 
+    Private Sub TextBox_Enter(sender As Object, e As EventArgs) Handles EMIDTxt.Enter, ENTxt.Enter, PosTxt.Enter, DaySchedTxt.Enter, DateTxt.Enter, TimeInTxt.Enter, TimeOutTxt.Enter, HourShiftTxt.Enter
+        If Not isEditable Then
+            Me.ActiveControl = Nothing
+        End If
+    End Sub
 
     Private Sub AttendancePanel_Paint(sender As Object, e As PaintEventArgs) Handles AttendancePanel.Paint
         DrawRoundedPanelBorder(e.Graphics, AttendancePanel, 20, 2)
