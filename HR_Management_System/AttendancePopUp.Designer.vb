@@ -41,7 +41,7 @@ Partial Class AttendancePopUp
         Label4 = New Label()
         Label3 = New Label()
         Label2 = New Label()
-        PictureBox3 = New PictureBox()
+        EPic = New PictureBox()
         ENTxt1 = New TextBox()
         EIDTxt1 = New TextBox()
         alay = New TextBox()
@@ -49,7 +49,7 @@ Partial Class AttendancePopUp
         PictureBox2 = New PictureBox()
         Label1 = New Label()
         AttendancePanel.SuspendLayout()
-        CType(PictureBox3, ComponentModel.ISupportInitialize).BeginInit()
+        CType(EPic, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -75,8 +75,8 @@ Partial Class AttendancePopUp
         AttendancePanel.Controls.Add(Label4)
         AttendancePanel.Controls.Add(Label3)
         AttendancePanel.Controls.Add(Label2)
-        AttendancePanel.Controls.Add(PictureBox3)
-        AttendancePanel.Location = New Point(11, 119)
+        AttendancePanel.Controls.Add(EPic)
+        AttendancePanel.Location = New Point(12, 119)
         AttendancePanel.Margin = New Padding(3, 0, 3, 3)
         AttendancePanel.Name = "AttendancePanel"
         AttendancePanel.Size = New Size(910, 430)
@@ -296,16 +296,16 @@ Partial Class AttendancePopUp
         Label2.Text = "EMPLOYEE ID"
         Label2.TextAlign = ContentAlignment.MiddleLeft
         ' 
-        ' PictureBox3
+        ' EPic
         ' 
-        PictureBox3.Anchor = AnchorStyles.None
-        PictureBox3.BackColor = Color.Transparent
-        PictureBox3.BackgroundImageLayout = ImageLayout.Stretch
-        PictureBox3.Location = New Point(59, 85)
-        PictureBox3.Name = "PictureBox3"
-        PictureBox3.Size = New Size(300, 300)
-        PictureBox3.TabIndex = 0
-        PictureBox3.TabStop = False
+        EPic.Anchor = AnchorStyles.None
+        EPic.BackColor = Color.Transparent
+        EPic.BackgroundImageLayout = ImageLayout.Stretch
+        EPic.Location = New Point(59, 85)
+        EPic.Name = "EPic"
+        EPic.Size = New Size(300, 300)
+        EPic.TabIndex = 0
+        EPic.TabStop = False
         ' 
         ' ENTxt1
         ' 
@@ -389,13 +389,14 @@ Partial Class AttendancePopUp
         Controls.Add(alay)
         Controls.Add(EIDTxt1)
         Controls.Add(ENTxt1)
+        FormBorderStyle = FormBorderStyle.FixedToolWindow
         Name = "AttendancePopUp"
         StartPosition = FormStartPosition.CenterScreen
-        Text = "AttendancePopUp"
+        Text = "ATTENDANCE"
         WindowState = FormWindowState.Maximized
         AttendancePanel.ResumeLayout(False)
         AttendancePanel.PerformLayout()
-        CType(PictureBox3, ComponentModel.ISupportInitialize).EndInit()
+        CType(EPic, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
@@ -406,7 +407,7 @@ Partial Class AttendancePopUp
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents Label1 As Label
-    Friend WithEvents PictureBox3 As PictureBox
+    Friend WithEvents EPic As PictureBox
     Friend WithEvents alay As TextBox
     Friend WithEvents Label2 As Label
     Friend WithEvents Label9 As Label

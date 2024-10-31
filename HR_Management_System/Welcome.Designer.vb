@@ -27,38 +27,46 @@ Partial Class Welcome
         Label1 = New Label()
         LoginBtn = New Button()
         TimeBtn = New Button()
+        TableLayoutPanel1 = New TableLayoutPanel()
+        Panel2 = New Panel()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
+        TableLayoutPanel1.SuspendLayout()
+        Panel2.SuspendLayout()
         SuspendLayout()
         ' 
         ' PictureBox1
         ' 
         PictureBox1.BackColor = Color.Transparent
         PictureBox1.BackgroundImageLayout = ImageLayout.Stretch
+        PictureBox1.Dock = DockStyle.Fill
         PictureBox1.Image = My.Resources.Resources.Logo_100x95_
-        PictureBox1.Location = New Point(12, 12)
+        PictureBox1.Location = New Point(3, 3)
         PictureBox1.Name = "PictureBox1"
-        PictureBox1.Size = New Size(100, 95)
+        PictureBox1.Size = New Size(127, 93)
+        PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage
         PictureBox1.TabIndex = 0
         PictureBox1.TabStop = False
         ' 
         ' PictureBox2
         ' 
-        PictureBox2.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         PictureBox2.BackColor = Color.Transparent
         PictureBox2.BackgroundImageLayout = ImageLayout.Stretch
+        PictureBox2.Dock = DockStyle.Fill
         PictureBox2.Image = My.Resources.Resources.SPLQ_100x95_
-        PictureBox2.Location = New Point(688, 12)
+        PictureBox2.Location = New Point(669, 3)
         PictureBox2.Name = "PictureBox2"
-        PictureBox2.Size = New Size(100, 95)
+        PictureBox2.Size = New Size(128, 93)
+        PictureBox2.SizeMode = PictureBoxSizeMode.StretchImage
         PictureBox2.TabIndex = 1
         PictureBox2.TabStop = False
         ' 
         ' Label1
         ' 
+        Label1.Anchor = AnchorStyles.None
         Label1.AutoSize = True
         Label1.Font = New Font("Corbel", 45F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label1.Location = New Point(243, 124)
+        Label1.Location = New Point(101, 10)
         Label1.Name = "Label1"
         Label1.Size = New Size(314, 73)
         Label1.TabIndex = 2
@@ -71,9 +79,9 @@ Partial Class Welcome
         LoginBtn.BackColor = Color.White
         LoginBtn.Cursor = Cursors.Hand
         LoginBtn.Font = New Font("Corbel", 35.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        LoginBtn.Location = New Point(156, 251)
+        LoginBtn.Location = New Point(50, 128)
         LoginBtn.Name = "LoginBtn"
-        LoginBtn.Size = New Size(204, 68)
+        LoginBtn.Size = New Size(172, 68)
         LoginBtn.TabIndex = 3
         LoginBtn.Text = "LOGIN"
         LoginBtn.UseVisualStyleBackColor = False
@@ -85,12 +93,41 @@ Partial Class Welcome
         TimeBtn.BackColor = Color.White
         TimeBtn.Cursor = Cursors.Hand
         TimeBtn.Font = New Font("Corbel", 35.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        TimeBtn.Location = New Point(444, 250)
+        TimeBtn.Location = New Point(272, 128)
         TimeBtn.Name = "TimeBtn"
         TimeBtn.Size = New Size(204, 68)
         TimeBtn.TabIndex = 4
         TimeBtn.Text = "TIME-IN"
         TimeBtn.UseVisualStyleBackColor = False
+        ' 
+        ' TableLayoutPanel1
+        ' 
+        TableLayoutPanel1.ColumnCount = 3
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 16.666666F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 66.6666641F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 16.666666F))
+        TableLayoutPanel1.Controls.Add(PictureBox2, 2, 0)
+        TableLayoutPanel1.Controls.Add(PictureBox1, 0, 0)
+        TableLayoutPanel1.Controls.Add(Panel2, 1, 1)
+        TableLayoutPanel1.Dock = DockStyle.Fill
+        TableLayoutPanel1.Location = New Point(0, 0)
+        TableLayoutPanel1.Name = "TableLayoutPanel1"
+        TableLayoutPanel1.RowCount = 2
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 23.62983F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 76.37017F))
+        TableLayoutPanel1.Size = New Size(800, 419)
+        TableLayoutPanel1.TabIndex = 5
+        ' 
+        ' Panel2
+        ' 
+        Panel2.Controls.Add(TimeBtn)
+        Panel2.Controls.Add(LoginBtn)
+        Panel2.Controls.Add(Label1)
+        Panel2.Dock = DockStyle.Fill
+        Panel2.Location = New Point(136, 102)
+        Panel2.Name = "Panel2"
+        Panel2.Size = New Size(527, 314)
+        Panel2.TabIndex = 6
         ' 
         ' Welcome
         ' 
@@ -98,18 +135,17 @@ Partial Class Welcome
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
         ClientSize = New Size(800, 419)
-        Controls.Add(TimeBtn)
-        Controls.Add(LoginBtn)
-        Controls.Add(Label1)
-        Controls.Add(PictureBox2)
-        Controls.Add(PictureBox1)
+        Controls.Add(TableLayoutPanel1)
+        FormBorderStyle = FormBorderStyle.FixedToolWindow
         Name = "Welcome"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Brgy. Santa Monica"
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
+        TableLayoutPanel1.ResumeLayout(False)
+        Panel2.ResumeLayout(False)
+        Panel2.PerformLayout()
         ResumeLayout(False)
-        PerformLayout()
     End Sub
 
     Friend WithEvents PictureBox1 As PictureBox
@@ -117,4 +153,6 @@ Partial Class Welcome
     Friend WithEvents Label1 As Label
     Friend WithEvents LoginBtn As Button
     Friend WithEvents TimeBtn As Button
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents Panel2 As Panel
 End Class

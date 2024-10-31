@@ -26,6 +26,8 @@ Partial Class AttRecord
         PictureBox1 = New PictureBox()
         Label1 = New Label()
         AttTable = New DataGridView()
+        LogOutBtn = New Button()
+        Button2 = New Button()
         EName = New DataGridViewTextBoxColumn()
         Position = New DataGridViewTextBoxColumn()
         Schedule = New DataGridViewTextBoxColumn()
@@ -33,8 +35,7 @@ Partial Class AttRecord
         LogDate = New DataGridViewTextBoxColumn()
         TimeIn = New DataGridViewTextBoxColumn()
         TimeOut = New DataGridViewTextBoxColumn()
-        LogOutBtn = New Button()
-        Button2 = New Button()
+        TotalHrs = New DataGridViewTextBoxColumn()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         CType(AttTable, ComponentModel.ISupportInitialize).BeginInit()
@@ -76,12 +77,37 @@ Partial Class AttRecord
         AttTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         AttTable.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
         AttTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        AttTable.Columns.AddRange(New DataGridViewColumn() {EName, Position, Schedule, Time_Shift, LogDate, TimeIn, TimeOut})
+        AttTable.Columns.AddRange(New DataGridViewColumn() {EName, Position, Schedule, Time_Shift, LogDate, TimeIn, TimeOut, TotalHrs})
         AttTable.GridColor = Color.Black
         AttTable.Location = New Point(12, 113)
         AttTable.Name = "AttTable"
         AttTable.Size = New Size(776, 273)
         AttTable.TabIndex = 6
+        ' 
+        ' LogOutBtn
+        ' 
+        LogOutBtn.AutoSize = True
+        LogOutBtn.BackColor = Color.Red
+        LogOutBtn.BackgroundImageLayout = ImageLayout.Center
+        LogOutBtn.Font = New Font("Corbel", 24.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        LogOutBtn.ForeColor = Color.White
+        LogOutBtn.ImageAlign = ContentAlignment.MiddleLeft
+        LogOutBtn.Location = New Point(632, 392)
+        LogOutBtn.Name = "LogOutBtn"
+        LogOutBtn.Size = New Size(156, 50)
+        LogOutBtn.TabIndex = 8
+        LogOutBtn.Text = "LOGOUT"
+        LogOutBtn.TextImageRelation = TextImageRelation.ImageBeforeText
+        LogOutBtn.UseVisualStyleBackColor = False
+        ' 
+        ' Button2
+        ' 
+        Button2.Location = New Point(537, 403)
+        Button2.Name = "Button2"
+        Button2.Size = New Size(75, 23)
+        Button2.TabIndex = 15
+        Button2.Text = "RETURN"
+        Button2.UseVisualStyleBackColor = True
         ' 
         ' EName
         ' 
@@ -118,30 +144,10 @@ Partial Class AttRecord
         TimeOut.HeaderText = "Time Out"
         TimeOut.Name = "TimeOut"
         ' 
-        ' LogOutBtn
+        ' TotalHrs
         ' 
-        LogOutBtn.AutoSize = True
-        LogOutBtn.BackColor = Color.Red
-        LogOutBtn.BackgroundImageLayout = ImageLayout.Center
-        LogOutBtn.Font = New Font("Corbel", 24.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        LogOutBtn.ForeColor = Color.White
-        LogOutBtn.ImageAlign = ContentAlignment.MiddleLeft
-        LogOutBtn.Location = New Point(632, 392)
-        LogOutBtn.Name = "LogOutBtn"
-        LogOutBtn.Size = New Size(156, 50)
-        LogOutBtn.TabIndex = 8
-        LogOutBtn.Text = "LOGOUT"
-        LogOutBtn.TextImageRelation = TextImageRelation.ImageBeforeText
-        LogOutBtn.UseVisualStyleBackColor = False
-        ' 
-        ' Button2
-        ' 
-        Button2.Location = New Point(537, 403)
-        Button2.Name = "Button2"
-        Button2.Size = New Size(75, 23)
-        Button2.TabIndex = 15
-        Button2.Text = "RETURN"
-        Button2.UseVisualStyleBackColor = True
+        TotalHrs.HeaderText = "Total Hours"
+        TotalHrs.Name = "TotalHrs"
         ' 
         ' AttRecord
         ' 
@@ -168,6 +174,8 @@ Partial Class AttRecord
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Label1 As Label
     Friend WithEvents AttTable As DataGridView
+    Friend WithEvents LogOutBtn As Button
+    Friend WithEvents Button2 As Button
     Friend WithEvents EName As DataGridViewTextBoxColumn
     Friend WithEvents Position As DataGridViewTextBoxColumn
     Friend WithEvents Schedule As DataGridViewTextBoxColumn
@@ -175,6 +183,5 @@ Partial Class AttRecord
     Friend WithEvents LogDate As DataGridViewTextBoxColumn
     Friend WithEvents TimeIn As DataGridViewTextBoxColumn
     Friend WithEvents TimeOut As DataGridViewTextBoxColumn
-    Friend WithEvents LogOutBtn As Button
-    Friend WithEvents Button2 As Button
+    Friend WithEvents TotalHrs As DataGridViewTextBoxColumn
 End Class

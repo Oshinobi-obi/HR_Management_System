@@ -27,7 +27,7 @@ Partial Class Login
         PassPanel = New Panel()
         Passtxt = New TextBox()
         StaffIDPanel = New Panel()
-        StaffIDtxt = New TextBox()
+        StaffIDtxt = New MaskedTextBox()
         LoginBtn = New Button()
         Label3 = New Label()
         Label2 = New Label()
@@ -93,15 +93,14 @@ Partial Class Login
         ' 
         ' StaffIDtxt
         ' 
-        StaffIDtxt.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
-        StaffIDtxt.BackColor = SystemColors.Window
         StaffIDtxt.BorderStyle = BorderStyle.None
         StaffIDtxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         StaffIDtxt.Location = New Point(8, 3)
-        StaffIDtxt.Margin = New Padding(1)
+        StaffIDtxt.Mask = "00-00-00-00"
         StaffIDtxt.Name = "StaffIDtxt"
         StaffIDtxt.Size = New Size(195, 38)
         StaffIDtxt.TabIndex = 1
+        StaffIDtxt.TextAlign = HorizontalAlignment.Center
         ' 
         ' LoginBtn
         ' 
@@ -225,7 +224,6 @@ Partial Class Login
     Friend WithEvents UserIcon As PictureBox
     Friend WithEvents Label2 As Label
     Friend WithEvents StaffIDPanel As Panel
-    Friend WithEvents StaffIDtxt As TextBox
     Friend WithEvents LoginBtn As Button
     Friend WithEvents ShowPass As CheckBox
     Friend WithEvents PassPanel As Panel
@@ -234,5 +232,6 @@ Partial Class Login
     Friend WithEvents PassIcon As PictureBox
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents PictureBox2 As PictureBox
+    Friend WithEvents StaffIDtxt As MaskedTextBox
 
 End Class

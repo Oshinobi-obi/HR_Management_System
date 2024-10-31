@@ -22,28 +22,19 @@ Partial Class Attendance
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        RFIDTap = New PictureBox()
         Label1 = New Label()
         RFIDTxt = New TextBox()
+        RFIDTap = New PictureBox()
+        TableLayoutPanel1 = New TableLayoutPanel()
         CType(RFIDTap, ComponentModel.ISupportInitialize).BeginInit()
+        TableLayoutPanel1.SuspendLayout()
         SuspendLayout()
-        ' 
-        ' RFIDTap
-        ' 
-        RFIDTap.Anchor = AnchorStyles.None
-        RFIDTap.BackColor = Color.Transparent
-        RFIDTap.Image = My.Resources.Resources.Logo_550x500_
-        RFIDTap.Location = New Point(67, 40)
-        RFIDTap.Name = "RFIDTap"
-        RFIDTap.Size = New Size(550, 500)
-        RFIDTap.TabIndex = 0
-        RFIDTap.TabStop = False
         ' 
         ' Label1
         ' 
         Label1.Anchor = AnchorStyles.None
         Label1.Font = New Font("Corbel", 30F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label1.Location = New Point(242, 551)
+        Label1.Location = New Point(241, 551)
         Label1.Name = "Label1"
         Label1.Size = New Size(200, 50)
         Label1.TabIndex = 1
@@ -59,23 +50,55 @@ Partial Class Attendance
         RFIDTxt.Size = New Size(200, 30)
         RFIDTxt.TabIndex = 2
         ' 
+        ' RFIDTap
+        ' 
+        RFIDTap.BackColor = Color.Transparent
+        RFIDTap.BackgroundImageLayout = ImageLayout.Stretch
+        RFIDTap.Dock = DockStyle.Fill
+        RFIDTap.Image = My.Resources.Resources.Logo_550x500_
+        RFIDTap.Location = New Point(71, 3)
+        RFIDTap.Name = "RFIDTap"
+        RFIDTap.Size = New Size(541, 506)
+        RFIDTap.SizeMode = PictureBoxSizeMode.StretchImage
+        RFIDTap.TabIndex = 0
+        RFIDTap.TabStop = False
+        ' 
+        ' TableLayoutPanel1
+        ' 
+        TableLayoutPanel1.ColumnCount = 3
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 10F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 80F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 10F))
+        TableLayoutPanel1.Controls.Add(RFIDTap, 1, 1)
+        TableLayoutPanel1.Controls.Add(Label1, 1, 2)
+        TableLayoutPanel1.Dock = DockStyle.Fill
+        TableLayoutPanel1.Location = New Point(0, 0)
+        TableLayoutPanel1.Name = "TableLayoutPanel1"
+        TableLayoutPanel1.RowCount = 3
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 0F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 80F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 20F))
+        TableLayoutPanel1.Size = New Size(684, 641)
+        TableLayoutPanel1.TabIndex = 3
+        ' 
         ' Attendance
         ' 
         AutoScaleMode = AutoScaleMode.None
         BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
         ClientSize = New Size(684, 641)
-        Controls.Add(Label1)
-        Controls.Add(RFIDTap)
+        Controls.Add(TableLayoutPanel1)
         Controls.Add(RFIDTxt)
+        FormBorderStyle = FormBorderStyle.FixedToolWindow
         Name = "Attendance"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Attendance"
         CType(RFIDTap, ComponentModel.ISupportInitialize).EndInit()
+        TableLayoutPanel1.ResumeLayout(False)
         ResumeLayout(False)
         PerformLayout()
     End Sub
-
-    Friend WithEvents RFIDTap As PictureBox
     Friend WithEvents Label1 As Label
     Friend WithEvents RFIDTxt As TextBox
+    Friend WithEvents RFIDTap As PictureBox
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
 End Class

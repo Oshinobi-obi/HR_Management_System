@@ -177,7 +177,6 @@ Public Class Login
         End If
     End Sub
 
-
     Private Function ValidateCredentials(employeeID As String, password As String) As String
         Try
             DatabaseConnection.OpenConnection()
@@ -200,7 +199,6 @@ Public Class Login
         End Try
         Return Nothing
     End Function
-
 
     Private Sub ResetLoginFields()
         StaffIDtxt.Clear()
