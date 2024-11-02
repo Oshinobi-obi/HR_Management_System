@@ -29,14 +29,6 @@ Partial Class AttRecord
         TableLayoutPanel1 = New TableLayoutPanel()
         Panel1 = New Panel()
         DataGridView1 = New DataGridView()
-        EN = New DataGridViewTextBoxColumn()
-        Position = New DataGridViewTextBoxColumn()
-        Schedule = New DataGridViewTextBoxColumn()
-        TimeShift = New DataGridViewTextBoxColumn()
-        LogDate = New DataGridViewTextBoxColumn()
-        TimeIn = New DataGridViewTextBoxColumn()
-        TimeOut = New DataGridViewTextBoxColumn()
-        TotalHours = New DataGridViewTextBoxColumn()
         Panel2 = New Panel()
         Panel3 = New Panel()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
@@ -128,52 +120,11 @@ Partial Class AttRecord
         ' 
         DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.Columns.AddRange(New DataGridViewColumn() {EN, Position, Schedule, TimeShift, LogDate, TimeIn, TimeOut, TotalHours})
         DataGridView1.Dock = DockStyle.Fill
         DataGridView1.Location = New Point(0, 0)
         DataGridView1.Name = "DataGridView1"
         DataGridView1.Size = New Size(694, 351)
         DataGridView1.TabIndex = 0
-        ' 
-        ' EN
-        ' 
-        EN.HeaderText = "Name"
-        EN.Name = "EN"
-        ' 
-        ' Position
-        ' 
-        Position.HeaderText = "Position"
-        Position.Name = "Position"
-        ' 
-        ' Schedule
-        ' 
-        Schedule.HeaderText = "Schedule"
-        Schedule.Name = "Schedule"
-        ' 
-        ' TimeShift
-        ' 
-        TimeShift.HeaderText = "Time Shift"
-        TimeShift.Name = "TimeShift"
-        ' 
-        ' LogDate
-        ' 
-        LogDate.HeaderText = "Log Date"
-        LogDate.Name = "LogDate"
-        ' 
-        ' TimeIn
-        ' 
-        TimeIn.HeaderText = "Time In"
-        TimeIn.Name = "TimeIn"
-        ' 
-        ' TimeOut
-        ' 
-        TimeOut.HeaderText = "Time Out"
-        TimeOut.Name = "TimeOut"
-        ' 
-        ' TotalHours
-        ' 
-        TotalHours.HeaderText = "TotalHours"
-        TotalHours.Name = "TotalHours"
         ' 
         ' Panel2
         ' 
@@ -223,12 +174,4 @@ Partial Class AttRecord
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Panel3 As Panel
     Friend WithEvents DataGridView1 As DataGridView
-    Friend WithEvents EN As DataGridViewTextBoxColumn
-    Friend WithEvents Position As DataGridViewTextBoxColumn
-    Friend WithEvents Schedule As DataGridViewTextBoxColumn
-    Friend WithEvents TimeShift As DataGridViewTextBoxColumn
-    Friend WithEvents LogDate As DataGridViewTextBoxColumn
-    Friend WithEvents TimeIn As DataGridViewTextBoxColumn
-    Friend WithEvents TimeOut As DataGridViewTextBoxColumn
-    Friend WithEvents TotalHours As DataGridViewTextBoxColumn
 End Class

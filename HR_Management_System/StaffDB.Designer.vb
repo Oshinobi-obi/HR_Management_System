@@ -25,13 +25,6 @@ Partial Class StaffDB
         Button2 = New Button()
         LogOutBtn = New Button()
         DataGridView1 = New DataGridView()
-        EID = New DataGridViewTextBoxColumn()
-        EN = New DataGridViewTextBoxColumn()
-        Position = New DataGridViewTextBoxColumn()
-        Schedule = New DataGridViewTextBoxColumn()
-        Age = New DataGridViewTextBoxColumn()
-        Contact = New DataGridViewTextBoxColumn()
-        DOE = New DataGridViewTextBoxColumn()
         PictureBox1 = New PictureBox()
         PictureBox2 = New PictureBox()
         AddBtn = New Button()
@@ -71,46 +64,10 @@ Partial Class StaffDB
         DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         DataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
         DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.Columns.AddRange(New DataGridViewColumn() {EID, EN, Position, Schedule, Age, Contact, DOE})
         DataGridView1.Location = New Point(12, 145)
         DataGridView1.Name = "DataGridView1"
         DataGridView1.Size = New Size(776, 237)
         DataGridView1.TabIndex = 18
-        ' 
-        ' EID
-        ' 
-        EID.HeaderText = "Employee ID"
-        EID.Name = "EID"
-        ' 
-        ' EN
-        ' 
-        EN.HeaderText = "Name"
-        EN.Name = "EN"
-        ' 
-        ' Position
-        ' 
-        Position.HeaderText = "Position"
-        Position.Name = "Position"
-        ' 
-        ' Schedule
-        ' 
-        Schedule.HeaderText = "Schedule"
-        Schedule.Name = "Schedule"
-        ' 
-        ' Age
-        ' 
-        Age.HeaderText = "Age"
-        Age.Name = "Age"
-        ' 
-        ' Contact
-        ' 
-        Contact.HeaderText = "Contact"
-        Contact.Name = "Contact"
-        ' 
-        ' DOE
-        ' 
-        DOE.HeaderText = "DOE"
-        DOE.Name = "DOE"
         ' 
         ' PictureBox1
         ' 
@@ -143,7 +100,6 @@ Partial Class StaffDB
         ' FilterBox
         ' 
         FilterBox.FormattingEnabled = True
-        FilterBox.Items.AddRange(New Object() {"BPSO", "Lupon Tagapamayapa", "Secretary", "Admin Aide I", "Admin Aide II", "Admin Aide III", "Admin Aide IV", "BNS", "Medical Aide", "Clerk", "Sangguniang Kabataan"})
         FilterBox.Location = New Point(447, 116)
         FilterBox.Name = "FilterBox"
         FilterBox.Size = New Size(121, 23)
@@ -173,13 +129,6 @@ Partial Class StaffDB
     Friend WithEvents Button2 As Button
     Friend WithEvents LogOutBtn As Button
     Friend WithEvents DataGridView1 As DataGridView
-    Friend WithEvents EID As DataGridViewTextBoxColumn
-    Friend WithEvents EN As DataGridViewTextBoxColumn
-    Friend WithEvents Position As DataGridViewTextBoxColumn
-    Friend WithEvents Schedule As DataGridViewTextBoxColumn
-    Friend WithEvents Age As DataGridViewTextBoxColumn
-    Friend WithEvents Contact As DataGridViewTextBoxColumn
-    Friend WithEvents DOE As DataGridViewTextBoxColumn
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents AddBtn As Button
