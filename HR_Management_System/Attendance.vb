@@ -1,4 +1,5 @@
 ﻿Imports Npgsql
+Imports System.Globalization
 
 Public Class Attendance
     Private Timer As New Timer()
@@ -33,7 +34,7 @@ Public Class Attendance
 
                     If employeeData IsNot Nothing Then
                         Dim timeIn As DateTime = DateTime.Now
-                        employeeData("TimeIn") = timeIn.ToString("HH:mm:ss")
+                        employeeData("TimeIn") = timeIn.ToString("hh:mm tt", CultureInfo.InvariantCulture) ' 12-hour format
                         employeeData("DateNow") = timeIn.ToString("yyyy-MM-dd")
                         employeeSessions(rfid) = New Dictionary(Of String, String)(employeeData)
 
@@ -49,19 +50,24 @@ Public Class Attendance
                     Dim sessionData = employeeSessions(rfid)
 
                     If sessionData.ContainsKey("TimeIn") Then
-                        Dim timeIn As DateTime = DateTime.Parse(sessionData("TimeIn"))
+                        Dim timeIn As DateTime = DateTime.ParseExact(sessionData("TimeIn"), "hh:mm tt", CultureInfo.InvariantCulture)
                         Dim timeOut As DateTime = DateTime.Now
-                        Dim hoursWorked As TimeSpan = timeOut - timeIn
 
-                        sessionData("TimeOut") = timeOut.ToString("HH:mm:ss")
-                        sessionData("EmployeeTotalHour") = hoursWorked.TotalHours.ToString("F2")
+                        If Not sessionData.ContainsKey("TimeOut") Then
+                            Dim hoursWorked As TimeSpan = timeOut - timeIn
+                            sessionData("TimeOut") = timeOut.ToString("hh:mm tt", CultureInfo.InvariantCulture) ' 12-hour format
+                            sessionData("EmployeeTotalHour") = hoursWorked.TotalHours.ToString("F2")
 
-                        If UpdateAttendanceRecord(sessionData, timeOut, hoursWorked) > 0 Then
-                            transaction.Commit()
-                            ShowAttendancePopUp(sessionData)
-                            employeeSessions.Remove(rfid)
+                            If UpdateAttendanceRecord(sessionData, timeOut, hoursWorked) > 0 Then
+                                transaction.Commit()
+                                ShowAttendancePopUp(sessionData)
+                                employeeSessions.Remove(rfid)
+                            Else
+                                MsgBox("Error: No records updated. Please check if the record exists with the matching Date, EmployeeID, and TimeIn.")
+                                transaction.Rollback()
+                            End If
                         Else
-                            MsgBox("Error: No records updated. Please check if the record exists with the matching Date, EmployeeName, and TimeIn.")
+                            MsgBox("Error: TimeOut already recorded for this employee.")
                             transaction.Rollback()
                         End If
                     Else
@@ -105,11 +111,12 @@ Public Class Attendance
     End Function
 
     Private Sub InsertAttendanceRecord(employeeData As Dictionary(Of String, String), timeIn As DateTime)
-        Dim query As String = "INSERT INTO attendance (""Date"", ""TimeIn"", ""EmployeeName"", ""EmployeePosition"", ""EmployeeDaySchedule"") " &
-                              "VALUES (@Date, @TimeIn, @EmployeeName, @EmployeePosition, @EmployeeDaySchedule)"
+        Dim query As String = "INSERT INTO attendance (""Date"", ""TimeIn"", ""EmployeeID"", ""EmployeeName"", ""EmployeePosition"", ""EmployeeDaySchedule"") " &
+                              "VALUES (@Date, @TimeIn, @EmployeeID, @EmployeeName, @EmployeePosition, @EmployeeDaySchedule)"
         Using cmd As New NpgsqlCommand(query, conn)
-            cmd.Parameters.AddWithValue("@Date", timeIn.ToString("yyyy-MM-dd"))
-            cmd.Parameters.AddWithValue("@TimeIn", timeIn.ToString("HH:mm:ss"))
+            cmd.Parameters.AddWithValue("@Date", timeIn.Date)
+            cmd.Parameters.AddWithValue("@TimeIn", timeIn.TimeOfDay)
+            cmd.Parameters.AddWithValue("@EmployeeID", employeeData("EmployeeID"))
             cmd.Parameters.AddWithValue("@EmployeeName", employeeData("EmployeeName"))
             cmd.Parameters.AddWithValue("@EmployeePosition", employeeData("EmployeePosition"))
             cmd.Parameters.AddWithValue("@EmployeeDaySchedule", employeeData("EmployeeDaySchedule"))
@@ -119,36 +126,25 @@ Public Class Attendance
 
     Private Function UpdateAttendanceRecord(sessionData As Dictionary(Of String, String), timeOut As DateTime, hoursWorked As TimeSpan) As Integer
         Dim rowsAffected As Integer = 0
-        Dim checkQuery As String = "SELECT COUNT(*) FROM attendance WHERE ""Date"" = @Date AND ""EmployeeName"" = @EmployeeName AND ""TimeIn"" = @TimeIn"
-
-        Console.WriteLine("Matching Data:")
-        Console.WriteLine("Date: " & sessionData("DateNow"))
-        Console.WriteLine("EmployeeName: " & sessionData("EmployeeName"))
-        Console.WriteLine("TimeIn: " & sessionData("TimeIn"))
-
-        Using checkCmd As New NpgsqlCommand(checkQuery, conn)
-            checkCmd.Parameters.AddWithValue("@Date", sessionData("DateNow"))
-            checkCmd.Parameters.AddWithValue("@EmployeeName", sessionData("EmployeeName"))
-            checkCmd.Parameters.AddWithValue("@TimeIn", DateTime.Parse(sessionData("TimeIn")).ToString("HH:mm:ss"))
-
-            Dim recordCount As Integer = CInt(checkCmd.ExecuteScalar())
-            If recordCount = 0 Then
-                MsgBox("Error: No matching record found for the given Date, EmployeeName, and TimeIn. Please verify the data.")
-                Return rowsAffected
-            End If
-        End Using
-
         Dim updateQuery As String = "UPDATE attendance SET ""TimeOut"" = @TimeOut, ""EmployeeTotalHour"" = @TotalHour " &
-                                "WHERE ""Date"" = @Date AND ""EmployeeName"" = @EmployeeName AND ""TimeIn"" = @TimeIn"
+                                    "WHERE ""Date"" = @Date AND ""EmployeeID"" = @EmployeeID AND ""TimeIn"" = @TimeIn"
+
         Using updateCmd As New NpgsqlCommand(updateQuery, conn)
-            updateCmd.Parameters.AddWithValue("@TimeOut", timeOut.ToString("HH:mm:ss"))
+            updateCmd.Parameters.AddWithValue("@TimeOut", timeOut.TimeOfDay)
             updateCmd.Parameters.AddWithValue("@TotalHour", hoursWorked.TotalHours.ToString("F2"))
-            updateCmd.Parameters.AddWithValue("@Date", sessionData("DateNow"))
-            updateCmd.Parameters.AddWithValue("@EmployeeName", sessionData("EmployeeName"))
-            updateCmd.Parameters.AddWithValue("@TimeIn", DateTime.Parse(sessionData("TimeIn")).ToString("HH:mm:ss"))
+
+            Dim dateValue As DateTime = DateTime.ParseExact(sessionData("DateNow"), "yyyy-MM-dd", CultureInfo.InvariantCulture)
+            updateCmd.Parameters.AddWithValue("@Date", dateValue)
+
+            updateCmd.Parameters.AddWithValue("@EmployeeID", sessionData("EmployeeID"))
+            updateCmd.Parameters.AddWithValue("@TimeIn", DateTime.ParseExact(sessionData("TimeIn"), "hh:mm tt", CultureInfo.InvariantCulture).TimeOfDay)
 
             rowsAffected = updateCmd.ExecuteNonQuery()
         End Using
+
+        If rowsAffected = 0 Then
+            MsgBox("Error: No matching record found for the given Date, EmployeeID, and TimeIn. Please verify the data.")
+        End If
 
         Return rowsAffected
     End Function
@@ -172,5 +168,4 @@ Public Class Attendance
             PopUp.Dispose()
         End If
     End Sub
-
 End Class
