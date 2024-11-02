@@ -1,10 +1,9 @@
 ﻿Imports System.Drawing.Drawing2D
 Imports System.Net
 Imports System.Runtime.CompilerServices
-Imports Npgsql ' Make sure you have the Npgsql package installed
+Imports Npgsql
 
 Public Class AddStaff
-    ' Define your PostgreSQL connection string
     Private connString As String = "Host=db-postgresql-sgp1-sbit3f-do-user-13901833-0.l.db.ondigitalocean.com;" &
                                    "Port=25060;" &
                                    "Username=doadmin;" &
@@ -127,7 +126,6 @@ Public Class AddStaff
         Dim residentName As String = StaffNameTxt.Text.Trim()
 
         If String.IsNullOrEmpty(residentName) Then
-            ' Clear the textboxes if the input is empty
             StaffAgeTxt.Clear()
             StaffContactTxt.Clear()
             StaffAddressTxt.Clear()
@@ -137,19 +135,16 @@ Public Class AddStaff
         Try
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
-                ' Update the query to match your actual column names and cases
                 Dim query As String = "SELECT ""ResidentAge"", ""ResidentContact"", ""ResidentAddress"" FROM resident WHERE ""ResidentName"" = @name"
                 Using cmd As New NpgsqlCommand(query, conn)
                     cmd.Parameters.AddWithValue("@name", residentName)
 
                     Using reader As NpgsqlDataReader = cmd.ExecuteReader()
                         If reader.Read() Then
-                            ' Populate the textboxes with resident details
                             StaffAgeTxt.Text = reader("ResidentAge").ToString()
                             StaffContactTxt.Text = reader("ResidentContact").ToString()
                             StaffAddressTxt.Text = reader("ResidentAddress").ToString()
                         Else
-                            ' Clear the textboxes if no resident is found
                             StaffAgeTxt.Clear()
                             StaffContactTxt.Clear()
                             StaffAddressTxt.Clear()
@@ -177,7 +172,7 @@ Public Class AddStaff
 }
 
     Private Sub PosCmb_SelectedIndexChanged(sender As Object, e As EventArgs) Handles PosCmb.SelectedIndexChanged
-        If PosCmb.SelectedItem IsNot Nothing Then ' Check if SelectedItem is not Nothing
+        If PosCmb.SelectedItem IsNot Nothing Then
             Dim selectedPosition As String = PosCmb.SelectedItem.ToString()
             Dim positionValue As String = ""
 
@@ -192,7 +187,7 @@ Public Class AddStaff
                     Dim formattedIncrementingNumber As String = incrementingNumber.ToString("D2") ' Format as two digits
 
                     employeeID = $"{positionValue}-{firstLetterNumber}-{age}-{formattedIncrementingNumber}" ' Format: xx-xx-xx-xx
-                    EmIDTxt.Text = employeeID ' Assign to Employee ID TextBox
+                    EmIDTxt.Text = employeeID
                 Else
                     MessageBox.Show("Please enter a valid age.")
                 End If
@@ -200,12 +195,11 @@ Public Class AddStaff
                 MessageBox.Show("Selected position is not recognized.")
             End If
 
-            ' Default shift for Secretary
             If selectedPosition = "Secretary" Then
-                HrShiftTxt.Text = "8:00am - 5:00pm" ' Set default for Secretary
-                HrShiftTxt.ForeColor = Color.Black ' Ensure text color is set correctly
+                HrShiftTxt.Text = "8:00am - 5:00pm"
+                HrShiftTxt.ForeColor = Color.Black
             Else
-                HrShiftTxt.Text = "" ' Clear for other positions
+                HrShiftTxt.Text = ""
             End If
         Else
             MessageBox.Show("Please select a position.")
@@ -214,19 +208,17 @@ Public Class AddStaff
 
 
     Private Function GetAlphabetPosition(letter As String) As String
-        ' Convert letter to uppercase and get its alphabetical position (A=01, B=02, ..., Z=26)
         Dim position As Integer = Asc(letter.ToUpper()) - Asc("A"c) + 1
-        Return position.ToString("D2") ' Format as two digits (e.g., 01, 02, ..., 26)
+        Return position.ToString("D2")
     End Function
 
     Private Function GetNextEmployeeID() As Integer
         Using conn As New NpgsqlConnection(connString)
             conn.Open()
-            ' Retrieve the maximum ID from the employee table
-            Dim query As String = "SELECT COALESCE(MAX(id), 0) FROM employee" ' Replace 'id' with the actual name of your primary key column
+            Dim query As String = "SELECT COALESCE(MAX(id), 0) FROM employee"
             Using cmd As New NpgsqlCommand(query, conn)
                 Dim maxId As Integer = CInt(cmd.ExecuteScalar())
-                Return maxId + 1 ' Increment the maximum ID to get the next ID
+                Return maxId + 1
             End Using
         End Using
     End Function
@@ -236,10 +228,9 @@ Public Class AddStaff
     End Sub
 
     Private Sub HrShiftTxt_Enter(sender As Object, e As EventArgs) Handles HrShiftTxt.Enter
-        ' Allow user to edit without restriction
         If HrShiftTxt.Text = "8:00am - 5:00pm" Then
-            HrShiftTxt.Text = "" ' Clear default value for input
-            HrShiftTxt.ForeColor = Color.Black ' Change color for input
+            HrShiftTxt.Text = ""
+            HrShiftTxt.ForeColor = Color.Black
         End If
     End Sub
 
@@ -251,23 +242,21 @@ Public Class AddStaff
             Dim validFormat As String = "^\d{1,2}:\d{2}(am|pm) - \d{1,2}:\d{2}(am|pm)$"
 
             If Not System.Text.RegularExpressions.Regex.IsMatch(inputText, validFormat, System.Text.RegularExpressions.RegexOptions.IgnoreCase) Then
-                HrShiftTxt.Text = "8:00am - 5:00pm" ' Reset to default if input is invalid
-                HrShiftTxt.ForeColor = Color.Black ' Reset color
+                HrShiftTxt.Text = "8:00am - 5:00pm"
+                HrShiftTxt.ForeColor = Color.Black
             End If
         End If
     End Sub
 
     Private Sub AddStaffBtn_Click(sender As Object, e As EventArgs) Handles AddStaffBtn.Click
-        ' Retrieve data from input fields
         Dim employeeName As String = StaffNameTxt.Text.Trim()
         Dim employeeAge As String = StaffAgeTxt.Text.Trim()
         Dim employeePosition As String = PosCmb.SelectedItem.ToString()
-        Dim employeeDaySchedule As String = WorkDayTxt.Text.Trim() ' Assuming you have this textbox for schedule
+        Dim employeeDaySchedule As String = WorkDayTxt.Text.Trim()
         Dim employeeTimeShift As String = HrShiftTxt.Text.Trim()
         Dim employeeMobile As String = StaffContactTxt.Text.Trim()
         Dim employeeAddress As String = StaffAddressTxt.Text.Trim()
 
-        ' Validate input fields
         If String.IsNullOrEmpty(employeeName) OrElse String.IsNullOrEmpty(employeeAge) OrElse String.IsNullOrEmpty(employeePosition) Then
             MessageBox.Show("Please fill all required fields.")
             Return
@@ -277,30 +266,25 @@ Public Class AddStaff
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
 
-                ' Fetch the highest EmployeeId
                 Dim maxIdQuery As String = "SELECT MAX(CAST(SUBSTRING(""EmployeeID"" FROM '[0-9]+$') AS INTEGER)) FROM ""employee"""
                 Dim lastTwoDigits As Integer = 0
 
                 Using maxIdCmd As New NpgsqlCommand(maxIdQuery, conn)
                     Dim maxIdResult = maxIdCmd.ExecuteScalar()
                     If maxIdResult IsNot DBNull.Value Then
-                        lastTwoDigits = Convert.ToInt32(maxIdResult) + 1 ' Increment the last two digits
+                        lastTwoDigits = Convert.ToInt32(maxIdResult) + 1
                     Else
-                        lastTwoDigits = 1 ' Start from 1 if no EmployeeId exists
+                        lastTwoDigits = 1
                     End If
                 End Using
 
-                ' Generate the new EmployeeId
-                Dim positionValue As String = GetPositionValue(employeePosition) ' Assuming you have a method to get this
+                Dim positionValue As String = GetPositionValue(employeePosition)
                 Dim firstLetter As String = If(employeeName.Length > 0, employeeName.Substring(0, 1).ToUpper(), "A")
                 Dim firstLetterNumber As String = GetAlphabetPosition(firstLetter)
-                Dim newEmployeeId As String = $"{positionValue}-{firstLetterNumber}-{employeeAge}-{lastTwoDigits:D2}" ' Format: xx-xx-xx-xx
-
-                ' Insert the new staff member
+                Dim newEmployeeId As String = $"{positionValue}-{firstLetterNumber}-{employeeAge}-{lastTwoDigits:D2}"
                 Dim insertQuery As String = "INSERT INTO ""employee"" (""EmployeeID"", ""EmployeeName"", ""EmployeeAge"", ""EmployeePosition"", ""EmployeeDaySchedule"", ""EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"") " &
                                      "VALUES (@EmployeeId, @EmployeeName, @EmployeeAge, @EmployeePosition, @EmployeeDaySchedule, @EmployeeTimeShift, @EmployeeMobile, @EmployeeAddress)"
                 Using insertCmd As New NpgsqlCommand(insertQuery, conn)
-                    ' Add parameters to the command
                     insertCmd.Parameters.AddWithValue("@EmployeeId", newEmployeeId)
                     insertCmd.Parameters.AddWithValue("@EmployeeName", employeeName)
                     insertCmd.Parameters.AddWithValue("@EmployeeAge", employeeAge)
@@ -309,15 +293,9 @@ Public Class AddStaff
                     insertCmd.Parameters.AddWithValue("@EmployeeTimeShift", employeeTimeShift)
                     insertCmd.Parameters.AddWithValue("@EmployeeMobile", employeeMobile)
                     insertCmd.Parameters.AddWithValue("@EmployeeAddress", employeeAddress)
-
-                    ' Execute the command
                     insertCmd.ExecuteNonQuery()
                     MessageBox.Show("Staff member added successfully!")
-
-                    ' Clear the input fields
                     ClearInputFields()
-
-                    ' Reload the form to reset EmployeeID and other fields
                     ReloadAddStaffForm()
                 End Using
             End Using
@@ -333,21 +311,18 @@ Public Class AddStaff
         StaffAddressTxt.Clear()
         WorkDayTxt.Clear()
         HrShiftTxt.Text = ""
-        PosCmb.SelectedIndex = -1 ' Reset the position combo box
+        PosCmb.SelectedIndex = -1
     End Sub
 
     Private Sub ReloadAddStaffForm()
-        ' Optionally, you could just clear fields and keep the form open. 
-        ' If you want to open a new instance of the form:
         Dim newForm As New AddStaff()
         newForm.Show()
-        Me.Close() ' Close the current instance of AddStaff
+        Me.Close()
     End Sub
 
 
 
     Private Function GetPositionValue(position As String) As String
-        ' Add your logic to map the position to its respective value
         Dim positionValues As New Dictionary(Of String, String) From {
             {"Admin Aide I", "11"},
             {"Admin Aide II", "14"},

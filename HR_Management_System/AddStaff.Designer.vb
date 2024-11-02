@@ -96,7 +96,7 @@ Partial Class AddStaff
         AddStaffPanel.Dock = DockStyle.Fill
         AddStaffPanel.Location = New Point(121, 115)
         AddStaffPanel.Name = "AddStaffPanel"
-        AddStaffPanel.Size = New Size(941, 443)
+        AddStaffPanel.Size = New Size(941, 386)
         AddStaffPanel.TabIndex = 22
         ' 
         ' HrShiftTxt
@@ -104,18 +104,18 @@ Partial Class AddStaff
         HrShiftTxt.Anchor = AnchorStyles.None
         HrShiftTxt.BorderStyle = BorderStyle.FixedSingle
         HrShiftTxt.Font = New Font("Corbel", 22.2F, FontStyle.Bold)
-        HrShiftTxt.Location = New Point(249, 196)
+        HrShiftTxt.Location = New Point(249, 187)
         HrShiftTxt.Multiline = True
         HrShiftTxt.Name = "HrShiftTxt"
         HrShiftTxt.Size = New Size(200, 50)
-        HrShiftTxt.TabIndex = 12
+        HrShiftTxt.TabIndex = 6
         ' 
         ' Label8
         ' 
         Label8.Anchor = AnchorStyles.None
         Label8.AutoSize = True
         Label8.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label8.Location = New Point(249, 151)
+        Label8.Location = New Point(249, 142)
         Label8.Name = "Label8"
         Label8.Size = New Size(135, 33)
         Label8.TabIndex = 13
@@ -128,9 +128,9 @@ Partial Class AddStaff
         AddStaffBtn.Cursor = Cursors.Hand
         AddStaffBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         AddStaffBtn.ForeColor = Color.Black
-        AddStaffBtn.Location = New Point(735, 275)
+        AddStaffBtn.Location = New Point(735, 254)
         AddStaffBtn.Name = "AddStaffBtn"
-        AddStaffBtn.Size = New Size(185, 50)
+        AddStaffBtn.Size = New Size(200, 50)
         AddStaffBtn.TabIndex = 9
         AddStaffBtn.Text = "ADD STAFF"
         AddStaffBtn.UseVisualStyleBackColor = False
@@ -146,7 +146,7 @@ Partial Class AddStaff
         PosCmb.IntegralHeight = False
         PosCmb.ItemHeight = 37
         PosCmb.Items.AddRange(New Object() {"Admin Aide I", "Admin Aide II", "Admin Aide III", "Admin Aide IV", "BNS", "BPSO", "Clerk", "Lupon Tagapamayapa", "Medical Aide", "Sangguniang Kabataan", "Secretary"})
-        PosCmb.Location = New Point(735, 78)
+        PosCmb.Location = New Point(735, 69)
         PosCmb.Name = "PosCmb"
         PosCmb.Size = New Size(200, 45)
         PosCmb.Sorted = True
@@ -157,18 +157,18 @@ Partial Class AddStaff
         StaffAddressTxt.Anchor = AnchorStyles.None
         StaffAddressTxt.BorderStyle = BorderStyle.FixedSingle
         StaffAddressTxt.Font = New Font("Corbel", 22.2F, FontStyle.Bold)
-        StaffAddressTxt.Location = New Point(735, 196)
+        StaffAddressTxt.Location = New Point(735, 187)
         StaffAddressTxt.Multiline = True
         StaffAddressTxt.Name = "StaffAddressTxt"
         StaffAddressTxt.Size = New Size(200, 50)
-        StaffAddressTxt.TabIndex = 7
+        StaffAddressTxt.TabIndex = 8
         ' 
         ' Label7
         ' 
         Label7.Anchor = AnchorStyles.None
         Label7.AutoSize = True
         Label7.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label7.Location = New Point(735, 151)
+        Label7.Location = New Point(735, 142)
         Label7.Name = "Label7"
         Label7.Size = New Size(108, 33)
         Label7.TabIndex = 11
@@ -179,11 +179,11 @@ Partial Class AddStaff
         StaffContactTxt.Anchor = AnchorStyles.None
         StaffContactTxt.BorderStyle = BorderStyle.FixedSingle
         StaffContactTxt.Font = New Font("Corbel", 22.2F, FontStyle.Bold)
-        StaffContactTxt.Location = New Point(492, 196)
+        StaffContactTxt.Location = New Point(492, 187)
         StaffContactTxt.Multiline = True
         StaffContactTxt.Name = "StaffContactTxt"
         StaffContactTxt.Size = New Size(200, 50)
-        StaffContactTxt.TabIndex = 6
+        StaffContactTxt.TabIndex = 7
         ' 
         ' ReturnBtn
         ' 
@@ -191,9 +191,9 @@ Partial Class AddStaff
         ReturnBtn.BackColor = Color.LightCoral
         ReturnBtn.Cursor = Cursors.Hand
         ReturnBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        ReturnBtn.Location = New Point(542, 275)
+        ReturnBtn.Location = New Point(735, 319)
         ReturnBtn.Name = "ReturnBtn"
-        ReturnBtn.Size = New Size(150, 50)
+        ReturnBtn.Size = New Size(200, 50)
         ReturnBtn.TabIndex = 8
         ReturnBtn.Text = "RETURN"
         ReturnBtn.UseVisualStyleBackColor = False
@@ -203,7 +203,7 @@ Partial Class AddStaff
         Label6.Anchor = AnchorStyles.None
         Label6.AutoSize = True
         Label6.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label6.Location = New Point(492, 151)
+        Label6.Location = New Point(492, 142)
         Label6.Name = "Label6"
         Label6.Size = New Size(107, 33)
         Label6.TabIndex = 9
@@ -214,7 +214,7 @@ Partial Class AddStaff
         WorkDayTxt.Anchor = AnchorStyles.None
         WorkDayTxt.BorderStyle = BorderStyle.FixedSingle
         WorkDayTxt.Font = New Font("Corbel", 22.2F, FontStyle.Bold)
-        WorkDayTxt.Location = New Point(6, 196)
+        WorkDayTxt.Location = New Point(6, 187)
         WorkDayTxt.Multiline = True
         WorkDayTxt.Name = "WorkDayTxt"
         WorkDayTxt.Size = New Size(200, 50)
@@ -225,7 +225,7 @@ Partial Class AddStaff
         Label5.Anchor = AnchorStyles.None
         Label5.AutoSize = True
         Label5.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label5.Location = New Point(6, 151)
+        Label5.Location = New Point(6, 142)
         Label5.Name = "Label5"
         Label5.Size = New Size(130, 33)
         Label5.TabIndex = 7
@@ -236,7 +236,7 @@ Partial Class AddStaff
         Label4.Anchor = AnchorStyles.None
         Label4.AutoSize = True
         Label4.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label4.Location = New Point(735, 32)
+        Label4.Location = New Point(735, 23)
         Label4.Name = "Label4"
         Label4.Size = New Size(110, 33)
         Label4.TabIndex = 6
@@ -247,7 +247,7 @@ Partial Class AddStaff
         StaffAgeTxt.Anchor = AnchorStyles.None
         StaffAgeTxt.BorderStyle = BorderStyle.FixedSingle
         StaffAgeTxt.Font = New Font("Corbel", 22.2F, FontStyle.Bold)
-        StaffAgeTxt.Location = New Point(492, 78)
+        StaffAgeTxt.Location = New Point(492, 69)
         StaffAgeTxt.Multiline = True
         StaffAgeTxt.Name = "StaffAgeTxt"
         StaffAgeTxt.Size = New Size(200, 50)
@@ -258,7 +258,7 @@ Partial Class AddStaff
         Label3.Anchor = AnchorStyles.None
         Label3.AutoSize = True
         Label3.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label3.Location = New Point(492, 32)
+        Label3.Location = New Point(492, 23)
         Label3.Name = "Label3"
         Label3.Size = New Size(62, 33)
         Label3.TabIndex = 4
@@ -269,7 +269,7 @@ Partial Class AddStaff
         StaffNameTxt.Anchor = AnchorStyles.None
         StaffNameTxt.BorderStyle = BorderStyle.FixedSingle
         StaffNameTxt.Font = New Font("Corbel", 22.2F, FontStyle.Bold)
-        StaffNameTxt.Location = New Point(249, 78)
+        StaffNameTxt.Location = New Point(249, 69)
         StaffNameTxt.Multiline = True
         StaffNameTxt.Name = "StaffNameTxt"
         StaffNameTxt.Size = New Size(200, 50)
@@ -280,7 +280,7 @@ Partial Class AddStaff
         Label2.Anchor = AnchorStyles.None
         Label2.AutoSize = True
         Label2.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label2.Location = New Point(249, 32)
+        Label2.Location = New Point(249, 23)
         Label2.Name = "Label2"
         Label2.Size = New Size(86, 33)
         Label2.TabIndex = 2
@@ -291,7 +291,7 @@ Partial Class AddStaff
         EmIDTxt.Anchor = AnchorStyles.None
         EmIDTxt.BorderStyle = BorderStyle.FixedSingle
         EmIDTxt.Font = New Font("Corbel", 22.2F, FontStyle.Bold)
-        EmIDTxt.Location = New Point(6, 78)
+        EmIDTxt.Location = New Point(6, 69)
         EmIDTxt.Multiline = True
         EmIDTxt.Name = "EmIDTxt"
         EmIDTxt.Size = New Size(200, 50)
@@ -302,7 +302,7 @@ Partial Class AddStaff
         Label1.Anchor = AnchorStyles.None
         Label1.AutoSize = True
         Label1.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label1.Location = New Point(6, 32)
+        Label1.Location = New Point(6, 23)
         Label1.Name = "Label1"
         Label1.Size = New Size(41, 33)
         Label1.TabIndex = 0
@@ -320,10 +320,10 @@ Partial Class AddStaff
         TableLayoutPanel1.Dock = DockStyle.Fill
         TableLayoutPanel1.Location = New Point(0, 0)
         TableLayoutPanel1.Name = "TableLayoutPanel1"
-        TableLayoutPanel1.RowCount = 2
+        TableLayoutPanel1.RowCount = 3
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 20F))
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 80F))
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Absolute, 20F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 70F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 10F))
         TableLayoutPanel1.Size = New Size(1184, 561)
         TableLayoutPanel1.TabIndex = 23
         ' 

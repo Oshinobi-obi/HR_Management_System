@@ -25,94 +25,120 @@ Partial Class AttRecord
         PictureBox2 = New PictureBox()
         PictureBox1 = New PictureBox()
         Label1 = New Label()
-        AttTable = New DataGridView()
-        LogOutBtn = New Button()
         Button2 = New Button()
-        EName = New DataGridViewTextBoxColumn()
+        TableLayoutPanel1 = New TableLayoutPanel()
+        Panel1 = New Panel()
+        DataGridView1 = New DataGridView()
+        EN = New DataGridViewTextBoxColumn()
         Position = New DataGridViewTextBoxColumn()
         Schedule = New DataGridViewTextBoxColumn()
-        Time_Shift = New DataGridViewTextBoxColumn()
+        TimeShift = New DataGridViewTextBoxColumn()
         LogDate = New DataGridViewTextBoxColumn()
         TimeIn = New DataGridViewTextBoxColumn()
         TimeOut = New DataGridViewTextBoxColumn()
-        TotalHrs = New DataGridViewTextBoxColumn()
+        TotalHours = New DataGridViewTextBoxColumn()
+        Panel2 = New Panel()
+        Panel3 = New Panel()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
-        CType(AttTable, ComponentModel.ISupportInitialize).BeginInit()
+        TableLayoutPanel1.SuspendLayout()
+        Panel1.SuspendLayout()
+        CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
+        Panel2.SuspendLayout()
+        Panel3.SuspendLayout()
         SuspendLayout()
         ' 
         ' PictureBox2
         ' 
         PictureBox2.BackgroundImageLayout = ImageLayout.Stretch
+        PictureBox2.Dock = DockStyle.Fill
         PictureBox2.Image = My.Resources.Resources.SPLQ_100x95_
-        PictureBox2.Location = New Point(688, 12)
+        PictureBox2.Location = New Point(819, 3)
         PictureBox2.Name = "PictureBox2"
-        PictureBox2.Size = New Size(100, 95)
+        PictureBox2.Size = New Size(112, 96)
+        PictureBox2.SizeMode = PictureBoxSizeMode.StretchImage
         PictureBox2.TabIndex = 3
         PictureBox2.TabStop = False
         ' 
         ' PictureBox1
         ' 
         PictureBox1.BackgroundImageLayout = ImageLayout.Stretch
+        PictureBox1.Dock = DockStyle.Fill
         PictureBox1.Image = My.Resources.Resources.Logo_100x95_
-        PictureBox1.Location = New Point(12, 12)
+        PictureBox1.Location = New Point(3, 3)
         PictureBox1.Name = "PictureBox1"
-        PictureBox1.Size = New Size(100, 95)
+        PictureBox1.Size = New Size(110, 96)
+        PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage
         PictureBox1.TabIndex = 4
         PictureBox1.TabStop = False
         ' 
         ' Label1
         ' 
-        Label1.AutoSize = True
+        Label1.Dock = DockStyle.Fill
         Label1.Font = New Font("Corbel", 34.8F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label1.Location = New Point(149, 25)
+        Label1.Location = New Point(0, 0)
         Label1.Name = "Label1"
-        Label1.Size = New Size(510, 58)
+        Label1.Size = New Size(694, 96)
         Label1.TabIndex = 5
         Label1.Text = "ATTENDANCE RECORD"
         Label1.TextAlign = ContentAlignment.MiddleCenter
         ' 
-        ' AttTable
-        ' 
-        AttTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-        AttTable.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
-        AttTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        AttTable.Columns.AddRange(New DataGridViewColumn() {EName, Position, Schedule, Time_Shift, LogDate, TimeIn, TimeOut, TotalHrs})
-        AttTable.GridColor = Color.Black
-        AttTable.Location = New Point(12, 113)
-        AttTable.Name = "AttTable"
-        AttTable.Size = New Size(776, 273)
-        AttTable.TabIndex = 6
-        ' 
-        ' LogOutBtn
-        ' 
-        LogOutBtn.AutoSize = True
-        LogOutBtn.BackColor = Color.Red
-        LogOutBtn.BackgroundImageLayout = ImageLayout.Center
-        LogOutBtn.Font = New Font("Corbel", 24.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        LogOutBtn.ForeColor = Color.White
-        LogOutBtn.ImageAlign = ContentAlignment.MiddleLeft
-        LogOutBtn.Location = New Point(632, 392)
-        LogOutBtn.Name = "LogOutBtn"
-        LogOutBtn.Size = New Size(156, 50)
-        LogOutBtn.TabIndex = 8
-        LogOutBtn.Text = "LOGOUT"
-        LogOutBtn.TextImageRelation = TextImageRelation.ImageBeforeText
-        LogOutBtn.UseVisualStyleBackColor = False
-        ' 
         ' Button2
         ' 
-        Button2.Location = New Point(537, 403)
+        Button2.BackColor = Color.LightCoral
+        Button2.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Button2.Location = New Point(554, 2)
         Button2.Name = "Button2"
-        Button2.Size = New Size(75, 23)
+        Button2.Size = New Size(137, 42)
         Button2.TabIndex = 15
         Button2.Text = "RETURN"
-        Button2.UseVisualStyleBackColor = True
+        Button2.UseVisualStyleBackColor = False
         ' 
-        ' EName
+        ' TableLayoutPanel1
         ' 
-        EName.HeaderText = "Name"
-        EName.Name = "EName"
+        TableLayoutPanel1.ColumnCount = 3
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 12.5F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 75F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 12.5F))
+        TableLayoutPanel1.Controls.Add(PictureBox1, 0, 0)
+        TableLayoutPanel1.Controls.Add(PictureBox2, 2, 0)
+        TableLayoutPanel1.Controls.Add(Panel1, 1, 1)
+        TableLayoutPanel1.Controls.Add(Panel2, 1, 0)
+        TableLayoutPanel1.Controls.Add(Panel3, 1, 2)
+        TableLayoutPanel1.Dock = DockStyle.Fill
+        TableLayoutPanel1.Location = New Point(0, 0)
+        TableLayoutPanel1.Name = "TableLayoutPanel1"
+        TableLayoutPanel1.RowCount = 3
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 20F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 70F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 10F))
+        TableLayoutPanel1.Size = New Size(934, 511)
+        TableLayoutPanel1.TabIndex = 16
+        ' 
+        ' Panel1
+        ' 
+        Panel1.Controls.Add(DataGridView1)
+        Panel1.Dock = DockStyle.Fill
+        Panel1.Location = New Point(119, 105)
+        Panel1.Name = "Panel1"
+        Panel1.Size = New Size(694, 351)
+        Panel1.TabIndex = 7
+        ' 
+        ' DataGridView1
+        ' 
+        DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+        DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridView1.Columns.AddRange(New DataGridViewColumn() {EN, Position, Schedule, TimeShift, LogDate, TimeIn, TimeOut, TotalHours})
+        DataGridView1.Dock = DockStyle.Fill
+        DataGridView1.Location = New Point(0, 0)
+        DataGridView1.Name = "DataGridView1"
+        DataGridView1.Size = New Size(694, 351)
+        DataGridView1.TabIndex = 0
+        ' 
+        ' EN
+        ' 
+        EN.HeaderText = "Name"
+        EN.Name = "EN"
         ' 
         ' Position
         ' 
@@ -124,10 +150,10 @@ Partial Class AttRecord
         Schedule.HeaderText = "Schedule"
         Schedule.Name = "Schedule"
         ' 
-        ' Time_Shift
+        ' TimeShift
         ' 
-        Time_Shift.HeaderText = "Time Shift"
-        Time_Shift.Name = "Time_Shift"
+        TimeShift.HeaderText = "Time Shift"
+        TimeShift.Name = "TimeShift"
         ' 
         ' LogDate
         ' 
@@ -144,44 +170,65 @@ Partial Class AttRecord
         TimeOut.HeaderText = "Time Out"
         TimeOut.Name = "TimeOut"
         ' 
-        ' TotalHrs
+        ' TotalHours
         ' 
-        TotalHrs.HeaderText = "Total Hours"
-        TotalHrs.Name = "TotalHrs"
+        TotalHours.HeaderText = "TotalHours"
+        TotalHours.Name = "TotalHours"
+        ' 
+        ' Panel2
+        ' 
+        Panel2.Controls.Add(Label1)
+        Panel2.Dock = DockStyle.Fill
+        Panel2.Location = New Point(119, 3)
+        Panel2.Name = "Panel2"
+        Panel2.Size = New Size(694, 96)
+        Panel2.TabIndex = 8
+        ' 
+        ' Panel3
+        ' 
+        Panel3.Controls.Add(Button2)
+        Panel3.Dock = DockStyle.Fill
+        Panel3.Location = New Point(119, 462)
+        Panel3.Name = "Panel3"
+        Panel3.Size = New Size(694, 46)
+        Panel3.TabIndex = 16
         ' 
         ' AttRecord
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
-        ClientSize = New Size(800, 450)
-        Controls.Add(Button2)
-        Controls.Add(LogOutBtn)
-        Controls.Add(AttTable)
-        Controls.Add(Label1)
-        Controls.Add(PictureBox1)
-        Controls.Add(PictureBox2)
+        ClientSize = New Size(934, 511)
+        Controls.Add(TableLayoutPanel1)
         Name = "AttRecord"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "AttRecord"
+        WindowState = FormWindowState.Maximized
         CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
-        CType(AttTable, ComponentModel.ISupportInitialize).EndInit()
+        TableLayoutPanel1.ResumeLayout(False)
+        Panel1.ResumeLayout(False)
+        CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
+        Panel2.ResumeLayout(False)
+        Panel3.ResumeLayout(False)
         ResumeLayout(False)
-        PerformLayout()
     End Sub
 
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Label1 As Label
-    Friend WithEvents AttTable As DataGridView
-    Friend WithEvents LogOutBtn As Button
     Friend WithEvents Button2 As Button
-    Friend WithEvents EName As DataGridViewTextBoxColumn
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Panel3 As Panel
+    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents EN As DataGridViewTextBoxColumn
     Friend WithEvents Position As DataGridViewTextBoxColumn
     Friend WithEvents Schedule As DataGridViewTextBoxColumn
-    Friend WithEvents Time_Shift As DataGridViewTextBoxColumn
+    Friend WithEvents TimeShift As DataGridViewTextBoxColumn
     Friend WithEvents LogDate As DataGridViewTextBoxColumn
     Friend WithEvents TimeIn As DataGridViewTextBoxColumn
     Friend WithEvents TimeOut As DataGridViewTextBoxColumn
-    Friend WithEvents TotalHrs As DataGridViewTextBoxColumn
+    Friend WithEvents TotalHours As DataGridViewTextBoxColumn
 End Class

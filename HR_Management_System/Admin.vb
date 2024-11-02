@@ -1,4 +1,6 @@
-﻿Public Class Admin
+﻿Imports System.Windows.Forms.VisualStyles
+
+Public Class Admin
 
     Public Sub New()
         InitializeComponent()
@@ -7,8 +9,9 @@
     Public Sub New(employeeName As String)
         InitializeComponent()
         NameTxt.Text = employeeName
+        NameTxt.TextAlign = ContentAlignment.Center
         NameTxt.TextAlign = HorizontalAlignment.Center
-        NameTxt.ReadOnly = True
+        NameTxt.TextAlign = VerticalAlignment.Center
         NameTxt.BorderStyle = BorderStyle.None
     End Sub
 

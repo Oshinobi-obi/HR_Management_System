@@ -22,8 +22,6 @@ Partial Class Login
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Login))
-        StaffLoginPanel = New Panel()
         PassPanel = New Panel()
         Passtxt = New TextBox()
         StaffIDPanel = New Panel()
@@ -34,41 +32,30 @@ Partial Class Login
         PassIcon = New PictureBox()
         UserIcon = New PictureBox()
         Label1 = New Label()
+        TableLayoutPanel1 = New TableLayoutPanel()
+        StaffLoginPanel = New Panel()
+        Panel1 = New Panel()
         PictureBox1 = New PictureBox()
         PictureBox2 = New PictureBox()
-        StaffLoginPanel.SuspendLayout()
         PassPanel.SuspendLayout()
         StaffIDPanel.SuspendLayout()
         CType(PassIcon, ComponentModel.ISupportInitialize).BeginInit()
         CType(UserIcon, ComponentModel.ISupportInitialize).BeginInit()
+        TableLayoutPanel1.SuspendLayout()
+        StaffLoginPanel.SuspendLayout()
+        Panel1.SuspendLayout()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
-        ' StaffLoginPanel
-        ' 
-        StaffLoginPanel.BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
-        StaffLoginPanel.Controls.Add(PassPanel)
-        StaffLoginPanel.Controls.Add(StaffIDPanel)
-        StaffLoginPanel.Controls.Add(LoginBtn)
-        StaffLoginPanel.Controls.Add(Label3)
-        StaffLoginPanel.Controls.Add(Label2)
-        StaffLoginPanel.Controls.Add(PassIcon)
-        StaffLoginPanel.Controls.Add(UserIcon)
-        StaffLoginPanel.Controls.Add(Label1)
-        StaffLoginPanel.Location = New Point(84, 84)
-        StaffLoginPanel.Margin = New Padding(75)
-        StaffLoginPanel.Name = "StaffLoginPanel"
-        StaffLoginPanel.Size = New Size(416, 327)
-        StaffLoginPanel.TabIndex = 0
-        ' 
         ' PassPanel
         ' 
+        PassPanel.Anchor = AnchorStyles.None
         PassPanel.BackColor = Color.White
         PassPanel.Controls.Add(Passtxt)
-        PassPanel.Location = New Point(80, 198)
+        PassPanel.Location = New Point(98, 187)
         PassPanel.Name = "PassPanel"
-        PassPanel.Size = New Size(211, 43)
+        PassPanel.Size = New Size(300, 45)
         PassPanel.TabIndex = 8
         ' 
         ' Passtxt
@@ -77,121 +64,171 @@ Partial Class Login
         Passtxt.BackColor = SystemColors.Window
         Passtxt.BorderStyle = BorderStyle.None
         Passtxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Passtxt.Location = New Point(8, 3)
+        Passtxt.Location = New Point(4, 3)
         Passtxt.Name = "Passtxt"
-        Passtxt.Size = New Size(195, 38)
+        Passtxt.Size = New Size(292, 38)
         Passtxt.TabIndex = 2
+        Passtxt.TextAlign = HorizontalAlignment.Center
         ' 
         ' StaffIDPanel
         ' 
+        StaffIDPanel.Anchor = AnchorStyles.None
         StaffIDPanel.BackColor = Color.White
         StaffIDPanel.Controls.Add(StaffIDtxt)
-        StaffIDPanel.Location = New Point(80, 120)
+        StaffIDPanel.Location = New Point(98, 78)
         StaffIDPanel.Name = "StaffIDPanel"
-        StaffIDPanel.Size = New Size(211, 43)
+        StaffIDPanel.Size = New Size(300, 45)
         StaffIDPanel.TabIndex = 7
         ' 
         ' StaffIDtxt
         ' 
         StaffIDtxt.BorderStyle = BorderStyle.None
         StaffIDtxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        StaffIDtxt.Location = New Point(8, 3)
+        StaffIDtxt.Location = New Point(4, 3)
         StaffIDtxt.Mask = "00-00-00-00"
         StaffIDtxt.Name = "StaffIDtxt"
-        StaffIDtxt.Size = New Size(195, 38)
+        StaffIDtxt.Size = New Size(292, 38)
         StaffIDtxt.TabIndex = 1
         StaffIDtxt.TextAlign = HorizontalAlignment.Center
         ' 
         ' LoginBtn
         ' 
-        LoginBtn.BackColor = Color.Green
+        LoginBtn.Anchor = AnchorStyles.None
+        LoginBtn.BackColor = Color.LightGreen
         LoginBtn.Cursor = Cursors.Hand
-        LoginBtn.Font = New Font("Corbel", 15F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        LoginBtn.Location = New Point(178, 269)
+        LoginBtn.Font = New Font("Corbel", 30F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        LoginBtn.Location = New Point(197, 269)
         LoginBtn.Name = "LoginBtn"
-        LoginBtn.Size = New Size(75, 38)
+        LoginBtn.Size = New Size(150, 60)
         LoginBtn.TabIndex = 10
         LoginBtn.Text = "Login"
         LoginBtn.UseVisualStyleBackColor = False
         ' 
         ' Label3
         ' 
+        Label3.Anchor = AnchorStyles.None
         Label3.AutoSize = True
         Label3.BackColor = Color.Transparent
-        Label3.Font = New Font("Corbel", 15F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label3.Location = New Point(80, 171)
+        Label3.Font = New Font("Corbel", 25.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label3.Location = New Point(98, 143)
         Label3.Name = "Label3"
-        Label3.Size = New Size(92, 24)
+        Label3.Size = New Size(159, 41)
         Label3.TabIndex = 6
         Label3.Text = "Password"
         ' 
         ' Label2
         ' 
+        Label2.Anchor = AnchorStyles.None
         Label2.AutoSize = True
         Label2.BackColor = Color.Transparent
-        Label2.Font = New Font("Corbel", 15F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label2.Location = New Point(80, 93)
+        Label2.Font = New Font("Corbel", 25.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label2.Location = New Point(98, 34)
         Label2.Name = "Label2"
-        Label2.Size = New Size(119, 24)
+        Label2.Size = New Size(203, 41)
         Label2.TabIndex = 5
         Label2.Text = "Employee ID"
         ' 
         ' PassIcon
         ' 
+        PassIcon.Anchor = AnchorStyles.None
         PassIcon.BackColor = Color.White
         PassIcon.BackgroundImageLayout = ImageLayout.Stretch
         PassIcon.Image = My.Resources.Resources.Lock_1
         PassIcon.InitialImage = Nothing
-        PassIcon.Location = New Point(290, 198)
+        PassIcon.Location = New Point(397, 187)
         PassIcon.Name = "PassIcon"
-        PassIcon.Size = New Size(50, 43)
+        PassIcon.Size = New Size(50, 45)
         PassIcon.TabIndex = 4
         PassIcon.TabStop = False
         ' 
         ' UserIcon
         ' 
+        UserIcon.Anchor = AnchorStyles.None
         UserIcon.BackColor = Color.White
         UserIcon.BackgroundImageLayout = ImageLayout.Stretch
         UserIcon.Image = My.Resources.Resources.ID_Verified_1
-        UserIcon.Location = New Point(290, 120)
+        UserIcon.Location = New Point(397, 78)
         UserIcon.Name = "UserIcon"
-        UserIcon.Size = New Size(50, 43)
+        UserIcon.Size = New Size(50, 45)
         UserIcon.TabIndex = 3
         UserIcon.TabStop = False
         ' 
         ' Label1
         ' 
-        Label1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
-        Label1.AutoEllipsis = True
-        Label1.AutoSize = True
-        Label1.Font = New Font("Corbel", 30F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label1.Location = New Point(146, 18)
+        Label1.Dock = DockStyle.Fill
+        Label1.Font = New Font("Corbel", 34.8F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label1.Location = New Point(0, 0)
         Label1.Margin = New Padding(3, 25, 3, 0)
         Label1.Name = "Label1"
-        Label1.Size = New Size(138, 49)
+        Label1.Size = New Size(544, 63)
         Label1.TabIndex = 0
         Label1.Text = "LOGIN"
         Label1.TextAlign = ContentAlignment.MiddleCenter
         ' 
+        ' TableLayoutPanel1
+        ' 
+        TableLayoutPanel1.ColumnCount = 3
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 12.5F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 75F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 12.5F))
+        TableLayoutPanel1.Controls.Add(StaffLoginPanel, 1, 1)
+        TableLayoutPanel1.Controls.Add(Panel1, 1, 0)
+        TableLayoutPanel1.Controls.Add(PictureBox1, 0, 0)
+        TableLayoutPanel1.Controls.Add(PictureBox2, 2, 0)
+        TableLayoutPanel1.Dock = DockStyle.Fill
+        TableLayoutPanel1.Location = New Point(0, 0)
+        TableLayoutPanel1.Name = "TableLayoutPanel1"
+        TableLayoutPanel1.RowCount = 3
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 15F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 80F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 5F))
+        TableLayoutPanel1.Size = New Size(734, 461)
+        TableLayoutPanel1.TabIndex = 1
+        ' 
+        ' StaffLoginPanel
+        ' 
+        StaffLoginPanel.Controls.Add(PassPanel)
+        StaffLoginPanel.Controls.Add(StaffIDPanel)
+        StaffLoginPanel.Controls.Add(UserIcon)
+        StaffLoginPanel.Controls.Add(LoginBtn)
+        StaffLoginPanel.Controls.Add(PassIcon)
+        StaffLoginPanel.Controls.Add(Label3)
+        StaffLoginPanel.Controls.Add(Label2)
+        StaffLoginPanel.Dock = DockStyle.Fill
+        StaffLoginPanel.Location = New Point(94, 72)
+        StaffLoginPanel.Name = "StaffLoginPanel"
+        StaffLoginPanel.Size = New Size(544, 362)
+        StaffLoginPanel.TabIndex = 0
+        ' 
+        ' Panel1
+        ' 
+        Panel1.Controls.Add(Label1)
+        Panel1.Dock = DockStyle.Fill
+        Panel1.Location = New Point(94, 3)
+        Panel1.Name = "Panel1"
+        Panel1.Size = New Size(544, 63)
+        Panel1.TabIndex = 1
+        ' 
         ' PictureBox1
         ' 
-        PictureBox1.BackColor = Color.Transparent
-        PictureBox1.BackgroundImageLayout = ImageLayout.Stretch
-        PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), Image)
-        PictureBox1.Location = New Point(13, 12)
+        PictureBox1.Dock = DockStyle.Fill
+        PictureBox1.Image = My.Resources.Resources.Logo_100x95_
+        PictureBox1.Location = New Point(3, 3)
         PictureBox1.Name = "PictureBox1"
-        PictureBox1.Size = New Size(65, 60)
-        PictureBox1.TabIndex = 1
+        PictureBox1.Size = New Size(85, 63)
+        PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage
+        PictureBox1.TabIndex = 2
         PictureBox1.TabStop = False
         ' 
         ' PictureBox2
         ' 
-        PictureBox2.BackgroundImageLayout = ImageLayout.Stretch
-        PictureBox2.Image = My.Resources.Resources.SPLQ
-        PictureBox2.Location = New Point(507, 12)
+        PictureBox2.Dock = DockStyle.Fill
+        PictureBox2.Image = My.Resources.Resources.SPLQ_100x95_
+        PictureBox2.Location = New Point(644, 3)
         PictureBox2.Name = "PictureBox2"
-        PictureBox2.Size = New Size(65, 60)
-        PictureBox2.TabIndex = 2
+        PictureBox2.Size = New Size(87, 63)
+        PictureBox2.SizeMode = PictureBoxSizeMode.StretchImage
+        PictureBox2.TabIndex = 3
         PictureBox2.TabStop = False
         ' 
         ' Login
@@ -199,27 +236,26 @@ Partial Class Login
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
-        ClientSize = New Size(584, 461)
-        Controls.Add(PictureBox2)
-        Controls.Add(PictureBox1)
-        Controls.Add(StaffLoginPanel)
+        ClientSize = New Size(734, 461)
+        Controls.Add(TableLayoutPanel1)
+        FormBorderStyle = FormBorderStyle.FixedToolWindow
         Name = "Login"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Brgy. Santa Monica"
-        StaffLoginPanel.ResumeLayout(False)
-        StaffLoginPanel.PerformLayout()
         PassPanel.ResumeLayout(False)
         PassPanel.PerformLayout()
         StaffIDPanel.ResumeLayout(False)
         StaffIDPanel.PerformLayout()
         CType(PassIcon, ComponentModel.ISupportInitialize).EndInit()
         CType(UserIcon, ComponentModel.ISupportInitialize).EndInit()
+        TableLayoutPanel1.ResumeLayout(False)
+        StaffLoginPanel.ResumeLayout(False)
+        StaffLoginPanel.PerformLayout()
+        Panel1.ResumeLayout(False)
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
     End Sub
-
-    Friend WithEvents StaffLoginPanel As Panel
     Friend WithEvents Label1 As Label
     Friend WithEvents UserIcon As PictureBox
     Friend WithEvents Label2 As Label
@@ -230,8 +266,11 @@ Partial Class Login
     Friend WithEvents Passtxt As TextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents PassIcon As PictureBox
+    Friend WithEvents StaffIDtxt As MaskedTextBox
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents StaffLoginPanel As Panel
+    Friend WithEvents Panel1 As Panel
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents PictureBox2 As PictureBox
-    Friend WithEvents StaffIDtxt As MaskedTextBox
 
 End Class

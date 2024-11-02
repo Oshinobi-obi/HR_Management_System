@@ -29,7 +29,6 @@ Public Class Attendance
             OpenConnection()
             Using transaction As NpgsqlTransaction = conn.BeginTransaction()
                 If Not employeeSessions.ContainsKey(rfid) Then
-                    ' First tap: Insert TimeIn
                     Dim employeeData = FetchEmployeeData(rfid)
 
                     If employeeData IsNot Nothing Then
@@ -47,7 +46,6 @@ Public Class Attendance
                         transaction.Rollback()
                     End If
                 Else
-                    ' Second tap: Update TimeOut and Total Hours
                     Dim sessionData = employeeSessions(rfid)
 
                     If sessionData.ContainsKey("TimeIn") Then
@@ -61,7 +59,7 @@ Public Class Attendance
                         If UpdateAttendanceRecord(sessionData, timeOut, hoursWorked) > 0 Then
                             transaction.Commit()
                             ShowAttendancePopUp(sessionData)
-                            employeeSessions.Remove(rfid) ' Clear session
+                            employeeSessions.Remove(rfid)
                         Else
                             MsgBox("Error: No records updated. Please check if the record exists with the matching Date, EmployeeName, and TimeIn.")
                             transaction.Rollback()
@@ -155,8 +153,6 @@ Public Class Attendance
         Return rowsAffected
     End Function
 
-
-
     Private Sub ShowAttendancePopUp(employeeData As Dictionary(Of String, String))
         PopUp = New AttendancePopUp()
         PopUp.SetEmployeeData(employeeData)
@@ -176,4 +172,5 @@ Public Class Attendance
             PopUp.Dispose()
         End If
     End Sub
+
 End Class

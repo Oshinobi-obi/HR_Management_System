@@ -114,7 +114,7 @@ Public Class Login
         path.AddArc(rect.X, rect.Bottom - radius, radius, radius, 90, 90)
         path.CloseFigure()
 
-        Using brush As New SolidBrush(Color.Green)
+        Using brush As New SolidBrush(Color.LightGreen)
             graphics.FillPath(brush, path)
         End Using
 
