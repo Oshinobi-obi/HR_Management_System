@@ -1,6 +1,4 @@
 ﻿Imports System.Drawing.Drawing2D
-Imports System.Net
-Imports System.Runtime.CompilerServices
 Imports Npgsql
 
 Public Class AddStaff
@@ -66,8 +64,6 @@ Public Class AddStaff
         Try
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
-
-                ' Correct column names for the resident table
                 Dim query As String = "SELECT ""ResidentName"", ""ResidentAge"", ""ResidentContact"", ""ResidentAddress"" FROM resident WHERE ""ResidentName"" = @ResidentName"
                 Using cmd As New NpgsqlCommand(query, conn)
                     cmd.Parameters.AddWithValue("@ResidentName", residentName)
@@ -92,7 +88,6 @@ Public Class AddStaff
             MessageBox.Show("An error occurred while checking resident information: " & ex.Message)
         End Try
     End Sub
-
 
     Private Sub StaffNameTxt_LostFocus(sender As Object, e As EventArgs) Handles StaffNameTxt.LostFocus
         CheckIfResident()
