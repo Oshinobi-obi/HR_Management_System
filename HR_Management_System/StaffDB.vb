@@ -106,12 +106,11 @@ Public Class StaffDb
         Try
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
-
                 Dim query As String
                 If String.IsNullOrEmpty(positionFilter) OrElse positionFilter = "All" Then
-                    query = "SELECT ""EmployeeID"", ""EmployeeName"", ""EmployeePosition"", ""EmployeeDaySchedule"", ""EmployeeAge"", ""EmployeeMobile"", ""EmployeeAddress"" FROM ""employee"""
+                    query = "SELECT ""EmployeeID"", ""EmployeeName"", ""EmployeePosition"", ""EmployeeDaySchedule"", ""EmployeeAge"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployedDate"" FROM ""employee"""
                 Else
-                    query = "SELECT ""EmployeeID"", ""EmployeeName"", ""EmployeePosition"", ""EmployeeDaySchedule"", ""EmployeeAge"", ""EmployeeMobile"", ""EmployeeAddress"" FROM ""employee"" WHERE ""EmployeePosition"" = @position"
+                    query = "SELECT ""EmployeeID"", ""EmployeeName"", ""EmployeePosition"", ""EmployeeDaySchedule"", ""EmployeeAge"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployedDate"" FROM ""employee"" WHERE ""EmployeePosition"" = @position"
                 End If
 
                 Using cmd As New NpgsqlCommand(query, conn)
@@ -122,8 +121,18 @@ Public Class StaffDb
                     Using reader As NpgsqlDataReader = cmd.ExecuteReader()
                         Dim dt As New DataTable()
                         dt.Load(reader)
+                        StaffGrid.Columns.Clear()
                         StaffGrid.DataSource = dt
+                        StaffGrid.Columns("EmployeeID").HeaderText = "EMPLOYEE ID"
+                        StaffGrid.Columns("EmployeeName").HeaderText = "NAME"
+                        StaffGrid.Columns("EmployeePosition").HeaderText = "POSITION"
+                        StaffGrid.Columns("EmployeeDaySchedule").HeaderText = "SCHEDULE"
+                        StaffGrid.Columns("EmployeeAge").HeaderText = "AGE"
+                        StaffGrid.Columns("EmployeeMobile").HeaderText = "CONTACT"
+                        StaffGrid.Columns("EmployeeAddress").HeaderText = "ADDRESS"
+                        StaffGrid.Columns("EmployedDate").HeaderText = "DOE"
                     End Using
+
                 End Using
             End Using
         Catch ex As Exception

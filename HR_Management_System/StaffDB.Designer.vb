@@ -22,8 +22,18 @@ Partial Class StaffDB
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim DataGridViewCellStyle1 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As DataGridViewCellStyle = New DataGridViewCellStyle()
         ReturnBtn = New Button()
         StaffGrid = New DataGridView()
+        EID = New DataGridViewTextBoxColumn()
+        EN = New DataGridViewTextBoxColumn()
+        EP = New DataGridViewTextBoxColumn()
+        ESCHED = New DataGridViewTextBoxColumn()
+        EAGE = New DataGridViewTextBoxColumn()
+        ECONTACT = New DataGridViewTextBoxColumn()
+        EADD = New DataGridViewTextBoxColumn()
+        EDOE = New DataGridViewTextBoxColumn()
         PictureBox1 = New PictureBox()
         PictureBox2 = New PictureBox()
         AddBtn = New Button()
@@ -58,12 +68,70 @@ Partial Class StaffDB
         ' 
         StaffGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         StaffGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
+        StaffGrid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single
+        DataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.BackColor = SystemColors.Control
+        DataGridViewCellStyle1.Font = New Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        DataGridViewCellStyle1.ForeColor = SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = DataGridViewTriState.True
+        StaffGrid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         StaffGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        StaffGrid.Columns.AddRange(New DataGridViewColumn() {EID, EN, EP, ESCHED, EAGE, ECONTACT, EADD, EDOE})
         StaffGrid.Dock = DockStyle.Fill
         StaffGrid.Location = New Point(0, 0)
         StaffGrid.Name = "StaffGrid"
+        DataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = SystemColors.Control
+        DataGridViewCellStyle2.Font = New Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        DataGridViewCellStyle2.ForeColor = SystemColors.WindowText
+        DataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = DataGridViewTriState.True
+        StaffGrid.RowHeadersDefaultCellStyle = DataGridViewCellStyle2
         StaffGrid.Size = New Size(657, 351)
         StaffGrid.TabIndex = 18
+        ' 
+        ' EID
+        ' 
+        EID.HeaderText = "EMPLOYEE ID"
+        EID.Name = "EID"
+        ' 
+        ' EN
+        ' 
+        EN.HeaderText = "NAME"
+        EN.Name = "EN"
+        ' 
+        ' EP
+        ' 
+        EP.HeaderText = "POSITION"
+        EP.Name = "EP"
+        ' 
+        ' ESCHED
+        ' 
+        ESCHED.HeaderText = "SCHEDULE"
+        ESCHED.Name = "ESCHED"
+        ' 
+        ' EAGE
+        ' 
+        EAGE.HeaderText = "AGE"
+        EAGE.Name = "EAGE"
+        ' 
+        ' ECONTACT
+        ' 
+        ECONTACT.HeaderText = "CONTACT"
+        ECONTACT.Name = "ECONTACT"
+        ' 
+        ' EADD
+        ' 
+        EADD.HeaderText = "ADDRESS"
+        EADD.Name = "EADD"
+        ' 
+        ' EDOE
+        ' 
+        EDOE.HeaderText = "DOE"
+        EDOE.Name = "EDOE"
         ' 
         ' PictureBox1
         ' 
@@ -194,4 +262,12 @@ Partial Class StaffDB
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Panel3 As Panel
+    Friend WithEvents EID As DataGridViewTextBoxColumn
+    Friend WithEvents EN As DataGridViewTextBoxColumn
+    Friend WithEvents EP As DataGridViewTextBoxColumn
+    Friend WithEvents ESCHED As DataGridViewTextBoxColumn
+    Friend WithEvents EAGE As DataGridViewTextBoxColumn
+    Friend WithEvents ECONTACT As DataGridViewTextBoxColumn
+    Friend WithEvents EADD As DataGridViewTextBoxColumn
+    Friend WithEvents EDOE As DataGridViewTextBoxColumn
 End Class
