@@ -102,6 +102,7 @@ Partial Class Admin
         ' 
         AttBtn.Anchor = AnchorStyles.None
         AttBtn.AutoSize = True
+        AttBtn.Cursor = Cursors.Hand
         AttBtn.Font = New Font("Corbel", 25.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         AttBtn.Location = New Point(22, 182)
         AttBtn.Name = "AttBtn"
@@ -113,6 +114,7 @@ Partial Class Admin
         ' VSBtn
         ' 
         VSBtn.Anchor = AnchorStyles.None
+        VSBtn.Cursor = Cursors.Hand
         VSBtn.Font = New Font("Corbel", 25.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         VSBtn.Location = New Point(318, 182)
         VSBtn.Name = "VSBtn"
@@ -125,10 +127,11 @@ Partial Class Admin
         ' 
         LogOutBtn.Anchor = AnchorStyles.None
         LogOutBtn.AutoSize = True
-        LogOutBtn.BackColor = Color.Red
+        LogOutBtn.BackColor = Color.LightCoral
         LogOutBtn.BackgroundImageLayout = ImageLayout.Center
+        LogOutBtn.Cursor = Cursors.Hand
         LogOutBtn.Font = New Font("Corbel", 24.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        LogOutBtn.ForeColor = Color.White
+        LogOutBtn.ForeColor = Color.Black
         LogOutBtn.ImageAlign = ContentAlignment.MiddleLeft
         LogOutBtn.Location = New Point(199, 266)
         LogOutBtn.Name = "LogOutBtn"
@@ -190,9 +193,10 @@ Partial Class Admin
         ClientSize = New Size(800, 450)
         Controls.Add(Label1)
         Controls.Add(TableLayoutPanel1)
+        FormBorderStyle = FormBorderStyle.FixedToolWindow
         Name = "Admin"
         StartPosition = FormStartPosition.CenterScreen
-        Text = "Brgy. Santa Monica"
+        Text = "Admin"
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox3, ComponentModel.ISupportInitialize).EndInit()

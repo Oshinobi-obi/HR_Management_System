@@ -241,7 +241,7 @@ Partial Class Login
         FormBorderStyle = FormBorderStyle.FixedToolWindow
         Name = "Login"
         StartPosition = FormStartPosition.CenterScreen
-        Text = "Brgy. Santa Monica"
+        Text = "Login"
         PassPanel.ResumeLayout(False)
         PassPanel.PerformLayout()
         StaffIDPanel.ResumeLayout(False)

@@ -8,15 +8,98 @@ Public Class StaffDb
                                    "Database=defaultdb;" &
                                    "SSL Mode=Require"
 
+    Private Sub StaffDB_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ReturnBtn.FlatStyle = FlatStyle.Flat
+        ReturnBtn.FlatAppearance.BorderSize = 0
+        ReturnBtn.BackColor = Color.Transparent
+        ReturnBtn.Text = "RETURN"
+
+        AddBtn.FlatStyle = FlatStyle.Flat
+        AddBtn.FlatAppearance.BorderSize = 0
+        AddBtn.BackColor = Color.Transparent
+        AddBtn.Text = "ADD"
+
+        AddHandler ReturnBtn.Paint, AddressOf ReturnBtn_Paint
+        AddHandler AddBtn.Paint, AddressOf AddBtn_Paint
+    End Sub
+
+    Private Sub ReturnBtn_Paint(sender As Object, e As PaintEventArgs)
+        Dim button As Button = CType(sender, Button)
+        Dim graphics As Graphics = e.Graphics
+        Dim rect As New Rectangle(0, 0, button.Width - 1, button.Height - 1)
+
+        graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+
+        Dim path As New Drawing2D.GraphicsPath()
+        Dim radius As Integer = 20
+        path.AddArc(rect.X, rect.Y, radius, radius, 180, 90)
+        path.AddArc(rect.Right - radius, rect.Y, radius, radius, 270, 90)
+        path.AddArc(rect.Right - radius, rect.Bottom - radius, radius, radius, 0, 90)
+        path.AddArc(rect.X, rect.Bottom - radius, radius, radius, 90, 90)
+        path.CloseFigure()
+
+        Using brush As New SolidBrush(Color.LightCoral)
+            graphics.FillPath(brush, path)
+        End Using
+
+        Using borderPen As New Pen(Color.Black, 2)
+            graphics.DrawPath(borderPen, path)
+        End Using
+
+        Dim textBrush As New SolidBrush(button.ForeColor)
+        Dim textFormat As New StringFormat() With {
+        .Alignment = StringAlignment.Center,
+        .LineAlignment = StringAlignment.Center
+    }
+        graphics.DrawString(button.Text, button.Font, textBrush, rect, textFormat)
+
+        textBrush.Dispose()
+        path.Dispose()
+    End Sub
+
+    Private Sub AddBtn_Paint(sender As Object, e As PaintEventArgs)
+        Dim button As Button = CType(sender, Button)
+        Dim graphics As Graphics = e.Graphics
+        Dim rect As New Rectangle(0, 0, button.Width - 1, button.Height - 1)
+
+        graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+
+        Dim path As New Drawing2D.GraphicsPath()
+        Dim radius As Integer = 20
+        path.AddArc(rect.X, rect.Y, radius, radius, 180, 90)
+        path.AddArc(rect.Right - radius, rect.Y, radius, radius, 270, 90)
+        path.AddArc(rect.Right - radius, rect.Bottom - radius, radius, radius, 0, 90)
+        path.AddArc(rect.X, rect.Bottom - radius, radius, radius, 90, 90)
+        path.CloseFigure()
+
+        Using brush As New SolidBrush(Color.LightGreen)
+            graphics.FillPath(brush, path)
+        End Using
+
+        Using borderPen As New Pen(Color.Black, 2)
+            graphics.DrawPath(borderPen, path)
+        End Using
+
+        Dim textBrush As New SolidBrush(button.ForeColor)
+        Dim textFormat As New StringFormat() With {
+        .Alignment = StringAlignment.Center,
+        .LineAlignment = StringAlignment.Center
+    }
+        graphics.DrawString(button.Text, button.Font, textBrush, rect, textFormat)
+
+        textBrush.Dispose()
+        path.Dispose()
+    End Sub
+
     Private Sub EmployeeRecordView_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         PopulateFilterBox()
         LoadEmployeeRecords()
     End Sub
 
     Private Sub PopulateFilterBox()
-        Dim positions As String() = {"All", "BPSO", "Lupon Tagapamayapa", "Secretary", "Admin Aide I", "Admin Aide II", "Admin Aide III", "Admin Aide IV", "BNS", "Medical Aide", "Clerk", "Sangguniang Kabataan"}
+        Dim positions As String() = {"All", "Admin Aide I", "Admin Aide II", "Admin Aide III", "Admin Aide IV", "BNS", "BPSO", "Clerk", "Lupon Tagapamayapa", "Medical Aide", "Sangguniang Kabataan", "Secretary"}
         FilterBox.Items.AddRange(positions)
-        FilterBox.SelectedIndex = 0 ' Set default to "All"
+        FilterBox.SelectedIndex = 0
     End Sub
 
     Private Sub LoadEmployeeRecords(Optional positionFilter As String = "")
@@ -39,7 +122,7 @@ Public Class StaffDb
                     Using reader As NpgsqlDataReader = cmd.ExecuteReader()
                         Dim dt As New DataTable()
                         dt.Load(reader)
-                        DataGridView1.DataSource = dt
+                        StaffGrid.DataSource = dt
                     End Using
                 End Using
             End Using
@@ -48,23 +131,13 @@ Public Class StaffDb
         End Try
     End Sub
 
-    Private Sub LogOutBtn_Click(sender As Object, e As EventArgs) Handles LogOutBtn.Click
-        Dim result As DialogResult = MessageBox.Show("Are you sure you want to log out?", "Log Out", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-
-        If result = DialogResult.Yes Then
-            Me.Close()
-            Dim loginForm As New Login()
-            loginForm.Show()
-        End If
-    End Sub
-
     Private Sub AddBtn_Click(sender As Object, e As EventArgs) Handles AddBtn.Click
         Me.Close()
         Dim addStaffForm As New AddStaff()
         addStaffForm.Show()
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+    Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
         Me.Close()
         Dim adminForm As New Admin()
         adminForm.Show()
@@ -74,9 +147,9 @@ Public Class StaffDb
         Dim selectedPosition As String = FilterBox.SelectedItem.ToString()
 
         If selectedPosition = "All" Then
-            LoadEmployeeRecords() ' Load all employee records
+            LoadEmployeeRecords()
         Else
-            LoadEmployeeRecords(selectedPosition) ' Load filtered records
+            LoadEmployeeRecords(selectedPosition)
         End If
     End Sub
 End Class

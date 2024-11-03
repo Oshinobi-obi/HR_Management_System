@@ -25,17 +25,17 @@ Partial Class AttRecord
         PictureBox2 = New PictureBox()
         PictureBox1 = New PictureBox()
         Label1 = New Label()
-        Button2 = New Button()
+        ReturnBtn = New Button()
         TableLayoutPanel1 = New TableLayoutPanel()
         Panel1 = New Panel()
-        DataGridView1 = New DataGridView()
+        AttendanceGrid = New DataGridView()
         Panel2 = New Panel()
         Panel3 = New Panel()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         TableLayoutPanel1.SuspendLayout()
         Panel1.SuspendLayout()
-        CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
+        CType(AttendanceGrid, ComponentModel.ISupportInitialize).BeginInit()
         Panel2.SuspendLayout()
         Panel3.SuspendLayout()
         SuspendLayout()
@@ -75,16 +75,17 @@ Partial Class AttRecord
         Label1.Text = "ATTENDANCE RECORD"
         Label1.TextAlign = ContentAlignment.MiddleCenter
         ' 
-        ' Button2
+        ' ReturnBtn
         ' 
-        Button2.BackColor = Color.LightCoral
-        Button2.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Button2.Location = New Point(554, 2)
-        Button2.Name = "Button2"
-        Button2.Size = New Size(137, 42)
-        Button2.TabIndex = 15
-        Button2.Text = "RETURN"
-        Button2.UseVisualStyleBackColor = False
+        ReturnBtn.Anchor = AnchorStyles.None
+        ReturnBtn.BackColor = Color.LightCoral
+        ReturnBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        ReturnBtn.Location = New Point(279, 2)
+        ReturnBtn.Name = "ReturnBtn"
+        ReturnBtn.Size = New Size(137, 42)
+        ReturnBtn.TabIndex = 1
+        ReturnBtn.Text = "RETURN"
+        ReturnBtn.UseVisualStyleBackColor = False
         ' 
         ' TableLayoutPanel1
         ' 
@@ -109,22 +110,22 @@ Partial Class AttRecord
         ' 
         ' Panel1
         ' 
-        Panel1.Controls.Add(DataGridView1)
+        Panel1.Controls.Add(AttendanceGrid)
         Panel1.Dock = DockStyle.Fill
         Panel1.Location = New Point(119, 105)
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(694, 351)
         Panel1.TabIndex = 7
         ' 
-        ' DataGridView1
+        ' AttendanceGrid
         ' 
-        DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-        DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.Dock = DockStyle.Fill
-        DataGridView1.Location = New Point(0, 0)
-        DataGridView1.Name = "DataGridView1"
-        DataGridView1.Size = New Size(694, 351)
-        DataGridView1.TabIndex = 0
+        AttendanceGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+        AttendanceGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        AttendanceGrid.Dock = DockStyle.Fill
+        AttendanceGrid.Location = New Point(0, 0)
+        AttendanceGrid.Name = "AttendanceGrid"
+        AttendanceGrid.Size = New Size(694, 351)
+        AttendanceGrid.TabIndex = 0
         ' 
         ' Panel2
         ' 
@@ -137,7 +138,7 @@ Partial Class AttRecord
         ' 
         ' Panel3
         ' 
-        Panel3.Controls.Add(Button2)
+        Panel3.Controls.Add(ReturnBtn)
         Panel3.Dock = DockStyle.Fill
         Panel3.Location = New Point(119, 462)
         Panel3.Name = "Panel3"
@@ -151,15 +152,16 @@ Partial Class AttRecord
         BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
         ClientSize = New Size(934, 511)
         Controls.Add(TableLayoutPanel1)
+        FormBorderStyle = FormBorderStyle.FixedToolWindow
         Name = "AttRecord"
         StartPosition = FormStartPosition.CenterScreen
-        Text = "AttRecord"
+        Text = "Attendance Record"
         WindowState = FormWindowState.Maximized
         CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         TableLayoutPanel1.ResumeLayout(False)
         Panel1.ResumeLayout(False)
-        CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
+        CType(AttendanceGrid, ComponentModel.ISupportInitialize).EndInit()
         Panel2.ResumeLayout(False)
         Panel3.ResumeLayout(False)
         ResumeLayout(False)
@@ -168,10 +170,10 @@ Partial Class AttRecord
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Label1 As Label
-    Friend WithEvents Button2 As Button
+    Friend WithEvents ReturnBtn As Button
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Panel3 As Panel
-    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents AttendanceGrid As DataGridView
 End Class

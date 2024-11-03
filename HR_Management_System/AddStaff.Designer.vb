@@ -336,7 +336,7 @@ Partial Class AddStaff
         FormBorderStyle = FormBorderStyle.FixedToolWindow
         Name = "AddStaff"
         StartPosition = FormStartPosition.CenterScreen
-        Text = "AddStaff"
+        Text = "Add Staff"
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
         AddStaffPanel.ResumeLayout(False)

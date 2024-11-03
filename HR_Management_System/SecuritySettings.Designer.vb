@@ -31,47 +31,59 @@ Partial Class SecuritySettings
         Label2 = New Label()
         Label3 = New Label()
         SaveBtn = New Button()
-        Button2 = New Button()
+        ReturnBtn = New Button()
+        TableLayoutPanel1 = New TableLayoutPanel()
+        Panel1 = New Panel()
+        SecurityPanel = New Panel()
+        Panel3 = New Panel()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox3, ComponentModel.ISupportInitialize).BeginInit()
+        TableLayoutPanel1.SuspendLayout()
+        Panel1.SuspendLayout()
+        SecurityPanel.SuspendLayout()
+        Panel3.SuspendLayout()
         SuspendLayout()
         ' 
         ' PictureBox1
         ' 
-        PictureBox1.BackgroundImageLayout = ImageLayout.Stretch
+        PictureBox1.Dock = DockStyle.Fill
         PictureBox1.Image = My.Resources.Resources.Logo_100x95_
-        PictureBox1.Location = New Point(12, 12)
+        PictureBox1.Location = New Point(3, 3)
         PictureBox1.Name = "PictureBox1"
-        PictureBox1.Size = New Size(100, 95)
+        PictureBox1.Size = New Size(104, 96)
+        PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage
         PictureBox1.TabIndex = 6
         PictureBox1.TabStop = False
         ' 
         ' PictureBox2
         ' 
-        PictureBox2.BackgroundImageLayout = ImageLayout.Stretch
+        PictureBox2.Dock = DockStyle.Fill
         PictureBox2.Image = My.Resources.Resources.SPLQ_100x95_
-        PictureBox2.Location = New Point(692, 12)
+        PictureBox2.Location = New Point(776, 3)
         PictureBox2.Name = "PictureBox2"
-        PictureBox2.Size = New Size(100, 95)
+        PictureBox2.Size = New Size(105, 96)
+        PictureBox2.SizeMode = PictureBoxSizeMode.StretchImage
         PictureBox2.TabIndex = 5
         PictureBox2.TabStop = False
         ' 
         ' Label1
         ' 
-        Label1.AutoSize = True
+        Label1.Dock = DockStyle.Fill
         Label1.Font = New Font("Segoe UI", 30F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label1.Location = New Point(200, 32)
+        Label1.Location = New Point(0, 0)
         Label1.Name = "Label1"
-        Label1.Size = New Size(403, 54)
+        Label1.Size = New Size(657, 96)
         Label1.TabIndex = 7
         Label1.Text = "SECURITY SETTINGS"
+        Label1.TextAlign = ContentAlignment.MiddleCenter
         ' 
         ' PictureBox3
         ' 
+        PictureBox3.Anchor = AnchorStyles.None
         PictureBox3.BackColor = Color.Transparent
         PictureBox3.Image = My.Resources.Resources.Security_Lock
-        PictureBox3.Location = New Point(371, 102)
+        PictureBox3.Location = New Point(298, 16)
         PictureBox3.Name = "PictureBox3"
         PictureBox3.Size = New Size(60, 60)
         PictureBox3.TabIndex = 8
@@ -79,27 +91,30 @@ Partial Class SecuritySettings
         ' 
         ' OldPassTxt
         ' 
+        OldPassTxt.Anchor = AnchorStyles.None
         OldPassTxt.BorderStyle = BorderStyle.FixedSingle
-        OldPassTxt.Font = New Font("Corbel", 24.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        OldPassTxt.Location = New Point(201, 221)
+        OldPassTxt.Font = New Font("Corbel", 25.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        OldPassTxt.Location = New Point(128, 128)
         OldPassTxt.Name = "OldPassTxt"
-        OldPassTxt.Size = New Size(400, 48)
+        OldPassTxt.Size = New Size(400, 49)
         OldPassTxt.TabIndex = 9
         ' 
         ' NewPassTxt
         ' 
+        NewPassTxt.Anchor = AnchorStyles.None
         NewPassTxt.BorderStyle = BorderStyle.FixedSingle
-        NewPassTxt.Font = New Font("Corbel", 24.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        NewPassTxt.Location = New Point(201, 321)
+        NewPassTxt.Font = New Font("Corbel", 25.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        NewPassTxt.Location = New Point(128, 228)
         NewPassTxt.Name = "NewPassTxt"
-        NewPassTxt.Size = New Size(400, 48)
+        NewPassTxt.Size = New Size(400, 49)
         NewPassTxt.TabIndex = 10
         ' 
         ' Label2
         ' 
+        Label2.Anchor = AnchorStyles.None
         Label2.AutoSize = True
         Label2.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label2.Location = New Point(201, 185)
+        Label2.Location = New Point(128, 92)
         Label2.Name = "Label2"
         Label2.Size = New Size(220, 33)
         Label2.TabIndex = 11
@@ -107,9 +122,10 @@ Partial Class SecuritySettings
         ' 
         ' Label3
         ' 
+        Label3.Anchor = AnchorStyles.None
         Label3.AutoSize = True
         Label3.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label3.Location = New Point(201, 285)
+        Label3.Location = New Point(128, 192)
         Label3.Name = "Label3"
         Label3.Size = New Size(226, 33)
         Label3.TabIndex = 12
@@ -117,48 +133,102 @@ Partial Class SecuritySettings
         ' 
         ' SaveBtn
         ' 
+        SaveBtn.Anchor = AnchorStyles.None
         SaveBtn.AutoSize = True
-        SaveBtn.BackColor = Color.LimeGreen
+        SaveBtn.BackColor = Color.LightGreen
         SaveBtn.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        SaveBtn.Location = New Point(356, 393)
+        SaveBtn.Location = New Point(273, 292)
         SaveBtn.Name = "SaveBtn"
-        SaveBtn.Size = New Size(90, 43)
+        SaveBtn.Size = New Size(110, 43)
         SaveBtn.TabIndex = 13
         SaveBtn.Text = "SAVE"
         SaveBtn.UseVisualStyleBackColor = False
         ' 
-        ' Button2
+        ' ReturnBtn
         ' 
-        Button2.Location = New Point(495, 408)
-        Button2.Name = "Button2"
-        Button2.Size = New Size(75, 23)
-        Button2.TabIndex = 14
-        Button2.Text = "RETURN"
-        Button2.UseVisualStyleBackColor = True
+        ReturnBtn.Anchor = AnchorStyles.Top
+        ReturnBtn.BackColor = Color.LightCoral
+        ReturnBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        ReturnBtn.Location = New Point(253, 2)
+        ReturnBtn.Name = "ReturnBtn"
+        ReturnBtn.Size = New Size(150, 43)
+        ReturnBtn.TabIndex = 14
+        ReturnBtn.Text = "RETURN"
+        ReturnBtn.UseVisualStyleBackColor = False
+        ' 
+        ' TableLayoutPanel1
+        ' 
+        TableLayoutPanel1.ColumnCount = 3
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 12.5F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 75F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 12.5F))
+        TableLayoutPanel1.Controls.Add(PictureBox1, 0, 0)
+        TableLayoutPanel1.Controls.Add(PictureBox2, 2, 0)
+        TableLayoutPanel1.Controls.Add(Panel1, 1, 0)
+        TableLayoutPanel1.Controls.Add(SecurityPanel, 1, 1)
+        TableLayoutPanel1.Controls.Add(Panel3, 1, 2)
+        TableLayoutPanel1.Dock = DockStyle.Fill
+        TableLayoutPanel1.Location = New Point(0, 0)
+        TableLayoutPanel1.Name = "TableLayoutPanel1"
+        TableLayoutPanel1.RowCount = 3
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 20F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 70F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 10F))
+        TableLayoutPanel1.Size = New Size(884, 511)
+        TableLayoutPanel1.TabIndex = 15
+        ' 
+        ' Panel1
+        ' 
+        Panel1.Controls.Add(Label1)
+        Panel1.Dock = DockStyle.Fill
+        Panel1.Location = New Point(113, 3)
+        Panel1.Name = "Panel1"
+        Panel1.Size = New Size(657, 96)
+        Panel1.TabIndex = 7
+        ' 
+        ' SecurityPanel
+        ' 
+        SecurityPanel.Controls.Add(PictureBox3)
+        SecurityPanel.Controls.Add(SaveBtn)
+        SecurityPanel.Controls.Add(OldPassTxt)
+        SecurityPanel.Controls.Add(Label3)
+        SecurityPanel.Controls.Add(NewPassTxt)
+        SecurityPanel.Controls.Add(Label2)
+        SecurityPanel.Dock = DockStyle.Fill
+        SecurityPanel.Location = New Point(113, 105)
+        SecurityPanel.Name = "SecurityPanel"
+        SecurityPanel.Size = New Size(657, 351)
+        SecurityPanel.TabIndex = 8
+        ' 
+        ' Panel3
+        ' 
+        Panel3.Controls.Add(ReturnBtn)
+        Panel3.Dock = DockStyle.Fill
+        Panel3.Location = New Point(113, 462)
+        Panel3.Name = "Panel3"
+        Panel3.Size = New Size(657, 46)
+        Panel3.TabIndex = 9
         ' 
         ' SecuritySettings
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
-        ClientSize = New Size(804, 461)
-        Controls.Add(Button2)
-        Controls.Add(SaveBtn)
-        Controls.Add(Label3)
-        Controls.Add(Label2)
-        Controls.Add(NewPassTxt)
-        Controls.Add(OldPassTxt)
-        Controls.Add(PictureBox3)
-        Controls.Add(Label1)
-        Controls.Add(PictureBox1)
-        Controls.Add(PictureBox2)
+        ClientSize = New Size(884, 511)
+        Controls.Add(TableLayoutPanel1)
+        FormBorderStyle = FormBorderStyle.FixedToolWindow
         Name = "SecuritySettings"
-        Text = "AttSummary"
+        StartPosition = FormStartPosition.CenterScreen
+        Text = "Change Password"
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox3, ComponentModel.ISupportInitialize).EndInit()
+        TableLayoutPanel1.ResumeLayout(False)
+        Panel1.ResumeLayout(False)
+        SecurityPanel.ResumeLayout(False)
+        SecurityPanel.PerformLayout()
+        Panel3.ResumeLayout(False)
         ResumeLayout(False)
-        PerformLayout()
     End Sub
 
     Friend WithEvents PictureBox1 As PictureBox
@@ -170,7 +240,11 @@ Partial Class SecuritySettings
     Friend WithEvents Label2 As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents SaveBtn As Button
-    Friend WithEvents Button2 As Button
+    Friend WithEvents ReturnBtn As Button
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents SecurityPanel As Panel
+    Friend WithEvents Panel3 As Panel
 
 
 End Class
