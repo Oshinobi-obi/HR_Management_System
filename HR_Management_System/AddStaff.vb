@@ -55,6 +55,49 @@ Public Class AddStaff
         End Using
     End Sub
 
+    Private Sub CheckIfResident()
+        Dim residentName As String = StaffNameTxt.Text.Trim()
+
+        If String.IsNullOrEmpty(residentName) Then
+            MessageBox.Show("Please enter a name to check.")
+            Return
+        End If
+
+        Try
+            Using conn As New NpgsqlConnection(connString)
+                conn.Open()
+
+                ' Correct column names for the resident table
+                Dim query As String = "SELECT ""ResidentName"", ""ResidentAge"", ""ResidentContact"", ""ResidentAddress"" FROM resident WHERE ""ResidentName"" = @ResidentName"
+                Using cmd As New NpgsqlCommand(query, conn)
+                    cmd.Parameters.AddWithValue("@ResidentName", residentName)
+
+                    Using reader As NpgsqlDataReader = cmd.ExecuteReader()
+                        If reader.Read() Then
+                            MessageBox.Show("This person is a resident.")
+                            StaffNameTxt.Text = reader("ResidentName").ToString()
+                            StaffAgeTxt.Text = reader("ResidentAge").ToString()
+                            StaffContactTxt.Text = reader("ResidentContact").ToString()
+                            StaffAddressTxt.Text = reader("ResidentAddress").ToString()
+                        Else
+                            MessageBox.Show("This person is not a resident.")
+                            Me.Close()
+                            Dim addStaffForm As New AddStaff()
+                            addStaffForm.Show()
+                        End If
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("An error occurred while checking resident information: " & ex.Message)
+        End Try
+    End Sub
+
+
+    Private Sub StaffNameTxt_LostFocus(sender As Object, e As EventArgs) Handles StaffNameTxt.LostFocus
+        CheckIfResident()
+    End Sub
+
     Private Sub PosCmb_SelectedIndexChanged(sender As Object, e As EventArgs) Handles PosCmb.SelectedIndexChanged
         If PosCmb.SelectedItem IsNot Nothing Then
             Dim selectedPosition As String = PosCmb.SelectedItem.ToString()
@@ -131,6 +174,10 @@ Public Class AddStaff
 
                     cmd.ExecuteNonQuery()
                     MessageBox.Show("Staff added successfully.")
+                    Me.Close()
+                    Dim newAddStaffForm As New AddStaff()
+                    newAddStaffForm.Show()
+
                 End Using
             End Using
         Catch ex As Exception
