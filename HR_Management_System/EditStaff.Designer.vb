@@ -26,12 +26,13 @@ Partial Class EditStaff
         PictureBox1 = New PictureBox()
         PictureBox2 = New PictureBox()
         Panel1 = New Panel()
+        EmIDCmb = New ComboBox()
         OpenBtn = New Button()
         PictureTxt = New TextBox()
         Label9 = New Label()
         HrShiftTxt = New TextBox()
         Label8 = New Label()
-        AddStaffBtn = New Button()
+        UpdateStaffBtn = New Button()
         PosCmb = New ComboBox()
         StaffAddressTxt = New TextBox()
         Label7 = New Label()
@@ -46,7 +47,6 @@ Partial Class EditStaff
         StaffNameTxt = New TextBox()
         Label2 = New Label()
         Label1 = New Label()
-        EmIDCmb = New ComboBox()
         SelectImage = New OpenFileDialog()
         TableLayoutPanel1.SuspendLayout()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
@@ -103,7 +103,7 @@ Partial Class EditStaff
         Panel1.Controls.Add(Label9)
         Panel1.Controls.Add(HrShiftTxt)
         Panel1.Controls.Add(Label8)
-        Panel1.Controls.Add(AddStaffBtn)
+        Panel1.Controls.Add(UpdateStaffBtn)
         Panel1.Controls.Add(PosCmb)
         Panel1.Controls.Add(StaffAddressTxt)
         Panel1.Controls.Add(Label7)
@@ -123,6 +123,23 @@ Partial Class EditStaff
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(941, 473)
         Panel1.TabIndex = 2
+        ' 
+        ' EmIDCmb
+        ' 
+        EmIDCmb.Anchor = AnchorStyles.None
+        EmIDCmb.Cursor = Cursors.Hand
+        EmIDCmb.DropDownHeight = 200
+        EmIDCmb.DropDownStyle = ComboBoxStyle.DropDownList
+        EmIDCmb.DropDownWidth = 400
+        EmIDCmb.Font = New Font("Corbel", 22.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        EmIDCmb.FormattingEnabled = True
+        EmIDCmb.IntegralHeight = False
+        EmIDCmb.ItemHeight = 37
+        EmIDCmb.Location = New Point(6, 69)
+        EmIDCmb.Name = "EmIDCmb"
+        EmIDCmb.Size = New Size(200, 45)
+        EmIDCmb.Sorted = True
+        EmIDCmb.TabIndex = 38
         ' 
         ' OpenBtn
         ' 
@@ -182,25 +199,26 @@ Partial Class EditStaff
         Label8.TabIndex = 34
         Label8.Text = "Hour Shift"
         ' 
-        ' AddStaffBtn
+        ' UpdateStaffBtn
         ' 
-        AddStaffBtn.Anchor = AnchorStyles.None
-        AddStaffBtn.BackColor = Color.LightGreen
-        AddStaffBtn.Cursor = Cursors.Hand
-        AddStaffBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        AddStaffBtn.ForeColor = Color.Black
-        AddStaffBtn.Location = New Point(529, 409)
-        AddStaffBtn.Name = "AddStaffBtn"
-        AddStaffBtn.Size = New Size(200, 50)
-        AddStaffBtn.TabIndex = 31
-        AddStaffBtn.Text = "ADD STAFF"
-        AddStaffBtn.UseVisualStyleBackColor = False
+        UpdateStaffBtn.Anchor = AnchorStyles.None
+        UpdateStaffBtn.BackColor = Color.LightGreen
+        UpdateStaffBtn.Cursor = Cursors.Hand
+        UpdateStaffBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        UpdateStaffBtn.ForeColor = Color.Black
+        UpdateStaffBtn.Location = New Point(469, 409)
+        UpdateStaffBtn.Name = "UpdateStaffBtn"
+        UpdateStaffBtn.Size = New Size(260, 50)
+        UpdateStaffBtn.TabIndex = 31
+        UpdateStaffBtn.Text = "UPDATE STAFF"
+        UpdateStaffBtn.UseVisualStyleBackColor = False
         ' 
         ' PosCmb
         ' 
         PosCmb.Anchor = AnchorStyles.None
         PosCmb.Cursor = Cursors.Hand
         PosCmb.DropDownHeight = 200
+        PosCmb.DropDownStyle = ComboBoxStyle.DropDownList
         PosCmb.DropDownWidth = 400
         PosCmb.Font = New Font("Corbel", 22.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         PosCmb.FormattingEnabled = True
@@ -353,23 +371,6 @@ Partial Class EditStaff
         Label1.TabIndex = 17
         Label1.Text = "ID"
         ' 
-        ' EmIDCmb
-        ' 
-        EmIDCmb.Anchor = AnchorStyles.None
-        EmIDCmb.Cursor = Cursors.Hand
-        EmIDCmb.DropDownHeight = 200
-        EmIDCmb.DropDownWidth = 400
-        EmIDCmb.Font = New Font("Corbel", 22.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        EmIDCmb.FormattingEnabled = True
-        EmIDCmb.IntegralHeight = False
-        EmIDCmb.ItemHeight = 37
-        EmIDCmb.Items.AddRange(New Object() {"Admin Aide I", "Admin Aide II", "Admin Aide III", "Admin Aide IV", "BNS", "BPSO", "Clerk", "Lupon Tagapamayapa", "Medical Aide", "Sangguniang Kabataan", "Secretary"})
-        EmIDCmb.Location = New Point(6, 69)
-        EmIDCmb.Name = "EmIDCmb"
-        EmIDCmb.Size = New Size(200, 45)
-        EmIDCmb.Sorted = True
-        EmIDCmb.TabIndex = 38
-        ' 
         ' EditStaff
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -400,7 +401,7 @@ Partial Class EditStaff
     Friend WithEvents Label9 As Label
     Friend WithEvents HrShiftTxt As TextBox
     Friend WithEvents Label8 As Label
-    Friend WithEvents AddStaffBtn As Button
+    Friend WithEvents UpdateStaffBtn As Button
     Friend WithEvents PosCmb As ComboBox
     Friend WithEvents StaffAddressTxt As TextBox
     Friend WithEvents Label7 As Label

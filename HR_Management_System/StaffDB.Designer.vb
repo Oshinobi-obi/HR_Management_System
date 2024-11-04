@@ -42,6 +42,7 @@ Partial Class StaffDB
         Panel1 = New Panel()
         Panel2 = New Panel()
         Panel3 = New Panel()
+        EditBtn = New Button()
         CType(StaffGrid, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
@@ -223,6 +224,7 @@ Partial Class StaffDB
         ' 
         ' Panel3
         ' 
+        Panel3.Controls.Add(EditBtn)
         Panel3.Controls.Add(FilterBox)
         Panel3.Controls.Add(AddBtn)
         Panel3.Dock = DockStyle.Fill
@@ -230,6 +232,19 @@ Partial Class StaffDB
         Panel3.Name = "Panel3"
         Panel3.Size = New Size(657, 96)
         Panel3.TabIndex = 23
+        ' 
+        ' EditBtn
+        ' 
+        EditBtn.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
+        EditBtn.BackColor = Color.LightGreen
+        EditBtn.Cursor = Cursors.Hand
+        EditBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        EditBtn.Location = New Point(82, 48)
+        EditBtn.Name = "EditBtn"
+        EditBtn.Size = New Size(110, 42)
+        EditBtn.TabIndex = 3
+        EditBtn.Text = "EDIT"
+        EditBtn.UseVisualStyleBackColor = False
         ' 
         ' StaffDB
         ' 
@@ -270,4 +285,5 @@ Partial Class StaffDB
     Friend WithEvents ECONTACT As DataGridViewTextBoxColumn
     Friend WithEvents EADD As DataGridViewTextBoxColumn
     Friend WithEvents EDOE As DataGridViewTextBoxColumn
+    Friend WithEvents EditBtn As Button
 End Class

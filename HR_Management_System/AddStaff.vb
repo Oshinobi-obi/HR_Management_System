@@ -180,8 +180,6 @@ Public Class AddStaff
         End Try
     End Sub
 
-
-
     Private PositionValues As New Dictionary(Of String, String) From {
         {"Admin Aide I", "11"}, {"Admin Aide II", "14"}, {"Admin Aide III", "12"},
         {"Admin Aide IV", "13"}, {"BNS", "09"}, {"BPSO", "03"}, {"Clerk", "04"},

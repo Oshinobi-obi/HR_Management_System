@@ -19,8 +19,14 @@ Public Class StaffDb
         AddBtn.BackColor = Color.Transparent
         AddBtn.Text = "ADD"
 
+        EditBtn.FlatStyle = FlatStyle.Flat
+        EditBtn.FlatAppearance.BorderSize = 0
+        EditBtn.BackColor = Color.Transparent
+        EditBtn.Text = "EDIT"
+
         AddHandler ReturnBtn.Paint, AddressOf ReturnBtn_Paint
         AddHandler AddBtn.Paint, AddressOf AddBtn_Paint
+        AddHandler EditBtn.Paint, AddressOf EditBtn_Paint
     End Sub
 
     Private Sub ReturnBtn_Paint(sender As Object, e As PaintEventArgs)
@@ -58,6 +64,40 @@ Public Class StaffDb
     End Sub
 
     Private Sub AddBtn_Paint(sender As Object, e As PaintEventArgs)
+        Dim button As Button = CType(sender, Button)
+        Dim graphics As Graphics = e.Graphics
+        Dim rect As New Rectangle(0, 0, button.Width - 1, button.Height - 1)
+
+        graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+
+        Dim path As New Drawing2D.GraphicsPath()
+        Dim radius As Integer = 20
+        path.AddArc(rect.X, rect.Y, radius, radius, 180, 90)
+        path.AddArc(rect.Right - radius, rect.Y, radius, radius, 270, 90)
+        path.AddArc(rect.Right - radius, rect.Bottom - radius, radius, radius, 0, 90)
+        path.AddArc(rect.X, rect.Bottom - radius, radius, radius, 90, 90)
+        path.CloseFigure()
+
+        Using brush As New SolidBrush(Color.LightGreen)
+            graphics.FillPath(brush, path)
+        End Using
+
+        Using borderPen As New Pen(Color.Black, 2)
+            graphics.DrawPath(borderPen, path)
+        End Using
+
+        Dim textBrush As New SolidBrush(button.ForeColor)
+        Dim textFormat As New StringFormat() With {
+        .Alignment = StringAlignment.Center,
+        .LineAlignment = StringAlignment.Center
+    }
+        graphics.DrawString(button.Text, button.Font, textBrush, rect, textFormat)
+
+        textBrush.Dispose()
+        path.Dispose()
+    End Sub
+
+    Private Sub EditBtn_Paint(sender As Object, e As PaintEventArgs)
         Dim button As Button = CType(sender, Button)
         Dim graphics As Graphics = e.Graphics
         Dim rect As New Rectangle(0, 0, button.Width - 1, button.Height - 1)
@@ -141,9 +181,9 @@ Public Class StaffDb
     End Sub
 
     Private Sub AddBtn_Click(sender As Object, e As EventArgs) Handles AddBtn.Click
-        Me.Close()
-        Dim addStaffForm As New AddStaff()
-        addStaffForm.Show()
+        Close
+        Dim addStaffForm As New AddStaff
+        addStaffForm.Show
     End Sub
 
     Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
@@ -160,5 +200,11 @@ Public Class StaffDb
         Else
             LoadEmployeeRecords(selectedPosition)
         End If
+    End Sub
+
+    Private Sub EditBtn_Click(sender As Object, e As EventArgs) Handles EditBtn.Click
+        Me.Close()
+        Dim EditStaff As New EditStaff()
+        EditStaff.Show()
     End Sub
 End Class
