@@ -12,8 +12,18 @@ Public Class EditStaff
         InitializeButton(UpdateStaffBtn, "UPDATE STAFF", Color.LightGreen)
         InitializeButton(OpenBtn, "OPEN", Color.LightGreen)
 
+        LoadPositionItems()  ' This should be added here
         LoadEmployeeIDs()
     End Sub
+
+
+    Private Sub LoadPositionItems()
+        PosCmb.Items.Clear()
+        PosCmb.Items.AddRange(New String() {"Admin Aide I", "Admin Aide II", "Admin Aide III", "Admin Aide IV",
+                                        "BNS", "BPSO", "Clerk", "Lupon Tagapamayapa", "Medical Aide",
+                                        "Sangguniang Kabataan", "Secretary"})
+    End Sub
+
 
     Private Sub LoadEmployeeIDs()
         Try
@@ -46,20 +56,39 @@ Public Class EditStaff
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
                 Dim sql As String = "SELECT ""EmployeeName"", ""EmployeeAge"", ""EmployeePosition"", ""EmployeeDaySchedule"", " &
-                                    """EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployeeImage"" " &
-                                    "FROM employee WHERE ""EmployeeID"" = @EmployeeID"
+                                """EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployeeImage"" " &
+                                "FROM employee WHERE ""EmployeeID"" = @EmployeeID"
                 Using cmd As New NpgsqlCommand(sql, conn)
                     cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
                     Using reader As NpgsqlDataReader = cmd.ExecuteReader()
                         If reader.Read() Then
+                            ' Populate the text fields with data from the database
                             StaffNameTxt.Text = reader("EmployeeName").ToString()
                             StaffAgeTxt.Text = reader("EmployeeAge").ToString()
-                            PosCmb.SelectedValue = reader("EmployeePosition").ToString()
                             WorkDayTxt.Text = reader("EmployeeDaySchedule").ToString()
                             HrShiftTxt.Text = reader("EmployeeTimeShift").ToString()
                             StaffContactTxt.Text = reader("EmployeeMobile").ToString()
                             StaffAddressTxt.Text = reader("EmployeeAddress").ToString()
 
+                            ' Load position items if not already loaded
+                            LoadPositionItems()
+                            Dim position As String = reader("EmployeePosition").ToString().Trim()
+
+                            ' Debug: Print out all items in PosCmb to verify they are loaded
+                            Console.WriteLine("PosCmb Items:")
+                            For Each item As Object In PosCmb.Items
+                                Console.WriteLine(item.ToString())
+                            Next
+
+                            ' Attempt to set PosCmb based on database position
+                            Dim index As Integer = PosCmb.Items.IndexOf(position)
+                            If index >= 0 Then
+                                PosCmb.SelectedIndex = index
+                            Else
+                                MessageBox.Show("Position '" & position & "' not found in PosCmb.")
+                            End If
+
+                            ' Load image if available
                             Dim imageBytes As Byte() = CType(reader("EmployeeImage"), Byte())
                             If imageBytes IsNot Nothing AndAlso imageBytes.Length > 0 Then
                                 Dim imageFilePath As String = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "tempImage.png")
@@ -78,6 +107,8 @@ Public Class EditStaff
             MessageBox.Show("Error loading employee data: " & ex.Message)
         End Try
     End Sub
+
+
 
     Private Sub InitializeButton(button As Button, text As String, backColor As Color)
         button.FlatStyle = FlatStyle.Flat
@@ -138,10 +169,10 @@ Public Class EditStaff
                 conn.Open()
 
                 Dim sql As String = "UPDATE employee SET ""EmployeeName"" = @EmployeeName, ""EmployeeAge"" = @EmployeeAge, " &
-                                    """EmployeePosition"" = @EmployeePosition, ""EmployeeDaySchedule"" = @EmployeeDaySchedule, " &
-                                    """EmployeeTimeShift"" = @EmployeeTimeShift, ""EmployeeMobile"" = @EmployeeMobile, " &
-                                    """EmployeeAddress"" = @EmployeeAddress, ""EmployeeImage"" = @EmployeeImage " &
-                                    "WHERE ""EmployeeID"" = @EmployeeID"
+                                """EmployeePosition"" = @EmployeePosition, ""EmployeeDaySchedule"" = @EmployeeDaySchedule, " &
+                                """EmployeeTimeShift"" = @EmployeeTimeShift, ""EmployeeMobile"" = @EmployeeMobile, " &
+                                """EmployeeAddress"" = @EmployeeAddress, ""EmployeeImage"" = @EmployeeImage " &
+                                "WHERE ""EmployeeID"" = @EmployeeID"
 
                 Using cmd As New NpgsqlCommand(sql, conn)
                     cmd.Parameters.AddWithValue("@EmployeeName", StaffNameTxt.Text.Trim())
@@ -163,12 +194,18 @@ Public Class EditStaff
 
                     cmd.ExecuteNonQuery()
                     MessageBox.Show("Employee data updated successfully.")
+
+                    ' Close EditStaff and return to StaffDB
+                    Me.Close()
+                    Dim staffDBForm As New StaffDB()
+                    staffDBForm.Show()
                 End Using
             End Using
         Catch ex As Exception
             MessageBox.Show("Error updating employee data: " & ex.Message)
         End Try
     End Sub
+
 
     Private Sub UpdateStaffBtn_Click(sender As Object, e As EventArgs) Handles UpdateStaffBtn.Click
         UpdateEmployeeData()
