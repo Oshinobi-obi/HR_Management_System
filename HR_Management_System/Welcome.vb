@@ -86,12 +86,23 @@ Public Class Welcome
     End Sub
 
     Private Sub LoginBtn_Click(sender As Object, e As EventArgs) Handles LoginBtn.Click
-        Dim Login As New Login()
-        Login.Show()
+        Dim loginForm As New Login()
+        CType(Me.MdiParent, MDIParent).LoadFormInMDI(loginForm)
+        Me.Close()
     End Sub
 
     Private Sub TimeBtn_Click(sender As Object, e As EventArgs) Handles TimeBtn.Click
-        Dim Attendance As New Attendance()
-        Attendance.Show()
+        Dim attendanceForm As New Attendance()
+        CType(Me.MdiParent, MDIParent).LoadFormInMDI(attendanceForm)
+    End Sub
+
+    Private Sub ShutdownBtn_Click(sender As Object, e As EventArgs) Handles ShutdownBtn.Click
+        Dim result As DialogResult = MessageBox.Show("Do you want to shut down the program?", "Shutdown Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        If result = DialogResult.Yes Then
+            If Me.MdiParent IsNot Nothing Then
+                Me.MdiParent.Close()
+            End If
+            Me.Close()
+        End If
     End Sub
 End Class

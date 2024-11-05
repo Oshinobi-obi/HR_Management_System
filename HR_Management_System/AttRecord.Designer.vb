@@ -151,8 +151,9 @@ Partial Class AttRecord
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
         ClientSize = New Size(934, 511)
+        ControlBox = False
         Controls.Add(TableLayoutPanel1)
-        FormBorderStyle = FormBorderStyle.FixedToolWindow
+        FormBorderStyle = FormBorderStyle.Fixed3D
         Name = "AttRecord"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Attendance Record"

@@ -83,8 +83,8 @@ Public Class AttRecord
     End Sub
 
     Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
-        Me.Close()
         Dim adminForm As New Admin()
-        adminForm.Show()
+        CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
+        Me.Close()
     End Sub
 End Class

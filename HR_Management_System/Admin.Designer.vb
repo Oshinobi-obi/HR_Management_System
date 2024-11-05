@@ -191,9 +191,10 @@ Partial Class Admin
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
         ClientSize = New Size(800, 450)
+        ControlBox = False
         Controls.Add(Label1)
         Controls.Add(TableLayoutPanel1)
-        FormBorderStyle = FormBorderStyle.FixedToolWindow
+        FormBorderStyle = FormBorderStyle.Fixed3D
         Name = "Admin"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Admin"

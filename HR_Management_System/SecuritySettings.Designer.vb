@@ -215,8 +215,9 @@ Partial Class SecuritySettings
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
         ClientSize = New Size(884, 511)
+        ControlBox = False
         Controls.Add(TableLayoutPanel1)
-        FormBorderStyle = FormBorderStyle.FixedToolWindow
+        FormBorderStyle = FormBorderStyle.Fixed3D
         Name = "SecuritySettings"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Change Password"

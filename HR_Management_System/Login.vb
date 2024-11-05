@@ -163,8 +163,8 @@ Public Class Login
 
                 If Not String.IsNullOrEmpty(employeeName) Then
                     Dim adminForm As New Admin(employeeName)
-                    adminForm.Show()
-                    Me.Hide()
+                    CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
+                    Me.Close()
                 Else
                     MsgBox("Wrong credentials.", MsgBoxStyle.Exclamation, "Login Failed")
                     ResetLoginFields()
@@ -204,5 +204,11 @@ Public Class Login
         StaffIDtxt.Clear()
         Passtxt.Clear()
         StaffIDtxt.Focus()
+    End Sub
+
+    Private Sub ShutdownBtn_Click(sender As Object, e As EventArgs) Handles ShutdownBtn.Click
+        Dim Welcome As New Welcome()
+        CType(Me.MdiParent, MDIParent).LoadFormInMDI(Welcome)
+        Me.Close()
     End Sub
 End Class

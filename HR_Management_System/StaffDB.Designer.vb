@@ -251,8 +251,9 @@ Partial Class StaffDB
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(884, 511)
+        ControlBox = False
         Controls.Add(TableLayoutPanel1)
-        FormBorderStyle = FormBorderStyle.FixedToolWindow
+        FormBorderStyle = FormBorderStyle.Fixed3D
         Name = "StaffDB"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Staff List"

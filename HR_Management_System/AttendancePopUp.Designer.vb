@@ -417,8 +417,9 @@ Partial Class AttendancePopUp
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
         ClientSize = New Size(1184, 661)
+        ControlBox = False
         Controls.Add(TableLayoutPanel1)
-        FormBorderStyle = FormBorderStyle.FixedToolWindow
+        FormBorderStyle = FormBorderStyle.Fixed3D
         Name = "AttendancePopUp"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Attendance"

@@ -152,7 +152,7 @@ Public Class Attendance
     Private Sub ShowAttendancePopUp(employeeData As Dictionary(Of String, String))
         PopUp = New AttendancePopUp()
         PopUp.SetEmployeeData(employeeData)
-        PopUp.Show()
+        CType(Me.MdiParent, MDIParent).LoadFormInMDI(PopUp)
         PopUp.AttendancePanel.Select()
 
         Timer.Interval = 5000
@@ -168,4 +168,5 @@ Public Class Attendance
             PopUp.Dispose()
         End If
     End Sub
+
 End Class

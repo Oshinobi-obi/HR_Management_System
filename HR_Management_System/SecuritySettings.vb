@@ -103,9 +103,9 @@ Public Class SecuritySettings
 
         If UpdatePassword(oldPassword, newPassword) Then
             MessageBox.Show("Password changed successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Me.Close()
             Dim adminForm As New Admin()
-            adminForm.Show()
+            CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
+            Me.Close()
         Else
             MessageBox.Show("Old password is incorrect.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
@@ -143,9 +143,9 @@ Public Class SecuritySettings
     End Function
 
     Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
-        Me.Close()
         Dim adminForm As New Admin()
-        adminForm.Show()
+        CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
+        Me.Close()
     End Sub
 
     Private Sub SecurityPanel_Paint(sender As Object, e As PaintEventArgs) Handles SecurityPanel.Paint

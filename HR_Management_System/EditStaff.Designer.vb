@@ -206,11 +206,11 @@ Partial Class EditStaff
         UpdateStaffBtn.Cursor = Cursors.Hand
         UpdateStaffBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         UpdateStaffBtn.ForeColor = Color.Black
-        UpdateStaffBtn.Location = New Point(469, 409)
+        UpdateStaffBtn.Location = New Point(529, 409)
         UpdateStaffBtn.Name = "UpdateStaffBtn"
-        UpdateStaffBtn.Size = New Size(260, 50)
+        UpdateStaffBtn.Size = New Size(200, 50)
         UpdateStaffBtn.TabIndex = 31
-        UpdateStaffBtn.Text = "UPDATE STAFF"
+        UpdateStaffBtn.Text = "UPDATE"
         UpdateStaffBtn.UseVisualStyleBackColor = False
         ' 
         ' PosCmb
@@ -377,8 +377,9 @@ Partial Class EditStaff
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
         ClientSize = New Size(1184, 661)
+        ControlBox = False
         Controls.Add(TableLayoutPanel1)
-        FormBorderStyle = FormBorderStyle.FixedToolWindow
+        FormBorderStyle = FormBorderStyle.Fixed3D
         Name = "EditStaff"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Edit Staff"

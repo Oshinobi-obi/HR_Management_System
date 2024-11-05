@@ -29,10 +29,12 @@ Partial Class Welcome
         TimeBtn = New Button()
         TableLayoutPanel1 = New TableLayoutPanel()
         Panel2 = New Panel()
+        ShutdownBtn = New PictureBox()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
         TableLayoutPanel1.SuspendLayout()
         Panel2.SuspendLayout()
+        CType(ShutdownBtn, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' PictureBox1
@@ -64,9 +66,8 @@ Partial Class Welcome
         ' Label1
         ' 
         Label1.Anchor = AnchorStyles.None
-        Label1.AutoSize = True
         Label1.Font = New Font("Corbel", 45F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label1.Location = New Point(101, 10)
+        Label1.Location = New Point(106, 15)
         Label1.Name = "Label1"
         Label1.Size = New Size(314, 73)
         Label1.TabIndex = 2
@@ -79,9 +80,9 @@ Partial Class Welcome
         LoginBtn.BackColor = Color.White
         LoginBtn.Cursor = Cursors.Hand
         LoginBtn.Font = New Font("Corbel", 35.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        LoginBtn.Location = New Point(50, 128)
+        LoginBtn.Location = New Point(27, 107)
         LoginBtn.Name = "LoginBtn"
-        LoginBtn.Size = New Size(172, 68)
+        LoginBtn.Size = New Size(204, 68)
         LoginBtn.TabIndex = 3
         LoginBtn.Text = "LOGIN"
         LoginBtn.UseVisualStyleBackColor = False
@@ -93,7 +94,7 @@ Partial Class Welcome
         TimeBtn.BackColor = Color.White
         TimeBtn.Cursor = Cursors.Hand
         TimeBtn.Font = New Font("Corbel", 35.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        TimeBtn.Location = New Point(272, 128)
+        TimeBtn.Location = New Point(294, 107)
         TimeBtn.Name = "TimeBtn"
         TimeBtn.Size = New Size(204, 68)
         TimeBtn.TabIndex = 4
@@ -120,6 +121,7 @@ Partial Class Welcome
         ' 
         ' Panel2
         ' 
+        Panel2.Controls.Add(ShutdownBtn)
         Panel2.Controls.Add(TimeBtn)
         Panel2.Controls.Add(LoginBtn)
         Panel2.Controls.Add(Label1)
@@ -129,14 +131,27 @@ Partial Class Welcome
         Panel2.Size = New Size(527, 314)
         Panel2.TabIndex = 6
         ' 
+        ' ShutdownBtn
+        ' 
+        ShutdownBtn.Anchor = AnchorStyles.None
+        ShutdownBtn.Cursor = Cursors.Hand
+        ShutdownBtn.Image = My.Resources.Resources.Shutdown
+        ShutdownBtn.Location = New Point(231, 218)
+        ShutdownBtn.Name = "ShutdownBtn"
+        ShutdownBtn.Size = New Size(65, 60)
+        ShutdownBtn.SizeMode = PictureBoxSizeMode.StretchImage
+        ShutdownBtn.TabIndex = 12
+        ShutdownBtn.TabStop = False
+        ' 
         ' Welcome
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
         ClientSize = New Size(800, 419)
+        ControlBox = False
         Controls.Add(TableLayoutPanel1)
-        FormBorderStyle = FormBorderStyle.FixedToolWindow
+        FormBorderStyle = FormBorderStyle.Fixed3D
         Name = "Welcome"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Brgy. Santa Monica"
@@ -145,6 +160,7 @@ Partial Class Welcome
         TableLayoutPanel1.ResumeLayout(False)
         Panel2.ResumeLayout(False)
         Panel2.PerformLayout()
+        CType(ShutdownBtn, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
     End Sub
 
@@ -155,4 +171,5 @@ Partial Class Welcome
     Friend WithEvents TimeBtn As Button
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents Panel2 As Panel
+    Friend WithEvents ShutdownBtn As PictureBox
 End Class

@@ -111,7 +111,7 @@ Partial Class AddStaff
         OpenBtn.Anchor = AnchorStyles.None
         OpenBtn.BackColor = Color.LightGreen
         OpenBtn.Cursor = Cursors.Hand
-        OpenBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0)
+        OpenBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         OpenBtn.Location = New Point(6, 352)
         OpenBtn.Name = "OpenBtn"
         OpenBtn.Size = New Size(120, 50)
@@ -136,7 +136,7 @@ Partial Class AddStaff
         ' 
         Label9.Anchor = AnchorStyles.None
         Label9.AutoSize = True
-        Label9.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0)
+        Label9.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label9.Location = New Point(6, 248)
         Label9.Name = "Label9"
         Label9.Size = New Size(98, 33)
@@ -157,7 +157,7 @@ Partial Class AddStaff
         ' 
         Label8.Anchor = AnchorStyles.None
         Label8.AutoSize = True
-        Label8.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0)
+        Label8.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label8.Location = New Point(249, 141)
         Label8.Name = "Label8"
         Label8.Size = New Size(135, 33)
@@ -169,7 +169,7 @@ Partial Class AddStaff
         AddStaffBtn.Anchor = AnchorStyles.None
         AddStaffBtn.BackColor = Color.LightGreen
         AddStaffBtn.Cursor = Cursors.Hand
-        AddStaffBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0)
+        AddStaffBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         AddStaffBtn.ForeColor = Color.Black
         AddStaffBtn.Location = New Point(529, 407)
         AddStaffBtn.Name = "AddStaffBtn"
@@ -184,7 +184,7 @@ Partial Class AddStaff
         PosCmb.Cursor = Cursors.Hand
         PosCmb.DropDownHeight = 200
         PosCmb.DropDownWidth = 400
-        PosCmb.Font = New Font("Corbel", 22.2F, FontStyle.Bold, GraphicsUnit.Point, 0)
+        PosCmb.Font = New Font("Corbel", 22.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         PosCmb.FormattingEnabled = True
         PosCmb.IntegralHeight = False
         PosCmb.ItemHeight = 37
@@ -209,7 +209,7 @@ Partial Class AddStaff
         ' 
         Label7.Anchor = AnchorStyles.None
         Label7.AutoSize = True
-        Label7.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0)
+        Label7.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label7.Location = New Point(735, 141)
         Label7.Name = "Label7"
         Label7.Size = New Size(108, 33)
@@ -231,7 +231,7 @@ Partial Class AddStaff
         ReturnBtn.Anchor = AnchorStyles.None
         ReturnBtn.BackColor = Color.LightCoral
         ReturnBtn.Cursor = Cursors.Hand
-        ReturnBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0)
+        ReturnBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         ReturnBtn.Location = New Point(735, 407)
         ReturnBtn.Name = "ReturnBtn"
         ReturnBtn.Size = New Size(200, 50)
@@ -243,7 +243,7 @@ Partial Class AddStaff
         ' 
         Label6.Anchor = AnchorStyles.None
         Label6.AutoSize = True
-        Label6.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0)
+        Label6.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label6.Location = New Point(492, 141)
         Label6.Name = "Label6"
         Label6.Size = New Size(107, 33)
@@ -264,7 +264,7 @@ Partial Class AddStaff
         ' 
         Label5.Anchor = AnchorStyles.None
         Label5.AutoSize = True
-        Label5.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0)
+        Label5.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label5.Location = New Point(6, 141)
         Label5.Name = "Label5"
         Label5.Size = New Size(130, 33)
@@ -275,7 +275,7 @@ Partial Class AddStaff
         ' 
         Label4.Anchor = AnchorStyles.None
         Label4.AutoSize = True
-        Label4.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0)
+        Label4.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label4.Location = New Point(735, 32)
         Label4.Name = "Label4"
         Label4.Size = New Size(110, 33)
@@ -296,7 +296,7 @@ Partial Class AddStaff
         ' 
         Label3.Anchor = AnchorStyles.None
         Label3.AutoSize = True
-        Label3.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0)
+        Label3.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label3.Location = New Point(492, 32)
         Label3.Name = "Label3"
         Label3.Size = New Size(62, 33)
@@ -317,7 +317,7 @@ Partial Class AddStaff
         ' 
         Label2.Anchor = AnchorStyles.None
         Label2.AutoSize = True
-        Label2.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0)
+        Label2.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label2.Location = New Point(249, 32)
         Label2.Name = "Label2"
         Label2.Size = New Size(86, 33)
@@ -338,7 +338,7 @@ Partial Class AddStaff
         ' 
         Label1.Anchor = AnchorStyles.None
         Label1.AutoSize = True
-        Label1.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0)
+        Label1.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label1.Location = New Point(6, 32)
         Label1.Name = "Label1"
         Label1.Size = New Size(41, 33)
@@ -367,10 +367,11 @@ Partial Class AddStaff
         ' AddStaff
         ' 
         AutoScaleMode = AutoScaleMode.None
-        BackColor = Color.FromArgb(242, 233, 233)
+        BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
         ClientSize = New Size(1184, 661)
+        ControlBox = False
         Controls.Add(TableLayoutPanel1)
-        FormBorderStyle = FormBorderStyle.FixedToolWindow
+        FormBorderStyle = FormBorderStyle.Fixed3D
         Name = "AddStaff"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Add Staff"

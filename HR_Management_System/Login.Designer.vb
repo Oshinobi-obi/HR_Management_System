@@ -34,6 +34,7 @@ Partial Class Login
         Label1 = New Label()
         TableLayoutPanel1 = New TableLayoutPanel()
         StaffLoginPanel = New Panel()
+        ShutdownBtn = New PictureBox()
         Panel1 = New Panel()
         PictureBox1 = New PictureBox()
         PictureBox2 = New PictureBox()
@@ -43,6 +44,7 @@ Partial Class Login
         CType(UserIcon, ComponentModel.ISupportInitialize).BeginInit()
         TableLayoutPanel1.SuspendLayout()
         StaffLoginPanel.SuspendLayout()
+        CType(ShutdownBtn, ComponentModel.ISupportInitialize).BeginInit()
         Panel1.SuspendLayout()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
@@ -187,6 +189,7 @@ Partial Class Login
         ' 
         ' StaffLoginPanel
         ' 
+        StaffLoginPanel.Controls.Add(ShutdownBtn)
         StaffLoginPanel.Controls.Add(PassPanel)
         StaffLoginPanel.Controls.Add(StaffIDPanel)
         StaffLoginPanel.Controls.Add(UserIcon)
@@ -199,6 +202,18 @@ Partial Class Login
         StaffLoginPanel.Name = "StaffLoginPanel"
         StaffLoginPanel.Size = New Size(544, 362)
         StaffLoginPanel.TabIndex = 0
+        ' 
+        ' ShutdownBtn
+        ' 
+        ShutdownBtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        ShutdownBtn.Cursor = Cursors.Hand
+        ShutdownBtn.Image = My.Resources.Resources.Shutdown
+        ShutdownBtn.Location = New Point(487, 12)
+        ShutdownBtn.Name = "ShutdownBtn"
+        ShutdownBtn.Size = New Size(45, 40)
+        ShutdownBtn.SizeMode = PictureBoxSizeMode.StretchImage
+        ShutdownBtn.TabIndex = 11
+        ShutdownBtn.TabStop = False
         ' 
         ' Panel1
         ' 
@@ -237,8 +252,9 @@ Partial Class Login
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
         ClientSize = New Size(734, 461)
+        ControlBox = False
         Controls.Add(TableLayoutPanel1)
-        FormBorderStyle = FormBorderStyle.FixedToolWindow
+        FormBorderStyle = FormBorderStyle.Fixed3D
         Name = "Login"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Login"
@@ -251,6 +267,7 @@ Partial Class Login
         TableLayoutPanel1.ResumeLayout(False)
         StaffLoginPanel.ResumeLayout(False)
         StaffLoginPanel.PerformLayout()
+        CType(ShutdownBtn, ComponentModel.ISupportInitialize).EndInit()
         Panel1.ResumeLayout(False)
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
@@ -272,5 +289,6 @@ Partial Class Login
     Friend WithEvents Panel1 As Panel
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents PictureBox2 As PictureBox
+    Friend WithEvents ShutdownBtn As PictureBox
 
 End Class

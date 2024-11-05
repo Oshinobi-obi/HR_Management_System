@@ -127,17 +127,14 @@
   <data name="Logo(100x95)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Image\Logo(100x95).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ID Verified" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Image\ID Verified.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Checked Identification Documents" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Checked Identification Documents.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Lock" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Image\Lock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Male User" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Image\Male User.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Lock_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Image\Lock_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ID Verified" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\ID Verified.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="User" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Image\User.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -154,16 +151,22 @@
   <data name="Logo(550x500)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Image\Logo(550x500).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Lock_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Lock_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Security Lock" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Security Lock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Lock Orientation" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Image\Lock Orientation.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ID Verified_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Image\ID Verified_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Checked Identification Documents" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Image\Checked Identification Documents.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Male User" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Male User.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Security Lock" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Image\Security Lock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Shutdown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Shutdown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

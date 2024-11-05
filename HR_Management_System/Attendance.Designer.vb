@@ -96,9 +96,10 @@ Partial Class Attendance
         AutoScaleMode = AutoScaleMode.None
         BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
         ClientSize = New Size(684, 611)
+        ControlBox = False
         Controls.Add(TableLayoutPanel1)
         Controls.Add(RFIDTxt)
-        FormBorderStyle = FormBorderStyle.FixedToolWindow
+        FormBorderStyle = FormBorderStyle.Fixed3D
         Name = "Attendance"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Attendance"

@@ -181,15 +181,15 @@ Public Class StaffDb
     End Sub
 
     Private Sub AddBtn_Click(sender As Object, e As EventArgs) Handles AddBtn.Click
-        Close
-        Dim addStaffForm As New AddStaff
-        addStaffForm.Show
+        Dim addStaffForm As New AddStaff()
+        CType(Me.MdiParent, MDIParent).LoadFormInMDI(addStaffForm)
+        Me.Close()
     End Sub
 
     Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
-        Me.Close()
         Dim adminForm As New Admin()
-        adminForm.Show()
+        CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
+        Me.Close()
     End Sub
 
     Private Sub FilterBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles FilterBox.SelectedIndexChanged
@@ -203,8 +203,8 @@ Public Class StaffDb
     End Sub
 
     Private Sub EditBtn_Click(sender As Object, e As EventArgs) Handles EditBtn.Click
+        Dim editStaffForm As New EditStaff()
+        CType(Me.MdiParent, MDIParent).LoadFormInMDI(editStaffForm)
         Me.Close()
-        Dim EditStaff As New EditStaff()
-        EditStaff.Show()
     End Sub
 End Class

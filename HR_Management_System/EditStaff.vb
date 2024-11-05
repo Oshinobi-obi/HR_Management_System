@@ -158,9 +158,9 @@ Public Class EditStaff
     End Sub
 
     Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
+        Dim staffDBForm As New StaffDB()
+        CType(Me.MdiParent, MDIParent).LoadFormInMDI(staffDBForm)
         Me.Close()
-        Dim StaffDB As New StaffDB()
-        StaffDB.Show()
     End Sub
 
     Private Sub UpdateEmployeeData()
@@ -195,10 +195,9 @@ Public Class EditStaff
                     cmd.ExecuteNonQuery()
                     MessageBox.Show("Employee data updated successfully.")
 
-                    ' Close EditStaff and return to StaffDB
-                    Me.Close()
                     Dim staffDBForm As New StaffDB()
-                    staffDBForm.Show()
+                    CType(Me.MdiParent, MDIParent).LoadFormInMDI(staffDBForm)
+                    Me.Close()
                 End Using
             End Using
         Catch ex As Exception
