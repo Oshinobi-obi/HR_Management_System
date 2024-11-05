@@ -27,11 +27,11 @@ Partial Class Attendance
         TableLayoutPanel1 = New TableLayoutPanel()
         Panel1 = New Panel()
         Label1 = New Label()
-        PictureBox1 = New PictureBox()
+        ShutdownBtn = New PictureBox()
         CType(RFIDTap, ComponentModel.ISupportInitialize).BeginInit()
         TableLayoutPanel1.SuspendLayout()
         Panel1.SuspendLayout()
-        CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
+        CType(ShutdownBtn, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' RFIDTxt
@@ -64,7 +64,7 @@ Partial Class Attendance
         TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 15F))
         TableLayoutPanel1.Controls.Add(RFIDTap, 1, 0)
         TableLayoutPanel1.Controls.Add(Panel1, 1, 1)
-        TableLayoutPanel1.Controls.Add(PictureBox1, 2, 0)
+        TableLayoutPanel1.Controls.Add(ShutdownBtn, 2, 0)
         TableLayoutPanel1.Dock = DockStyle.Fill
         TableLayoutPanel1.Location = New Point(0, 0)
         TableLayoutPanel1.Name = "TableLayoutPanel1"
@@ -94,17 +94,17 @@ Partial Class Attendance
         Label1.Text = "TAP ID"
         Label1.TextAlign = ContentAlignment.MiddleCenter
         ' 
-        ' PictureBox1
+        ' ShutdownBtn
         ' 
-        PictureBox1.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        PictureBox1.Cursor = Cursors.Hand
-        PictureBox1.Image = My.Resources.Resources.Shutdown
-        PictureBox1.Location = New Point(636, 3)
-        PictureBox1.Name = "PictureBox1"
-        PictureBox1.Size = New Size(45, 40)
-        PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage
-        PictureBox1.TabIndex = 14
-        PictureBox1.TabStop = False
+        ShutdownBtn.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        ShutdownBtn.Cursor = Cursors.Hand
+        ShutdownBtn.Image = My.Resources.Resources.Shutdown
+        ShutdownBtn.Location = New Point(636, 3)
+        ShutdownBtn.Name = "ShutdownBtn"
+        ShutdownBtn.Size = New Size(45, 40)
+        ShutdownBtn.SizeMode = PictureBoxSizeMode.StretchImage
+        ShutdownBtn.TabIndex = 14
+        ShutdownBtn.TabStop = False
         ' 
         ' Attendance
         ' 
@@ -122,7 +122,7 @@ Partial Class Attendance
         CType(RFIDTap, ComponentModel.ISupportInitialize).EndInit()
         TableLayoutPanel1.ResumeLayout(False)
         Panel1.ResumeLayout(False)
-        CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
+        CType(ShutdownBtn, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -131,5 +131,5 @@ Partial Class Attendance
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Label1 As Label
-    Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents ShutdownBtn As PictureBox
 End Class

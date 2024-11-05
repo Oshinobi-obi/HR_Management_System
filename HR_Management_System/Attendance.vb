@@ -169,7 +169,7 @@ Public Class Attendance
         End If
     End Sub
 
-    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
+    Private Sub ShutdownBtn_Click(sender As Object, e As EventArgs) Handles ShutdownBtn.Click
         Dim Welcome As New Welcome()
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(Welcome)
         Me.Close()
