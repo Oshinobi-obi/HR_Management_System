@@ -9,10 +9,10 @@ Public Class EditStaff
 
     Public Sub EditStaff_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitializeButton(ReturnBtn, "RETURN", Color.LightCoral)
-        InitializeButton(UpdateStaffBtn, "UPDATE STAFF", Color.LightGreen)
+        InitializeButton(UpdateStaffBtn, "UPDATE", Color.LightGreen)
         InitializeButton(OpenBtn, "OPEN", Color.LightGreen)
 
-        LoadPositionItems()  ' This should be added here
+        LoadPositionItems()
         LoadEmployeeIDs()
     End Sub
 
@@ -62,7 +62,6 @@ Public Class EditStaff
                     cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
                     Using reader As NpgsqlDataReader = cmd.ExecuteReader()
                         If reader.Read() Then
-                            ' Populate the text fields with data from the database
                             StaffNameTxt.Text = reader("EmployeeName").ToString()
                             StaffAgeTxt.Text = reader("EmployeeAge").ToString()
                             WorkDayTxt.Text = reader("EmployeeDaySchedule").ToString()
@@ -70,17 +69,14 @@ Public Class EditStaff
                             StaffContactTxt.Text = reader("EmployeeMobile").ToString()
                             StaffAddressTxt.Text = reader("EmployeeAddress").ToString()
 
-                            ' Load position items if not already loaded
                             LoadPositionItems()
                             Dim position As String = reader("EmployeePosition").ToString().Trim()
 
-                            ' Debug: Print out all items in PosCmb to verify they are loaded
                             Console.WriteLine("PosCmb Items:")
                             For Each item As Object In PosCmb.Items
                                 Console.WriteLine(item.ToString())
                             Next
 
-                            ' Attempt to set PosCmb based on database position
                             Dim index As Integer = PosCmb.Items.IndexOf(position)
                             If index >= 0 Then
                                 PosCmb.SelectedIndex = index
@@ -88,7 +84,6 @@ Public Class EditStaff
                                 MessageBox.Show("Position '" & position & "' not found in PosCmb.")
                             End If
 
-                            ' Load image if available
                             Dim imageBytes As Byte() = CType(reader("EmployeeImage"), Byte())
                             If imageBytes IsNot Nothing AndAlso imageBytes.Length > 0 Then
                                 Dim imageFilePath As String = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "tempImage.png")
@@ -205,9 +200,49 @@ Public Class EditStaff
         End Try
     End Sub
 
+    Private Sub DeleteEmployeeData(employeeID As String)
+        Try
+            Using conn As New NpgsqlConnection(connString)
+                conn.Open()
+                Dim confirmDelete As DialogResult = MessageBox.Show("Are you sure you want to delete this employee?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+
+                If confirmDelete = DialogResult.Yes Then
+                    Dim sql As String = "DELETE FROM employee WHERE ""EmployeeID"" = @EmployeeID"
+                    Using cmd As New NpgsqlCommand(sql, conn)
+                        cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
+                        Dim rowsAffected As Integer = cmd.ExecuteNonQuery()
+
+                        If rowsAffected > 0 Then
+                            MessageBox.Show("Employee deleted successfully.")
+
+                            Dim staffDBForm As New StaffDB()
+                            CType(Me.MdiParent, MDIParent).LoadFormInMDI(staffDBForm)
+                            Me.Close()
+                        Else
+                            MessageBox.Show("No record found with the specified EmployeeID.")
+                        End If
+                    End Using
+                End If
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error deleting employee data: " & ex.Message)
+        End Try
+    End Sub
+
+
+
 
     Private Sub UpdateStaffBtn_Click(sender As Object, e As EventArgs) Handles UpdateStaffBtn.Click
         UpdateEmployeeData()
+    End Sub
+
+    Private Sub DeleteBtn_Click(sender As Object, e As EventArgs) Handles DeleteBtn.Click
+        If EmIDCmb.SelectedItem IsNot Nothing Then
+            Dim selectedID As String = EmIDCmb.SelectedItem.ToString().Trim()
+            DeleteEmployeeData(selectedID)
+        Else
+            MessageBox.Show("Please select an EmployeeID to delete.")
+        End If
     End Sub
 
 End Class

@@ -48,6 +48,7 @@ Partial Class EditStaff
         Label2 = New Label()
         Label1 = New Label()
         SelectImage = New OpenFileDialog()
+        DeleteBtn = New Button()
         TableLayoutPanel1.SuspendLayout()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
@@ -97,6 +98,7 @@ Partial Class EditStaff
         ' 
         ' Panel1
         ' 
+        Panel1.Controls.Add(DeleteBtn)
         Panel1.Controls.Add(EmIDCmb)
         Panel1.Controls.Add(OpenBtn)
         Panel1.Controls.Add(PictureTxt)
@@ -371,6 +373,19 @@ Partial Class EditStaff
         Label1.TabIndex = 17
         Label1.Text = "ID"
         ' 
+        ' DeleteBtn
+        ' 
+        DeleteBtn.Anchor = AnchorStyles.None
+        DeleteBtn.BackColor = Color.LightCoral
+        DeleteBtn.Cursor = Cursors.Hand
+        DeleteBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        DeleteBtn.Location = New Point(6, 409)
+        DeleteBtn.Name = "DeleteBtn"
+        DeleteBtn.Size = New Size(200, 50)
+        DeleteBtn.TabIndex = 39
+        DeleteBtn.Text = "DELETE"
+        DeleteBtn.UseVisualStyleBackColor = False
+        ' 
         ' EditStaff
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -418,4 +433,5 @@ Partial Class EditStaff
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents SelectImage As OpenFileDialog
+    Friend WithEvents DeleteBtn As Button
 End Class

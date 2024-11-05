@@ -169,10 +169,16 @@ Public Class AddStaff
 
                     cmd.ExecuteNonQuery()
                     MessageBox.Show("Staff added successfully.")
-                    Me.Close()
-                    Dim newAddStaffForm As New AddStaff()
-                    newAddStaffForm.Show()
 
+                    EmIDTxt.Text = ""
+                    StaffNameTxt.Text = ""
+                    StaffAgeTxt.Text = ""
+                    PosCmb.SelectedText = ""
+                    WorkDayTxt.Text = ""
+                    HrShiftTxt.Text = ""
+                    StaffContactTxt.Text = ""
+                    StaffAddressTxt.Text = ""
+                    PictureTxt.Text = ""
                 End Using
             End Using
         Catch ex As Exception
@@ -197,8 +203,8 @@ Public Class AddStaff
     End Sub
 
     Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
-        Me.Close()
         Dim StaffDB As New StaffDB()
-        StaffDB.Show()
+        CType(Me.MdiParent, MDIParent).LoadFormInMDI(StaffDB)
+        Me.Close()
     End Sub
 End Class

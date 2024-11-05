@@ -152,7 +152,7 @@ Public Class Attendance
     Private Sub ShowAttendancePopUp(employeeData As Dictionary(Of String, String))
         PopUp = New AttendancePopUp()
         PopUp.SetEmployeeData(employeeData)
-        CType(Me.MdiParent, MDIParent).LoadFormInMDI(PopUp)
+        PopUp.Show()
         PopUp.AttendancePanel.Select()
 
         Timer.Interval = 5000
@@ -169,4 +169,9 @@ Public Class Attendance
         End If
     End Sub
 
+    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
+        Dim Welcome As New Welcome()
+        CType(Me.MdiParent, MDIParent).LoadFormInMDI(Welcome)
+        Me.Close()
+    End Sub
 End Class
