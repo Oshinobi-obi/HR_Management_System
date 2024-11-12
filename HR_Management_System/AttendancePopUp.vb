@@ -25,7 +25,7 @@ Public Class AttendancePopUp
             End If
 
             If employeeData.ContainsKey("HourShift") Then
-                HourShiftTxt.Text = employeeData("HourShift")
+                HourShiftTxt.Text = employeeData("EmployeeTotalHour").ToString("F2")
             End If
         End If
 
@@ -69,4 +69,5 @@ Public Class AttendancePopUp
             End Using
         End Using
     End Sub
+
 End Class

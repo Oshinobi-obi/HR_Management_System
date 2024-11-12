@@ -183,6 +183,7 @@ Partial Class AddStaff
         PosCmb.Anchor = AnchorStyles.None
         PosCmb.Cursor = Cursors.Hand
         PosCmb.DropDownHeight = 200
+        PosCmb.DropDownStyle = ComboBoxStyle.DropDownList
         PosCmb.DropDownWidth = 400
         PosCmb.Font = New Font("Corbel", 22.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         PosCmb.FormattingEnabled = True
@@ -327,10 +328,12 @@ Partial Class AddStaff
         ' EmIDTxt
         ' 
         EmIDTxt.Anchor = AnchorStyles.None
+        EmIDTxt.BackColor = Color.White
         EmIDTxt.BorderStyle = BorderStyle.FixedSingle
         EmIDTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
         EmIDTxt.Location = New Point(6, 78)
         EmIDTxt.Name = "EmIDTxt"
+        EmIDTxt.ReadOnly = True
         EmIDTxt.Size = New Size(200, 45)
         EmIDTxt.TabIndex = 1
         ' 

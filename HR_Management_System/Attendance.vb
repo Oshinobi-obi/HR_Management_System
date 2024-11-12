@@ -34,13 +34,18 @@ Public Class Attendance
 
                     If employeeData IsNot Nothing Then
                         Dim timeIn As DateTime = DateTime.Now
-                        employeeData("TimeIn") = timeIn.ToString("hh:mm tt", CultureInfo.InvariantCulture) ' 12-hour format
+                        employeeData("TimeIn") = timeIn.ToString("hh:mm tt", CultureInfo.InvariantCulture)
                         employeeData("DateNow") = timeIn.ToString("yyyy-MM-dd")
                         employeeSessions(rfid) = New Dictionary(Of String, String)(employeeData)
 
-                        InsertAttendanceRecord(employeeData, timeIn)
-                        transaction.Commit()
-                        ShowAttendancePopUp(employeeData)
+                        If Not AttendanceRecordExists(employeeData("EmployeeID"), timeIn) Then
+                            InsertAttendanceRecord(employeeData, timeIn)
+                            transaction.Commit()
+                            ShowAttendancePopUp(employeeData)
+                        Else
+                            MsgBox("Attendance already recorded for today.")
+                            transaction.Rollback()
+                        End If
                     Else
                         MsgBox("RFID not recognized or employee not found.")
                         System.Media.SystemSounds.Exclamation.Play()
@@ -55,7 +60,7 @@ Public Class Attendance
 
                         If Not sessionData.ContainsKey("TimeOut") Then
                             Dim hoursWorked As TimeSpan = timeOut - timeIn
-                            sessionData("TimeOut") = timeOut.ToString("hh:mm tt", CultureInfo.InvariantCulture) ' 12-hour format
+                            sessionData("TimeOut") = timeOut.ToString("hh:mm tt", CultureInfo.InvariantCulture)
                             sessionData("EmployeeTotalHour") = hoursWorked.TotalHours.ToString("F2")
 
                             If UpdateAttendanceRecord(sessionData, timeOut, hoursWorked) > 0 Then
@@ -83,6 +88,17 @@ Public Class Attendance
         End Try
     End Sub
 
+    Private Function AttendanceRecordExists(employeeID As String, dateValue As DateTime) As Boolean
+        Dim exists As Boolean = False
+        Dim query As String = "SELECT COUNT(*) FROM attendance WHERE ""Date"" = @Date AND ""EmployeeID"" = @EmployeeID"
+        Using cmd As New NpgsqlCommand(query, conn)
+            cmd.Parameters.AddWithValue("@Date", dateValue.Date)
+            cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
+            exists = Convert.ToInt32(cmd.ExecuteScalar()) > 0
+        End Using
+        Return exists
+    End Function
+
     Private Function FetchEmployeeData(rfid As String) As Dictionary(Of String, String)
         Dim employeeData As Dictionary(Of String, String) = Nothing
 
@@ -91,6 +107,7 @@ Public Class Attendance
             Select Case rfid
                 Case "2091286169" : cmd.Parameters.AddWithValue("@ID", 1)
                 Case "2085555385" : cmd.Parameters.AddWithValue("@ID", 2)
+                Case "2092396169" : cmd.Parameters.AddWithValue("@ID", 3)
                 Case Else
                     Return Nothing
             End Select
@@ -113,15 +130,19 @@ Public Class Attendance
     Private Sub InsertAttendanceRecord(employeeData As Dictionary(Of String, String), timeIn As DateTime)
         Dim query As String = "INSERT INTO attendance (""Date"", ""TimeIn"", ""EmployeeID"", ""EmployeeName"", ""EmployeePosition"", ""EmployeeDaySchedule"") " &
                               "VALUES (@Date, @TimeIn, @EmployeeID, @EmployeeName, @EmployeePosition, @EmployeeDaySchedule)"
-        Using cmd As New NpgsqlCommand(query, conn)
-            cmd.Parameters.AddWithValue("@Date", timeIn.Date)
-            cmd.Parameters.AddWithValue("@TimeIn", timeIn.TimeOfDay)
-            cmd.Parameters.AddWithValue("@EmployeeID", employeeData("EmployeeID"))
-            cmd.Parameters.AddWithValue("@EmployeeName", employeeData("EmployeeName"))
-            cmd.Parameters.AddWithValue("@EmployeePosition", employeeData("EmployeePosition"))
-            cmd.Parameters.AddWithValue("@EmployeeDaySchedule", employeeData("EmployeeDaySchedule"))
-            cmd.ExecuteNonQuery()
-        End Using
+        Try
+            Using cmd As New NpgsqlCommand(query, conn)
+                cmd.Parameters.AddWithValue("@Date", timeIn.Date)
+                cmd.Parameters.AddWithValue("@TimeIn", timeIn.TimeOfDay)
+                cmd.Parameters.AddWithValue("@EmployeeID", employeeData("EmployeeID"))
+                cmd.Parameters.AddWithValue("@EmployeeName", employeeData("EmployeeName"))
+                cmd.Parameters.AddWithValue("@EmployeePosition", employeeData("EmployeePosition"))
+                cmd.Parameters.AddWithValue("@EmployeeDaySchedule", employeeData("EmployeeDaySchedule"))
+                cmd.ExecuteNonQuery()
+            End Using
+        Catch ex As Exception
+            MsgBox("Error inserting attendance record: " & ex.Message)
+        End Try
     End Sub
 
     Private Function UpdateAttendanceRecord(sessionData As Dictionary(Of String, String), timeOut As DateTime, hoursWorked As TimeSpan) As Integer
@@ -131,15 +152,26 @@ Public Class Attendance
 
         Using updateCmd As New NpgsqlCommand(updateQuery, conn)
             updateCmd.Parameters.AddWithValue("@TimeOut", timeOut.TimeOfDay)
-            updateCmd.Parameters.AddWithValue("@TotalHour", hoursWorked.TotalHours.ToString("F2"))
+
+            If hoursWorked.TotalHours > 0 Then
+                updateCmd.Parameters.AddWithValue("@TotalHour", hoursWorked.TotalHours)
+            Else
+                updateCmd.Parameters.AddWithValue("@TotalHour", DBNull.Value)
+            End If
 
             Dim dateValue As DateTime = DateTime.ParseExact(sessionData("DateNow"), "yyyy-MM-dd", CultureInfo.InvariantCulture)
             updateCmd.Parameters.AddWithValue("@Date", dateValue)
 
             updateCmd.Parameters.AddWithValue("@EmployeeID", sessionData("EmployeeID"))
+
+            sessionData("TimeIn") = timeOut.TimeOfDay.ToString("hh:mm tt", CultureInfo.InvariantCulture)
             updateCmd.Parameters.AddWithValue("@TimeIn", DateTime.ParseExact(sessionData("TimeIn"), "hh:mm tt", CultureInfo.InvariantCulture).TimeOfDay)
 
-            rowsAffected = updateCmd.ExecuteNonQuery()
+            Try
+                rowsAffected = updateCmd.ExecuteNonQuery()
+            Catch ex As Exception
+                MsgBox("Error updating attendance record: " & ex.Message)
+            End Try
         End Using
 
         If rowsAffected = 0 Then
@@ -164,8 +196,7 @@ Public Class Attendance
         Timer.Stop()
         Timer.Dispose()
         If PopUp IsNot Nothing Then
-            PopUp.Close()
-            PopUp.Dispose()
+            PopUp.Hide()
         End If
     End Sub
 
@@ -174,4 +205,5 @@ Public Class Attendance
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(Welcome)
         Me.Close()
     End Sub
+
 End Class

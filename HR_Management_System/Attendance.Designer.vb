@@ -62,9 +62,9 @@ Partial Class Attendance
         TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 15F))
         TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 70F))
         TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 15F))
-        TableLayoutPanel1.Controls.Add(RFIDTap, 1, 0)
         TableLayoutPanel1.Controls.Add(Panel1, 1, 1)
         TableLayoutPanel1.Controls.Add(ShutdownBtn, 2, 0)
+        TableLayoutPanel1.Controls.Add(RFIDTap, 1, 0)
         TableLayoutPanel1.Dock = DockStyle.Fill
         TableLayoutPanel1.Location = New Point(0, 0)
         TableLayoutPanel1.Name = "TableLayoutPanel1"
