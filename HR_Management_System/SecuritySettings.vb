@@ -116,15 +116,17 @@ Public Class SecuritySettings
 
         Try
             DatabaseConnection.OpenConnection()
-            Dim employeeID As String = "02-10-28-02"
-            Dim query As String = "SELECT COUNT(*) FROM accounts WHERE ""EmployeeID"" = @EmployeeID AND ""Password"" = @OldPassword"
+
+            Dim employeeID As String = GetLoggedInEmployeeID()
+
+            Dim query As String = "SELECT COUNT(*) FROM ""Account"" WHERE ""EmployeeID"" = @EmployeeID AND ""Password"" = @OldPassword"
             Using cmd As New NpgsqlCommand(query, DatabaseConnection.conn)
                 cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
                 cmd.Parameters.AddWithValue("@OldPassword", oldPassword)
 
                 Dim count As Integer = Convert.ToInt32(cmd.ExecuteScalar())
                 If count > 0 Then
-                    Dim updateQuery As String = "UPDATE accounts SET ""Password"" = @NewPassword WHERE ""EmployeeID"" = @EmployeeID"
+                    Dim updateQuery As String = "UPDATE ""Account"" SET ""Password"" = @NewPassword WHERE ""EmployeeID"" = @EmployeeID"
                     Using updateCmd As New NpgsqlCommand(updateQuery, DatabaseConnection.conn)
                         updateCmd.Parameters.AddWithValue("@NewPassword", newPassword)
                         updateCmd.Parameters.AddWithValue("@EmployeeID", employeeID)
@@ -140,6 +142,11 @@ Public Class SecuritySettings
         End Try
 
         Return isSuccess
+    End Function
+
+    Private Function GetLoggedInEmployeeID() As String
+
+        Return "02-10-28-02"
     End Function
 
     Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click

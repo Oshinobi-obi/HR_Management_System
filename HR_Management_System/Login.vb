@@ -157,47 +157,40 @@ Public Class Login
         Dim employeeID As String = StaffIDtxt.Text.Trim()
         Dim password As String = Passtxt.Text.Trim()
 
-        If employeeID.StartsWith("02-") Then
-            Try
-                Dim employeeName As String = ValidateCredentials(employeeID, password)
+        Try
+            Dim isValid As Boolean = ValidateCredentials(employeeID, password)
 
-                If Not String.IsNullOrEmpty(employeeName) Then
-                    Dim adminForm As New Admin(employeeName)
-                    CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
-                    Me.Close()
-                Else
-                    MsgBox("Wrong credentials.", MsgBoxStyle.Exclamation, "Login Failed")
-                    ResetLoginFields()
-                End If
-            Catch ex As Exception
-                MsgBox("Error validating credentials: " & ex.Message)
-            End Try
-        Else
-            MsgBox("Invalid Employee ID.", MsgBoxStyle.Exclamation, "Login Failed")
-        End If
+            If isValid Then
+                Dim adminForm As New Admin(employeeID)
+                CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
+                Me.Close()
+            Else
+                MsgBox("Wrong credentials.", MsgBoxStyle.Exclamation, "Login Failed")
+                ResetLoginFields()
+            End If
+        Catch ex As Exception
+            MsgBox("Error validating credentials: " & ex.Message)
+        End Try
     End Sub
 
-    Private Function ValidateCredentials(employeeID As String, password As String) As String
+    Private Function ValidateCredentials(employeeID As String, password As String) As Boolean
         Try
             DatabaseConnection.OpenConnection()
-            Dim query As String = "SELECT ""EmployeeName"" FROM accounts WHERE ""EmployeeID"" = @EmployeeID AND ""Password"" = @Password"
+            Dim query As String = "SELECT COUNT(*) FROM ""Account"" WHERE ""EmployeeID"" = @EmployeeID AND ""Password"" = @Password"
 
             Using cmd As New NpgsqlCommand(query, DatabaseConnection.conn)
                 cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
                 cmd.Parameters.AddWithValue("@Password", password)
 
-                Dim employeeName As Object = cmd.ExecuteScalar()
-
-                If employeeName IsNot Nothing Then
-                    Return employeeName.ToString()
-                End If
+                Dim result As Integer = Convert.ToInt32(cmd.ExecuteScalar())
+                Return result > 0
             End Using
         Catch ex As Exception
             MsgBox("Database error: " & ex.Message)
         Finally
             DatabaseConnection.CloseConnection()
         End Try
-        Return Nothing
+        Return False
     End Function
 
     Private Sub ResetLoginFields()
