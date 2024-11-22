@@ -54,26 +54,45 @@ Public Class AddStaff
     End Sub
 
     Private Sub CheckIfResident()
-        Dim residentName As String = StaffNameTxt.Text.Trim()
+        Dim residentID As String = ResidentIDTxt.Text.Trim()
 
-        If String.IsNullOrEmpty(residentName) Then
-            MessageBox.Show("Please enter a name to check.")
+        If String.IsNullOrEmpty(residentID) Then
+            MessageBox.Show("Please enter resident ID to check.")
             Return
         End If
 
         Try
+            Dim parsedResidentID As Long
+            If Not Long.TryParse(residentID, parsedResidentID) Then
+                MessageBox.Show("Please enter a valid resident ID number.")
+                Return
+            End If
+
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
-                Dim query As String = "SELECT ""ResidentName"", ""ResidentAge"", ""ResidentContact"", ""ResidentAddress"" FROM resident WHERE ""ResidentName"" = @ResidentName"
-                Using cmd As New NpgsqlCommand(query, conn)
-                    cmd.Parameters.AddWithValue("@ResidentName", residentName)
 
+                Dim query As String = "SELECT ""First_Name"", ""Middle_Name"", ""Last_Name"", ""Date_Of_Birth"", ""Sex"", ""Contact_Number"", " &
+                                  "CONCAT(""House_Number"", ' ', ""Street_Name"", ' ', ""Subdivision"") AS ""ResidentAddress"" " &
+                                  "FROM ""Residents"" WHERE ""Resident_ID"" = @Resident_ID"
+
+                Using cmd As New NpgsqlCommand(query, conn)
+                    cmd.Parameters.AddWithValue("@Resident_ID", parsedResidentID)
                     Using reader As NpgsqlDataReader = cmd.ExecuteReader()
                         If reader.Read() Then
                             MessageBox.Show("This person is a resident.")
-                            StaffNameTxt.Text = reader("ResidentName").ToString()
-                            StaffAgeTxt.Text = reader("ResidentAge").ToString()
-                            StaffContactTxt.Text = reader("ResidentContact").ToString()
+
+                            FirstNameTxt.Text = reader("First_Name").ToString()
+                            MiddleNameTxt.Text = reader("Middle_Name").ToString()
+                            LastNameTxt.Text = reader("Last_Name").ToString()
+
+                            Dim dateOfBirth As DateTime = Convert.ToDateTime(reader("Date_Of_Birth"))
+                            Dim age As Integer = DateTime.Now.Year - dateOfBirth.Year
+                            If (DateTime.Now.Month < dateOfBirth.Month OrElse (DateTime.Now.Month = dateOfBirth.Month AndAlso DateTime.Now.Day < dateOfBirth.Day)) Then
+                                age -= 1
+                            End If
+                            StaffAgeTxt.Text = age.ToString()
+                            GenderTxt.Text = reader("Sex").ToString()
+                            StaffContactTxt.Text = reader("Contact_Number").ToString()
                             StaffAddressTxt.Text = reader("ResidentAddress").ToString()
                         Else
                             MessageBox.Show("This person is not a resident.")
@@ -89,15 +108,17 @@ Public Class AddStaff
         End Try
     End Sub
 
-    Private Sub StaffNameTxt_LostFocus(sender As Object, e As EventArgs) Handles StaffNameTxt.LostFocus
+    Private Sub ResidentIDTxt_LostFocus(sender As Object, e As EventArgs) Handles ResidentIDTxt.LostFocus
         CheckIfResident()
     End Sub
+
+
 
     Private Sub PosCmb_SelectedIndexChanged(sender As Object, e As EventArgs) Handles PosCmb.SelectedIndexChanged
         If PosCmb.SelectedItem IsNot Nothing Then
             Dim selectedPosition As String = PosCmb.SelectedItem.ToString()
             Dim positionCode As String = PositionValues(selectedPosition)
-            Dim firstLetter As String = If(StaffNameTxt.Text.Length > 0, StaffNameTxt.Text.Substring(0, 1).ToUpper(), "A")
+            Dim firstLetter As String = If(FirstNameTxt.Text.Length > 0, FirstNameTxt.Text.Substring(0, 1).ToUpper(), "A")
             Dim firstLetterNumber As String = GetAlphabetPosition(firstLetter)
             Dim age As String = StaffAgeTxt.Text.Trim()
 
@@ -135,7 +156,7 @@ Public Class AddStaff
     End Function
 
     Private Sub AddStaffBtn_Click(sender As Object, e As EventArgs) Handles AddStaffBtn.Click
-        Dim employeeName As String = StaffNameTxt.Text.Trim()
+        Dim employeeName As String = FirstNameTxt.Text.Trim()
         Dim employeeAge As String = StaffAgeTxt.Text.Trim()
         Dim employeePosition As String = PosCmb.SelectedItem.ToString()
         Dim employeeDaySchedule As String = WorkDayTxt.Text.Trim()
@@ -143,6 +164,7 @@ Public Class AddStaff
         Dim employeeMobile As String = StaffContactTxt.Text.Trim()
         Dim employeeAddress As String = StaffAddressTxt.Text.Trim()
         Dim employeeImage As String = PictureTxt.Text.Trim()
+        Dim employeeCardNumber As String = CardNumberTxt.Text.Trim()
 
         If String.IsNullOrEmpty(employeeName) OrElse String.IsNullOrEmpty(employeeAge) OrElse String.IsNullOrEmpty(employeePosition) Then
             MessageBox.Show("Please fill all required fields.")
@@ -154,8 +176,8 @@ Public Class AddStaff
                 conn.Open()
 
                 Dim imageBytes As Byte() = System.IO.File.ReadAllBytes(employeeImage)
-                Dim query As String = "INSERT INTO employee (""EmployeeID"", ""EmployeeName"", ""EmployeeAge"", ""EmployeePosition"", ""EmployeeDaySchedule"", ""EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployeeImage"", ""EmployedDate"") " &
-                                  "VALUES (@EmployeeID, @EmployeeName, @EmployeeAge, @EmployeePosition, @EmployeeDaySchedule, @EmployeeTimeShift, @EmployeeMobile, @EmployeeAddress, @EmployeeImage, CURRENT_DATE)"
+                Dim query As String = "INSERT INTO employee (""EmployeeID"", ""EmployeeName"", ""EmployeeAge"", ""EmployeePosition"", ""EmployeeDaySchedule"", ""EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployeeImage"", ""EmployedDate"", ""EmployeeCardNumber"") " &
+                                  "VALUES (@EmployeeID, @EmployeeName, @EmployeeAge, @EmployeePosition, @EmployeeDaySchedule, @EmployeeTimeShift, @EmployeeMobile, @EmployeeAddress, @EmployeeImage, @EmployeeCardNumber, CURRENT_DATE)"
                 Using cmd As New NpgsqlCommand(query, conn)
                     cmd.Parameters.AddWithValue("@EmployeeID", EmIDTxt.Text)
                     cmd.Parameters.AddWithValue("@EmployeeName", employeeName)
@@ -166,19 +188,14 @@ Public Class AddStaff
                     cmd.Parameters.AddWithValue("@EmployeeMobile", employeeMobile)
                     cmd.Parameters.AddWithValue("@EmployeeAddress", employeeAddress)
                     cmd.Parameters.AddWithValue("@EmployeeImage", imageBytes)
+                    cmd.Parameters.AddWithValue("@EmployeeCardNumber", employeeCardNumber)
 
                     cmd.ExecuteNonQuery()
                     MessageBox.Show("Staff added successfully.")
 
-                    EmIDTxt.Text = ""
-                    StaffNameTxt.Text = ""
-                    StaffAgeTxt.Text = ""
-                    PosCmb.SelectedText = ""
-                    WorkDayTxt.Text = ""
-                    HrShiftTxt.Text = ""
-                    StaffContactTxt.Text = ""
-                    StaffAddressTxt.Text = ""
-                    PictureTxt.Text = ""
+                    Me.Close()
+                    Dim AddStaffAgain As New AddStaff()
+                    AddStaffAgain.Show()
                 End Using
             End Using
         Catch ex As Exception
@@ -187,10 +204,8 @@ Public Class AddStaff
     End Sub
 
     Private PositionValues As New Dictionary(Of String, String) From {
-        {"Admin Aide I", "11"}, {"Admin Aide II", "14"}, {"Admin Aide III", "12"},
-        {"Admin Aide IV", "13"}, {"BNS", "09"}, {"BPSO", "03"}, {"Clerk", "04"},
-        {"Lupon Tagapamayapa", "08"}, {"Medical Aide", "05"}, {"Sangguniang Kabataan", "06"},
-        {"Secretary", "02"}
+        {"Secretary", "02"}, {"BPSO", "03"}, {"Clerk", "04"}, {"Medical Aide", "05"},
+        {"Sangguniang Kabataan", "06"}
     }
 
     Private Sub OpenBtn_Click(sender As Object, e As EventArgs) Handles OpenBtn.Click
@@ -207,4 +222,5 @@ Public Class AddStaff
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(StaffDB)
         Me.Close()
     End Sub
+
 End Class

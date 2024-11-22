@@ -205,5 +205,4 @@ Public Class Attendance
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(Welcome)
         Me.Close()
     End Sub
-
 End Class

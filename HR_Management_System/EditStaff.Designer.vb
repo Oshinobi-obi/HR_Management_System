@@ -26,6 +26,7 @@ Partial Class EditStaff
         PictureBox1 = New PictureBox()
         PictureBox2 = New PictureBox()
         Panel1 = New Panel()
+        DeleteBtn = New Button()
         EmIDCmb = New ComboBox()
         OpenBtn = New Button()
         PictureTxt = New TextBox()
@@ -48,7 +49,6 @@ Partial Class EditStaff
         Label2 = New Label()
         Label1 = New Label()
         SelectImage = New OpenFileDialog()
-        DeleteBtn = New Button()
         TableLayoutPanel1.SuspendLayout()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
@@ -125,6 +125,19 @@ Partial Class EditStaff
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(941, 473)
         Panel1.TabIndex = 2
+        ' 
+        ' DeleteBtn
+        ' 
+        DeleteBtn.Anchor = AnchorStyles.None
+        DeleteBtn.BackColor = Color.LightCoral
+        DeleteBtn.Cursor = Cursors.Hand
+        DeleteBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        DeleteBtn.Location = New Point(6, 409)
+        DeleteBtn.Name = "DeleteBtn"
+        DeleteBtn.Size = New Size(200, 50)
+        DeleteBtn.TabIndex = 39
+        DeleteBtn.Text = "DELETE"
+        DeleteBtn.UseVisualStyleBackColor = False
         ' 
         ' EmIDCmb
         ' 
@@ -372,19 +385,6 @@ Partial Class EditStaff
         Label1.Size = New Size(41, 33)
         Label1.TabIndex = 17
         Label1.Text = "ID"
-        ' 
-        ' DeleteBtn
-        ' 
-        DeleteBtn.Anchor = AnchorStyles.None
-        DeleteBtn.BackColor = Color.LightCoral
-        DeleteBtn.Cursor = Cursors.Hand
-        DeleteBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        DeleteBtn.Location = New Point(6, 409)
-        DeleteBtn.Name = "DeleteBtn"
-        DeleteBtn.Size = New Size(200, 50)
-        DeleteBtn.TabIndex = 39
-        DeleteBtn.Text = "DELETE"
-        DeleteBtn.UseVisualStyleBackColor = False
         ' 
         ' EditStaff
         ' 

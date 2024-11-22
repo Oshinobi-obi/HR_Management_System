@@ -16,14 +16,11 @@ Public Class EditStaff
         LoadEmployeeIDs()
     End Sub
 
-
     Private Sub LoadPositionItems()
         PosCmb.Items.Clear()
-        PosCmb.Items.AddRange(New String() {"Admin Aide I", "Admin Aide II", "Admin Aide III", "Admin Aide IV",
-                                        "BNS", "BPSO", "Clerk", "Lupon Tagapamayapa", "Medical Aide",
-                                        "Sangguniang Kabataan", "Secretary"})
+        PosCmb.Items.AddRange(New String() {"Secretary", "BPSO", "Clerk", "Medical Aide",
+                                            "Sangguniang Kabataan"})
     End Sub
-
 
     Private Sub LoadEmployeeIDs()
         Try
@@ -102,8 +99,6 @@ Public Class EditStaff
             MessageBox.Show("Error loading employee data: " & ex.Message)
         End Try
     End Sub
-
-
 
     Private Sub InitializeButton(button As Button, text As String, backColor As Color)
         button.FlatStyle = FlatStyle.Flat
@@ -229,9 +224,6 @@ Public Class EditStaff
         End Try
     End Sub
 
-
-
-
     Private Sub UpdateStaffBtn_Click(sender As Object, e As EventArgs) Handles UpdateStaffBtn.Click
         UpdateEmployeeData()
     End Sub
@@ -244,5 +236,4 @@ Public Class EditStaff
             MessageBox.Show("Please select an EmployeeID to delete.")
         End If
     End Sub
-
 End Class
