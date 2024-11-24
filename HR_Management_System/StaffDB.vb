@@ -137,7 +137,7 @@ Public Class StaffDb
     End Sub
 
     Private Sub PopulateFilterBox()
-        Dim positions As String() = {"All", "Admin Aide I", "Admin Aide II", "Admin Aide III", "Admin Aide IV", "BNS", "BPSO", "Clerk", "Lupon Tagapamayapa", "Medical Aide", "Sangguniang Kabataan", "Secretary"}
+        Dim positions As String() = {"All", "Admin Staff", "Secretary (HRMO)", "BPSO", "Clerk", "Medical Aide"}
         FilterBox.Items.AddRange(positions)
         FilterBox.SelectedIndex = 0
     End Sub

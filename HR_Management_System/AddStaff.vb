@@ -13,7 +13,56 @@ Public Class AddStaff
         InitializeButton(ReturnBtn, "RETURN", Color.LightCoral)
         InitializeButton(AddStaffBtn, "ADD STAFF", Color.LightGreen)
         InitializeButton(OpenBtn, "OPEN", Color.LightGreen)
+        ToggleControls(False)
     End Sub
+
+    Private Sub ToggleControls(isEnabled As Boolean)
+        FirstNameTxt.Enabled = isEnabled
+        MiddleNameTxt.Enabled = isEnabled
+        LastNameTxt.Enabled = isEnabled
+        AgeTxt.Enabled = isEnabled
+        GenderTxt.Enabled = isEnabled
+        ContactTxt.Enabled = isEnabled
+        AddressTxt.Enabled = isEnabled
+        EmIDTxt.Enabled = isEnabled
+        WorkDayTxt.Enabled = isEnabled
+        HrShiftTxt.Enabled = isEnabled
+        PosCmb.Enabled = isEnabled
+        PictureTxt.Enabled = isEnabled
+        CardNumberTxt.Enabled = isEnabled
+
+        Dim backColor As Color = If(isEnabled, Color.White, Color.LightGray)
+        FirstNameTxt.BackColor = backColor
+        MiddleNameTxt.BackColor = backColor
+        LastNameTxt.BackColor = backColor
+        AgeTxt.BackColor = backColor
+        GenderTxt.BackColor = backColor
+        ContactTxt.BackColor = backColor
+        AddressTxt.BackColor = backColor
+        EmIDTxt.BackColor = backColor
+        WorkDayTxt.BackColor = backColor
+        HrShiftTxt.BackColor = backColor
+        PosCmb.BackColor = backColor
+        PictureTxt.BackColor = backColor
+        CardNumberTxt.BackColor = backColor
+    End Sub
+
+    Private Sub ClearFields()
+        FirstNameTxt.Clear()
+        MiddleNameTxt.Clear()
+        LastNameTxt.Clear()
+        AgeTxt.Clear()
+        GenderTxt.Clear()
+        ContactTxt.Clear()
+        AddressTxt.Clear()
+        EmIDTxt.Clear()
+        WorkDayTxt.Clear()
+        HrShiftTxt.Clear()
+        PictureTxt.Clear()
+        CardNumberTxt.Clear()
+        PosCmb.SelectedIndex = -1
+    End Sub
+
 
     Private Sub InitializeButton(button As Button, text As String, backColor As Color)
         button.FlatStyle = FlatStyle.Flat
@@ -58,6 +107,8 @@ Public Class AddStaff
 
         If String.IsNullOrEmpty(residentID) Then
             MessageBox.Show("Please enter resident ID to check.")
+            ClearFields()
+            ToggleControls(False)
             Return
         End If
 
@@ -65,6 +116,8 @@ Public Class AddStaff
             Dim parsedResidentID As Long
             If Not Long.TryParse(residentID, parsedResidentID) Then
                 MessageBox.Show("Please enter a valid resident ID number.")
+                ClearFields()
+                ToggleControls(False)
                 Return
             End If
 
@@ -79,32 +132,38 @@ Public Class AddStaff
                     cmd.Parameters.AddWithValue("@Resident_ID", parsedResidentID)
                     Using reader As NpgsqlDataReader = cmd.ExecuteReader()
                         If reader.Read() Then
-                            MessageBox.Show("This person is a resident.")
+                            MessageBox.Show("This is a Resident.", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
+                            ' Populate fields
                             FirstNameTxt.Text = reader("First_Name").ToString()
                             MiddleNameTxt.Text = reader("Middle_Name").ToString()
                             LastNameTxt.Text = reader("Last_Name").ToString()
 
                             Dim dateOfBirth As DateTime = Convert.ToDateTime(reader("Date_Of_Birth"))
                             Dim age As Integer = DateTime.Now.Year - dateOfBirth.Year
-                            If (DateTime.Now.Month < dateOfBirth.Month OrElse (DateTime.Now.Month = dateOfBirth.Month AndAlso DateTime.Now.Day < dateOfBirth.Day)) Then
+                            If DateTime.Now.Month < dateOfBirth.Month OrElse
+                           (DateTime.Now.Month = dateOfBirth.Month AndAlso DateTime.Now.Day < dateOfBirth.Day) Then
                                 age -= 1
                             End If
-                            StaffAgeTxt.Text = age.ToString()
+                            AgeTxt.Text = age.ToString()
+
                             GenderTxt.Text = reader("Sex").ToString()
-                            StaffContactTxt.Text = reader("Contact_Number").ToString()
-                            StaffAddressTxt.Text = reader("ResidentAddress").ToString()
+                            ContactTxt.Text = reader("Contact_Number").ToString()
+                            AddressTxt.Text = reader("ResidentAddress").ToString()
+
+                            ToggleControls(True)
                         Else
-                            MessageBox.Show("This person is not a resident.")
-                            Me.Close()
-                            Dim addStaffForm As New AddStaff()
-                            addStaffForm.Show()
+                            MessageBox.Show("This is not a Resident.", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                            ClearFields()
+                            ToggleControls(False)
                         End If
                     End Using
                 End Using
             End Using
         Catch ex As Exception
-            MessageBox.Show("An error occurred while checking resident information: " & ex.Message)
+            MessageBox.Show("An error occurred while checking resident information: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            ClearFields()
+            ToggleControls(False)
         End Try
     End Sub
 
@@ -112,15 +171,13 @@ Public Class AddStaff
         CheckIfResident()
     End Sub
 
-
-
     Private Sub PosCmb_SelectedIndexChanged(sender As Object, e As EventArgs) Handles PosCmb.SelectedIndexChanged
         If PosCmb.SelectedItem IsNot Nothing Then
             Dim selectedPosition As String = PosCmb.SelectedItem.ToString()
             Dim positionCode As String = PositionValues(selectedPosition)
             Dim firstLetter As String = If(FirstNameTxt.Text.Length > 0, FirstNameTxt.Text.Substring(0, 1).ToUpper(), "A")
             Dim firstLetterNumber As String = GetAlphabetPosition(firstLetter)
-            Dim age As String = StaffAgeTxt.Text.Trim()
+            Dim age As String = AgeTxt.Text.Trim()
 
             If IsNumeric(age) Then
                 Dim incrementingNumber As Integer = GetNextEmployeeID()
@@ -130,7 +187,7 @@ Public Class AddStaff
                 MessageBox.Show("Please enter a valid age.")
             End If
 
-            If selectedPosition = "Secretary" Then
+            If selectedPosition = "Secretary (HRMO)" Then
                 HrShiftTxt.Text = "8:00 AM - 5:00 PM"
                 HrShiftTxt.ForeColor = Color.Black
             Else
@@ -156,18 +213,29 @@ Public Class AddStaff
     End Function
 
     Private Sub AddStaffBtn_Click(sender As Object, e As EventArgs) Handles AddStaffBtn.Click
-        Dim employeeName As String = FirstNameTxt.Text.Trim()
-        Dim employeeAge As String = StaffAgeTxt.Text.Trim()
+        If String.IsNullOrWhiteSpace(FirstNameTxt.Text) OrElse
+       String.IsNullOrWhiteSpace(AgeTxt.Text) OrElse
+       PosCmb.SelectedIndex = -1 Then
+            MessageBox.Show("Please fill in all required fields.", "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        Dim employeeID As String = EmIDTxt.Text.Trim()
+        Dim employeeName As String = $"{FirstNameTxt.Text.Trim()} {MiddleNameTxt.Text.Trim()} {LastNameTxt.Text.Trim()}".Trim()
+        Dim employeeAge As Integer = Integer.Parse(AgeTxt.Text.Trim())
         Dim employeePosition As String = PosCmb.SelectedItem.ToString()
         Dim employeeDaySchedule As String = WorkDayTxt.Text.Trim()
         Dim employeeTimeShift As String = HrShiftTxt.Text.Trim()
-        Dim employeeMobile As String = StaffContactTxt.Text.Trim()
-        Dim employeeAddress As String = StaffAddressTxt.Text.Trim()
-        Dim employeeImage As String = PictureTxt.Text.Trim()
+        Dim employeeMobile As String = ContactTxt.Text.Trim()
+        Dim employeeAddress As String = AddressTxt.Text.Trim()
         Dim employeeCardNumber As String = CardNumberTxt.Text.Trim()
+        Dim employeeStatus As String = "EMPLOYED"
+        Dim employeeImage As Byte()
 
-        If String.IsNullOrEmpty(employeeName) OrElse String.IsNullOrEmpty(employeeAge) OrElse String.IsNullOrEmpty(employeePosition) Then
-            MessageBox.Show("Please fill all required fields.")
+        If Not String.IsNullOrWhiteSpace(PictureTxt.Text) AndAlso IO.File.Exists(PictureTxt.Text) Then
+            employeeImage = IO.File.ReadAllBytes(PictureTxt.Text)
+        Else
+            MessageBox.Show("Please select a valid image file.", "Invalid Image", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return
         End If
 
@@ -175,11 +243,25 @@ Public Class AddStaff
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
 
-                Dim imageBytes As Byte() = System.IO.File.ReadAllBytes(employeeImage)
-                Dim query As String = "INSERT INTO employee (""EmployeeID"", ""EmployeeName"", ""EmployeeAge"", ""EmployeePosition"", ""EmployeeDaySchedule"", ""EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployeeImage"", ""EmployedDate"", ""EmployeeCardNumber"") " &
-                                  "VALUES (@EmployeeID, @EmployeeName, @EmployeeAge, @EmployeePosition, @EmployeeDaySchedule, @EmployeeTimeShift, @EmployeeMobile, @EmployeeAddress, @EmployeeImage, @EmployeeCardNumber, CURRENT_DATE)"
+                Dim checkQuery As String = "SELECT COUNT(*) FROM employee WHERE ""EmployeeID"" = @EmployeeID OR ""EmployeeCardNumber"" = @EmployeeCardNumber"
+                Using checkCmd As New NpgsqlCommand(checkQuery, conn)
+                    checkCmd.Parameters.AddWithValue("@EmployeeID", employeeID)
+                    checkCmd.Parameters.AddWithValue("@EmployeeCardNumber", employeeCardNumber)
+
+                    Dim count As Integer = CInt(checkCmd.ExecuteScalar())
+                    If count > 0 Then
+                        MessageBox.Show("This resident is already employed.", "Duplicate Entry", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                        Return
+                    End If
+                End Using
+
+                Dim query As String = "INSERT INTO employee (""EmployeeID"", ""EmployeeName"", ""EmployeeAge"", ""EmployeePosition"", ""EmployeeDaySchedule"", " &
+                                  """EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployeeImage"", ""EmployedDate"", ""EmployeeCardNumber"", ""EmployeeStatus"") " &
+                                  "VALUES (@EmployeeID, @EmployeeName, @EmployeeAge, @EmployeePosition, @EmployeeDaySchedule, " &
+                                  "@EmployeeTimeShift, @EmployeeMobile, @EmployeeAddress, @EmployeeImage, CURRENT_DATE, @EmployeeCardNumber, @EmployeeStatus)"
+
                 Using cmd As New NpgsqlCommand(query, conn)
-                    cmd.Parameters.AddWithValue("@EmployeeID", EmIDTxt.Text)
+                    cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
                     cmd.Parameters.AddWithValue("@EmployeeName", employeeName)
                     cmd.Parameters.AddWithValue("@EmployeeAge", employeeAge)
                     cmd.Parameters.AddWithValue("@EmployeePosition", employeePosition)
@@ -187,25 +269,23 @@ Public Class AddStaff
                     cmd.Parameters.AddWithValue("@EmployeeTimeShift", employeeTimeShift)
                     cmd.Parameters.AddWithValue("@EmployeeMobile", employeeMobile)
                     cmd.Parameters.AddWithValue("@EmployeeAddress", employeeAddress)
-                    cmd.Parameters.AddWithValue("@EmployeeImage", imageBytes)
+                    cmd.Parameters.AddWithValue("@EmployeeImage", employeeImage)
                     cmd.Parameters.AddWithValue("@EmployeeCardNumber", employeeCardNumber)
+                    cmd.Parameters.AddWithValue("@EmployeeStatus", employeeStatus)
 
                     cmd.ExecuteNonQuery()
-                    MessageBox.Show("Staff added successfully.")
-
-                    Me.Close()
-                    Dim AddStaffAgain As New AddStaff()
-                    AddStaffAgain.Show()
+                    MessageBox.Show("Staff added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    ClearFields()
                 End Using
             End Using
         Catch ex As Exception
-            MessageBox.Show("An error occurred while adding staff: " & ex.Message)
+            MessageBox.Show($"An error occurred while adding staff: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
+
     Private PositionValues As New Dictionary(Of String, String) From {
-        {"Secretary", "02"}, {"BPSO", "03"}, {"Clerk", "04"}, {"Medical Aide", "05"},
-        {"Sangguniang Kabataan", "06"}
+       {"Admin Staff", "01"}, {"Secretary (HRMO)", "02"}, {"BPSO", "03"}, {"Clerk", "04"}, {"Medical Aide", "05"}
     }
 
     Private Sub OpenBtn_Click(sender As Object, e As EventArgs) Handles OpenBtn.Click

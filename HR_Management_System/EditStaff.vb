@@ -18,8 +18,7 @@ Public Class EditStaff
 
     Private Sub LoadPositionItems()
         PosCmb.Items.Clear()
-        PosCmb.Items.AddRange(New String() {"Secretary", "BPSO", "Clerk", "Medical Aide",
-                                            "Sangguniang Kabataan"})
+        PosCmb.Items.AddRange(New String() {"Admin Staff", "Secretary (HRMO)", "BPSO", "Clerk", "Medical Aide"})
     End Sub
 
     Private Sub LoadEmployeeIDs()
