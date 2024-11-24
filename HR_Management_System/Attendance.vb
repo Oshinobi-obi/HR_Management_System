@@ -35,6 +35,14 @@ Public Class Attendance
                     Dim currentDate As DateTime = DateTime.Now
                     Dim currentTime As TimeSpan = currentDate.TimeOfDay
 
+                    ' Check if attendance is already complete
+                    If IsAttendanceComplete(employeeData("EmployeeID"), currentDate) Then
+                        MsgBox("You have already completed your attendance for today.")
+                        System.Media.SystemSounds.Exclamation.Play()
+                        transaction.Rollback()
+                        Return
+                    End If
+
                     employeeData("DateNow") = currentDate.ToString("yyyy-MM-dd")
                     employeeData("TimeIn") = currentTime.ToString("hh\:mm\:ss")
 
@@ -67,6 +75,17 @@ Public Class Attendance
             CloseConnection()
         End Try
     End Sub
+
+    Private Function IsAttendanceComplete(employeeID As String, currentDate As DateTime) As Boolean
+        Dim isComplete As Boolean = False
+        Dim query As String = "SELECT COUNT(*) FROM attendance WHERE ""Date"" = @Date AND ""EmployeeID"" = @EmployeeID AND ""TimeOut"" IS NOT NULL"
+        Using cmd As New NpgsqlCommand(query, conn)
+            cmd.Parameters.AddWithValue("@Date", currentDate.Date)
+            cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
+            isComplete = Convert.ToInt32(cmd.ExecuteScalar()) > 0
+        End Using
+        Return isComplete
+    End Function
 
 
     Private Function AttendanceRecordExists(employeeID As String, dateValue As DateTime) As Boolean
