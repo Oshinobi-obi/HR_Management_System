@@ -11,13 +11,15 @@ Public Class AttendancePopUp
     Public Sub SetEmployeeData(employeeData As Dictionary(Of String, String))
 
         If employeeData IsNot Nothing Then
-            If employeeData.ContainsKey("EmployeeID") Then
-                EMIDTxt.Text = employeeData("EmployeeID")
-                ENTxt.Text = employeeData("EmployeeName")
-                PosTxt.Text = employeeData("EmployeePosition")
-                DaySchedTxt.Text = employeeData("EmployeeDaySchedule")
-                DateTxt.Text = employeeData("DateNow")
-                TimeInTxt.Text = employeeData("TimeIn")
+            If employeeData IsNot Nothing Then
+                EMIDTxt.Text = employeeData.GetValueOrDefault("EmployeeID", "N/A")
+                ENTxt.Text = employeeData.GetValueOrDefault("EmployeeName", "N/A")
+                PosTxt.Text = employeeData.GetValueOrDefault("EmployeePosition", "N/A")
+                DaySchedTxt.Text = employeeData.GetValueOrDefault("EmployeeDaySchedule", "N/A")
+                DateTxt.Text = employeeData.GetValueOrDefault("DateNow", "N/A")
+                TimeInTxt.Text = employeeData.GetValueOrDefault("TimeIn", "N/A")
+                TimeOutTxt.Text = employeeData.GetValueOrDefault("TimeOut", "N/A")
+                HourShiftTxt.Text = employeeData.GetValueOrDefault("EmployeeTotalHour", "0")
             End If
 
             If employeeData.ContainsKey("TimeOut") Then

@@ -36,16 +36,14 @@ Public Class Attendance
                     Dim currentTime As TimeSpan = currentDate.TimeOfDay
 
                     employeeData("DateNow") = currentDate.ToString("yyyy-MM-dd")
-                    employeeData("TimeIn") = currentTime.ToString("HH:mm:ss")
+                    employeeData("TimeIn") = currentTime.ToString("hh\:mm\:ss")
 
                     If Not AttendanceRecordExists(employeeData("EmployeeID"), currentDate.Date) Then
-                        MsgBox("Inserting attendance record.")
                         InsertAttendanceRecord(employeeData, currentDate)
                         transaction.Commit()
                         ShowAttendancePopUp(employeeData)
                     Else
-                        Dim attendanceUpdated = UpdateAttendanceRecord(employeeData("EmployeeID"), currentDate)
-                        If attendanceUpdated Then
+                        If UpdateAttendanceRecord(employeeData("EmployeeID"), currentDate) Then
                             transaction.Commit()
                             MsgBox("Time-Out recorded successfully.")
                         Else
@@ -78,60 +76,49 @@ Public Class Attendance
     End Function
 
     Private Function FetchEmployeeDataByCardNumber(rfid As String) As Dictionary(Of String, String)
-        Dim employeeData As Dictionary(Of String, String) = Nothing
-
+        Dim employeeData As New Dictionary(Of String, String)
         Dim query As String = "SELECT ""EmployeeID"", ""EmployeeName"", ""EmployeePosition"", ""EmployeeDaySchedule"", ""EmployeeTimeShift"" " &
-                          "FROM employee WHERE ""EmployeeCardNumber"" = @RFID"
+                              "FROM employee WHERE ""EmployeeCardNumber"" = @RFID"
         Using cmd As New NpgsqlCommand(query, conn)
             cmd.Parameters.AddWithValue("@RFID", rfid)
-
-            Dim reader As NpgsqlDataReader = cmd.ExecuteReader()
-            If reader.Read() Then
-                employeeData = New Dictionary(Of String, String) From {
-                {"EmployeeID", reader("EmployeeID").ToString()},
-                {"EmployeeName", reader("EmployeeName").ToString()},
-                {"EmployeePosition", reader("EmployeePosition").ToString()},
-                {"EmployeeDaySchedule", reader("EmployeeDaySchedule").ToString()},
-                {"EmployeeTimeShift", reader("EmployeeTimeShift").ToString()}
-            }
-            End If
-            reader.Close()
+            Using reader As NpgsqlDataReader = cmd.ExecuteReader()
+                If reader.Read() Then
+                    employeeData("EmployeeID") = reader("EmployeeID").ToString()
+                    employeeData("EmployeeName") = reader("EmployeeName").ToString()
+                    employeeData("EmployeePosition") = reader("EmployeePosition").ToString()
+                    employeeData("EmployeeDaySchedule") = reader("EmployeeDaySchedule").ToString()
+                    employeeData("EmployeeTimeShift") = reader("EmployeeTimeShift").ToString()
+                End If
+            End Using
         End Using
-
-        Return employeeData
+        Return If(employeeData.Count > 0, employeeData, Nothing)
     End Function
 
     Private Sub InsertAttendanceRecord(employeeData As Dictionary(Of String, String), timeIn As DateTime)
         Dim query As String = "INSERT INTO attendance (""Date"", ""TimeIn"", ""EmployeeID"", ""EmployeeName"", ""EmployeePosition"", ""EmployeeDaySchedule"", ""EmployeeTimeShift"") " &
-                          "VALUES (@Date, @TimeIn, @EmployeeID, @EmployeeName, @EmployeePosition, @EmployeeDaySchedule, @EmployeeTimeShift)"
+                              "VALUES (@Date, @TimeIn, @EmployeeID, @EmployeeName, @EmployeePosition, @EmployeeDaySchedule, @EmployeeTimeShift)"
         Using cmd As New NpgsqlCommand(query, conn)
             cmd.Parameters.AddWithValue("@Date", timeIn.Date)
-            cmd.Parameters.AddWithValue("@TimeIn", timeIn.ToString("HH:mm:ss"))
-
+            cmd.Parameters.AddWithValue("@TimeIn", timeIn.TimeOfDay)
             cmd.Parameters.AddWithValue("@EmployeeID", employeeData("EmployeeID"))
             cmd.Parameters.AddWithValue("@EmployeeName", employeeData("EmployeeName"))
             cmd.Parameters.AddWithValue("@EmployeePosition", employeeData("EmployeePosition"))
             cmd.Parameters.AddWithValue("@EmployeeDaySchedule", employeeData("EmployeeDaySchedule"))
             cmd.Parameters.AddWithValue("@EmployeeTimeShift", employeeData("EmployeeTimeShift"))
-
             cmd.ExecuteNonQuery()
         End Using
     End Sub
 
-
     Private Function UpdateAttendanceRecord(employeeID As String, timeOut As DateTime) As Boolean
-        Dim rowsAffected As Integer = 0
-
+        Dim rowsAffected As Integer
         Dim query As String = "UPDATE attendance SET ""TimeOut"" = @TimeOut, ""EmployeeTotalHour"" = EXTRACT(EPOCH FROM (@TimeOut - ""TimeIn"")) / 3600 " &
-                          "WHERE ""Date"" = @Date AND ""EmployeeID"" = @EmployeeID AND ""TimeOut"" IS NULL"
+                              "WHERE ""Date"" = @Date AND ""EmployeeID"" = @EmployeeID AND ""TimeOut"" IS NULL"
         Using cmd As New NpgsqlCommand(query, conn)
             cmd.Parameters.AddWithValue("@TimeOut", timeOut.TimeOfDay)
             cmd.Parameters.AddWithValue("@Date", timeOut.Date)
             cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
-
             rowsAffected = cmd.ExecuteNonQuery()
         End Using
-
         Return rowsAffected > 0
     End Function
 
@@ -139,8 +126,6 @@ Public Class Attendance
         PopUp = New AttendancePopUp()
         PopUp.SetEmployeeData(employeeData)
         PopUp.Show()
-        PopUp.AttendancePanel.Select()
-
         Timer.Interval = 5000
         AddHandler Timer.Tick, AddressOf ClosePopUp
         Timer.Start()
