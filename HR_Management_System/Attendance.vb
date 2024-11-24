@@ -41,11 +41,15 @@ Public Class Attendance
                     If Not AttendanceRecordExists(employeeData("EmployeeID"), currentDate.Date) Then
                         InsertAttendanceRecord(employeeData, currentDate)
                         transaction.Commit()
-                        ShowAttendancePopUp(employeeData)
+                        ShowAttendancePopUp(employeeData) ' Show popup after Time-In
                     Else
-                        If UpdateAttendanceRecord(employeeData("EmployeeID"), currentDate) Then
+                        Dim isTimeOutRecorded = UpdateAttendanceRecord(employeeData("EmployeeID"), currentDate)
+                        If isTimeOutRecorded Then
+                            ' Update employee data with TimeOut and Total Hours
+                            employeeData("TimeOut") = currentTime.ToString("hh\:mm\:ss")
+                            employeeData("EmployeeTotalHour") = CalculateTotalHours(employeeData("EmployeeID"), currentDate).ToString("F2")
                             transaction.Commit()
-                            MsgBox("Time-Out recorded successfully.")
+                            ShowAttendancePopUp(employeeData) ' Show popup after Time-Out
                         Else
                             MsgBox("Failed to record Time-Out. Please check the records.")
                             transaction.Rollback()
@@ -63,6 +67,7 @@ Public Class Attendance
             CloseConnection()
         End Try
     End Sub
+
 
     Private Function AttendanceRecordExists(employeeID As String, dateValue As DateTime) As Boolean
         Dim exists As Boolean = False
@@ -130,6 +135,22 @@ Public Class Attendance
         AddHandler Timer.Tick, AddressOf ClosePopUp
         Timer.Start()
     End Sub
+
+    Private Function CalculateTotalHours(employeeID As String, currentDate As DateTime) As Double
+        Dim totalHours As Double = 0
+        Dim query As String = "SELECT EXTRACT(EPOCH FROM (""TimeOut"" - ""TimeIn"")) / 3600 AS TotalHours " &
+                          "FROM attendance WHERE ""Date"" = @Date AND ""EmployeeID"" = @EmployeeID AND ""TimeOut"" IS NOT NULL"
+        Using cmd As New NpgsqlCommand(query, conn)
+            cmd.Parameters.AddWithValue("@Date", currentDate.Date)
+            cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
+            Dim result = cmd.ExecuteScalar()
+            If result IsNot Nothing Then
+                totalHours = Convert.ToDouble(result)
+            End If
+        End Using
+        Return totalHours
+    End Function
+
 
     Private Sub ClosePopUp(sender As Object, e As EventArgs)
         Timer.Stop()
