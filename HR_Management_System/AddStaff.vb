@@ -134,7 +134,6 @@ Public Class AddStaff
                         If reader.Read() Then
                             MessageBox.Show("This is a Resident.", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-                            ' Populate fields
                             FirstNameTxt.Text = reader("First_Name").ToString()
                             MiddleNameTxt.Text = reader("Middle_Name").ToString()
                             LastNameTxt.Text = reader("Last_Name").ToString()

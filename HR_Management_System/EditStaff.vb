@@ -14,6 +14,53 @@ Public Class EditStaff
 
         LoadPositionItems()
         LoadEmployeeIDs()
+        ToggleControls(False)
+    End Sub
+
+    Private Sub ToggleControls(isEnabled As Boolean)
+        ResidentIDTxt.Enabled = isEnabled
+        FirstNameTxt.Enabled = isEnabled
+        MiddleNameTxt.Enabled = isEnabled
+        LastNameTxt.Enabled = isEnabled
+        AgeTxt.Enabled = isEnabled
+        StatusCmb.Enabled = isEnabled
+        ContactTxt.Enabled = isEnabled
+        AddressTxt.Enabled = isEnabled
+        WorkDayTxt.Enabled = isEnabled
+        HrShiftTxt.Enabled = isEnabled
+        PosCmb.Enabled = isEnabled
+        PictureTxt.Enabled = isEnabled
+        CardNumberTxt.Enabled = isEnabled
+
+        Dim backColor As Color = If(isEnabled, Color.White, Color.LightGray)
+        ResidentIDTxt.BackColor = backColor
+        FirstNameTxt.BackColor = backColor
+        MiddleNameTxt.BackColor = backColor
+        LastNameTxt.BackColor = backColor
+        AgeTxt.BackColor = backColor
+        StatusCmb.BackColor = backColor
+        ContactTxt.BackColor = backColor
+        AddressTxt.BackColor = backColor
+        WorkDayTxt.BackColor = backColor
+        HrShiftTxt.BackColor = backColor
+        PosCmb.BackColor = backColor
+        PictureTxt.BackColor = backColor
+        CardNumberTxt.BackColor = backColor
+    End Sub
+
+    Private Sub ClearFields()
+        FirstNameTxt.Clear()
+        MiddleNameTxt.Clear()
+        LastNameTxt.Clear()
+        AgeTxt.Clear()
+        StatusCmb.SelectedIndex = -1
+        ContactTxt.Clear()
+        AddressTxt.Clear()
+        WorkDayTxt.Clear()
+        HrShiftTxt.Clear()
+        PictureTxt.Clear()
+        CardNumberTxt.Clear()
+        PosCmb.SelectedIndex = -1
     End Sub
 
     Private Sub LoadPositionItems()
@@ -41,9 +88,12 @@ Public Class EditStaff
     End Sub
 
     Private Sub EmIDCmb_SelectedIndexChanged(sender As Object, e As EventArgs) Handles EmIDCmb.SelectedIndexChanged
-        If EmIDCmb.SelectedItem IsNot Nothing Then
-            Dim selectedID As String = EmIDCmb.SelectedItem.ToString().Trim()
+        If EmIDCmb.SelectedItem IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(EmIDCmb.SelectedItem.ToString().Trim()) Then
+            ToggleControls(True)
+            Dim selectedID = EmIDCmb.SelectedItem.ToString.Trim
             LoadEmployeeData(selectedID)
+        Else
+            ToggleControls(False)
         End If
     End Sub
 
@@ -52,26 +102,34 @@ Public Class EditStaff
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
                 Dim sql As String = "SELECT ""EmployeeName"", ""EmployeeAge"", ""EmployeePosition"", ""EmployeeDaySchedule"", " &
-                                """EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployeeImage"" " &
-                                "FROM employee WHERE ""EmployeeID"" = @EmployeeID"
+                                    """EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployeeImage"", ""EmployeeStatus"" " &
+                                    "FROM employee WHERE ""EmployeeID"" = @EmployeeID"
                 Using cmd As New NpgsqlCommand(sql, conn)
                     cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
                     Using reader As NpgsqlDataReader = cmd.ExecuteReader()
                         If reader.Read() Then
-                            StaffNameTxt.Text = reader("EmployeeName").ToString()
-                            StaffAgeTxt.Text = reader("EmployeeAge").ToString()
+                            Dim fullName As String = reader("EmployeeName").ToString().Trim()
+                            Dim nameParts As String() = fullName.Split(" "c)
+
+                            If nameParts.Length > 0 Then FirstNameTxt.Text = nameParts(0)
+                            If nameParts.Length > 1 Then MiddleNameTxt.Text = nameParts(1)
+                            If nameParts.Length > 2 Then LastNameTxt.Text = nameParts(2)
+
+                            AgeTxt.Text = reader("EmployeeAge").ToString()
                             WorkDayTxt.Text = reader("EmployeeDaySchedule").ToString()
                             HrShiftTxt.Text = reader("EmployeeTimeShift").ToString()
-                            StaffContactTxt.Text = reader("EmployeeMobile").ToString()
-                            StaffAddressTxt.Text = reader("EmployeeAddress").ToString()
+                            ContactTxt.Text = reader("EmployeeMobile").ToString()
+                            AddressTxt.Text = reader("EmployeeAddress").ToString()
+
+                            Dim status As String = reader("EmployeeStatus").ToString().Trim()
+                            If StatusCmb.Items.Contains(status) Then
+                                StatusCmb.SelectedItem = status
+                            Else
+                                MessageBox.Show("Status '" & status & "' not found in StatusCmb.")
+                            End If
 
                             LoadPositionItems()
                             Dim position As String = reader("EmployeePosition").ToString().Trim()
-
-                            Console.WriteLine("PosCmb Items:")
-                            For Each item As Object In PosCmb.Items
-                                Console.WriteLine(item.ToString())
-                            Next
 
                             Dim index As Integer = PosCmb.Items.IndexOf(position)
                             If index >= 0 Then
@@ -153,86 +211,54 @@ Public Class EditStaff
     End Sub
 
     Private Sub UpdateEmployeeData()
+        Dim employeeID As String = EmIDCmb.SelectedItem.ToString().Trim()
+
+        If String.IsNullOrWhiteSpace(FirstNameTxt.Text) OrElse String.IsNullOrWhiteSpace(AgeTxt.Text) OrElse PosCmb.SelectedIndex = -1 Then
+            MessageBox.Show("Please fill in all required fields.", "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        Dim employeeName As String = $"{FirstNameTxt.Text.Trim()} {MiddleNameTxt.Text.Trim()} {LastNameTxt.Text.Trim()}".Trim()
+        Dim employeeAge As Integer = Integer.Parse(AgeTxt.Text.Trim())
+        Dim employeePosition As String = PosCmb.SelectedItem.ToString()
+        Dim employeeDaySchedule As String = WorkDayTxt.Text.Trim()
+        Dim employeeTimeShift As String = HrShiftTxt.Text.Trim()
+        Dim employeeMobile As String = ContactTxt.Text.Trim()
+        Dim employeeAddress As String = AddressTxt.Text.Trim()
+        Dim employeeStatus As String = StatusCmb.SelectedItem.ToString()
+
         Try
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
+                Dim updateQuery As String = "UPDATE employee SET ""EmployeeName"" = @EmployeeName, ""EmployeeAge"" = @EmployeeAge, " &
+                                        """EmployeePosition"" = @EmployeePosition, ""EmployeeDaySchedule"" = @EmployeeDaySchedule, " &
+                                        """EmployeeTimeShift"" = @EmployeeTimeShift, ""EmployeeMobile"" = @EmployeeMobile, " &
+                                        """EmployeeAddress"" = @EmployeeAddress, ""EmployeeStatus"" = @EmployeeStatus " &
+                                        "WHERE ""EmployeeID"" = @EmployeeID"
 
-                Dim sql As String = "UPDATE employee SET ""EmployeeName"" = @EmployeeName, ""EmployeeAge"" = @EmployeeAge, " &
-                                """EmployeePosition"" = @EmployeePosition, ""EmployeeDaySchedule"" = @EmployeeDaySchedule, " &
-                                """EmployeeTimeShift"" = @EmployeeTimeShift, ""EmployeeMobile"" = @EmployeeMobile, " &
-                                """EmployeeAddress"" = @EmployeeAddress, ""EmployeeImage"" = @EmployeeImage " &
-                                "WHERE ""EmployeeID"" = @EmployeeID"
-
-                Using cmd As New NpgsqlCommand(sql, conn)
-                    cmd.Parameters.AddWithValue("@EmployeeName", StaffNameTxt.Text.Trim())
-                    cmd.Parameters.AddWithValue("@EmployeeAge", Convert.ToInt32(StaffAgeTxt.Text.Trim()))
-                    cmd.Parameters.AddWithValue("@EmployeePosition", PosCmb.SelectedItem.ToString())
-                    cmd.Parameters.AddWithValue("@EmployeeDaySchedule", WorkDayTxt.Text.Trim())
-                    cmd.Parameters.AddWithValue("@EmployeeTimeShift", HrShiftTxt.Text.Trim())
-                    cmd.Parameters.AddWithValue("@EmployeeMobile", StaffContactTxt.Text.Trim())
-                    cmd.Parameters.AddWithValue("@EmployeeAddress", StaffAddressTxt.Text.Trim())
-
-                    If Not String.IsNullOrEmpty(PictureTxt.Text) Then
-                        Dim imageBytes As Byte() = System.IO.File.ReadAllBytes(PictureTxt.Text.Trim())
-                        cmd.Parameters.AddWithValue("@EmployeeImage", imageBytes)
-                    Else
-                        cmd.Parameters.AddWithValue("@EmployeeImage", DBNull.Value)
-                    End If
-
-                    cmd.Parameters.AddWithValue("@EmployeeID", EmIDCmb.SelectedItem.ToString().Trim())
+                Using cmd As New NpgsqlCommand(updateQuery, conn)
+                    cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
+                    cmd.Parameters.AddWithValue("@EmployeeName", employeeName)
+                    cmd.Parameters.AddWithValue("@EmployeeAge", employeeAge)
+                    cmd.Parameters.AddWithValue("@EmployeePosition", employeePosition)
+                    cmd.Parameters.AddWithValue("@EmployeeDaySchedule", employeeDaySchedule)
+                    cmd.Parameters.AddWithValue("@EmployeeTimeShift", employeeTimeShift)
+                    cmd.Parameters.AddWithValue("@EmployeeMobile", employeeMobile)
+                    cmd.Parameters.AddWithValue("@EmployeeAddress", employeeAddress)
+                    cmd.Parameters.AddWithValue("@EmployeeStatus", employeeStatus)
 
                     cmd.ExecuteNonQuery()
-                    MessageBox.Show("Employee data updated successfully.")
-
-                    Dim staffDBForm As New StaffDB()
-                    CType(Me.MdiParent, MDIParent).LoadFormInMDI(staffDBForm)
-                    Me.Close()
+                    MessageBox.Show("Employee data updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End Using
             End Using
         Catch ex As Exception
-            MessageBox.Show("Error updating employee data: " & ex.Message)
+            MessageBox.Show("An error occurred while updating employee data: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
-    Private Sub DeleteEmployeeData(employeeID As String)
-        Try
-            Using conn As New NpgsqlConnection(connString)
-                conn.Open()
-                Dim confirmDelete As DialogResult = MessageBox.Show("Are you sure you want to delete this employee?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
-
-                If confirmDelete = DialogResult.Yes Then
-                    Dim sql As String = "DELETE FROM employee WHERE ""EmployeeID"" = @EmployeeID"
-                    Using cmd As New NpgsqlCommand(sql, conn)
-                        cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
-                        Dim rowsAffected As Integer = cmd.ExecuteNonQuery()
-
-                        If rowsAffected > 0 Then
-                            MessageBox.Show("Employee deleted successfully.")
-
-                            Dim staffDBForm As New StaffDB()
-                            CType(Me.MdiParent, MDIParent).LoadFormInMDI(staffDBForm)
-                            Me.Close()
-                        Else
-                            MessageBox.Show("No record found with the specified EmployeeID.")
-                        End If
-                    End Using
-                End If
-            End Using
-        Catch ex As Exception
-            MessageBox.Show("Error deleting employee data: " & ex.Message)
-        End Try
-    End Sub
 
     Private Sub UpdateStaffBtn_Click(sender As Object, e As EventArgs) Handles UpdateStaffBtn.Click
         UpdateEmployeeData()
     End Sub
 
-    Private Sub DeleteBtn_Click(sender As Object, e As EventArgs) Handles DeleteBtn.Click
-        If EmIDCmb.SelectedItem IsNot Nothing Then
-            Dim selectedID As String = EmIDCmb.SelectedItem.ToString().Trim()
-            DeleteEmployeeData(selectedID)
-        Else
-            MessageBox.Show("Please select an EmployeeID to delete.")
-        End If
-    End Sub
 End Class

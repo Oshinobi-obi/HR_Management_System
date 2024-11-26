@@ -34,8 +34,6 @@ Public Class Attendance
                 If employeeData IsNot Nothing Then
                     Dim currentDate As DateTime = DateTime.Now
                     Dim currentTime As TimeSpan = currentDate.TimeOfDay
-
-                    ' Check if attendance is already complete
                     If IsAttendanceComplete(employeeData("EmployeeID"), currentDate) Then
                         MsgBox("You have already completed your attendance for today.")
                         System.Media.SystemSounds.Exclamation.Play()
@@ -49,15 +47,14 @@ Public Class Attendance
                     If Not AttendanceRecordExists(employeeData("EmployeeID"), currentDate.Date) Then
                         InsertAttendanceRecord(employeeData, currentDate)
                         transaction.Commit()
-                        ShowAttendancePopUp(employeeData) ' Show popup after Time-In
+                        ShowAttendancePopUp(employeeData)
                     Else
                         Dim isTimeOutRecorded = UpdateAttendanceRecord(employeeData("EmployeeID"), currentDate)
                         If isTimeOutRecorded Then
-                            ' Update employee data with TimeOut and Total Hours
                             employeeData("TimeOut") = currentTime.ToString("hh\:mm\:ss")
                             employeeData("EmployeeTotalHour") = CalculateTotalHours(employeeData("EmployeeID"), currentDate).ToString("F2")
                             transaction.Commit()
-                            ShowAttendancePopUp(employeeData) ' Show popup after Time-Out
+                            ShowAttendancePopUp(employeeData)
                         Else
                             MsgBox("Failed to record Time-Out. Please check the records.")
                             transaction.Rollback()
