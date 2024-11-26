@@ -102,7 +102,7 @@ Public Class EditStaff
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
                 Dim sql As String = "SELECT ""EmployeeName"", ""EmployeeAge"", ""EmployeePosition"", ""EmployeeDaySchedule"", " &
-                                    """EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployeeImage"", ""EmployeeStatus"" " &
+                                    """EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployeeImage"", ""EmployeeCardNumber"", ""EmployeeStatus"" " &
                                     "FROM employee WHERE ""EmployeeID"" = @EmployeeID"
                 Using cmd As New NpgsqlCommand(sql, conn)
                     cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
@@ -120,6 +120,7 @@ Public Class EditStaff
                             HrShiftTxt.Text = reader("EmployeeTimeShift").ToString()
                             ContactTxt.Text = reader("EmployeeMobile").ToString()
                             AddressTxt.Text = reader("EmployeeAddress").ToString()
+                            CardNumberTxt.Text = reader("EmployeeCardNumber").ToString()
 
                             Dim status As String = reader("EmployeeStatus").ToString().Trim()
                             If StatusCmb.Items.Contains(status) Then
@@ -225,6 +226,7 @@ Public Class EditStaff
         Dim employeeTimeShift As String = HrShiftTxt.Text.Trim()
         Dim employeeMobile As String = ContactTxt.Text.Trim()
         Dim employeeAddress As String = AddressTxt.Text.Trim()
+        Dim employeeCardNumber As String = CardNumberTxt.Text.Trim()
         Dim employeeStatus As String = StatusCmb.SelectedItem.ToString()
 
         Try
@@ -233,7 +235,7 @@ Public Class EditStaff
                 Dim updateQuery As String = "UPDATE employee SET ""EmployeeName"" = @EmployeeName, ""EmployeeAge"" = @EmployeeAge, " &
                                         """EmployeePosition"" = @EmployeePosition, ""EmployeeDaySchedule"" = @EmployeeDaySchedule, " &
                                         """EmployeeTimeShift"" = @EmployeeTimeShift, ""EmployeeMobile"" = @EmployeeMobile, " &
-                                        """EmployeeAddress"" = @EmployeeAddress, ""EmployeeStatus"" = @EmployeeStatus " &
+                                        """EmployeeAddress"" = @EmployeeAddress, ""EmployeeCardNumber"" = @EmployeeCardNumber, ""EmployeeStatus"" = @EmployeeStatus " &
                                         "WHERE ""EmployeeID"" = @EmployeeID"
 
                 Using cmd As New NpgsqlCommand(updateQuery, conn)
@@ -245,6 +247,7 @@ Public Class EditStaff
                     cmd.Parameters.AddWithValue("@EmployeeTimeShift", employeeTimeShift)
                     cmd.Parameters.AddWithValue("@EmployeeMobile", employeeMobile)
                     cmd.Parameters.AddWithValue("@EmployeeAddress", employeeAddress)
+                    cmd.Parameters.AddWithValue("@EmployeeCardNumber", employeeCardNumber)
                     cmd.Parameters.AddWithValue("@EmployeeStatus", employeeStatus)
 
                     cmd.ExecuteNonQuery()

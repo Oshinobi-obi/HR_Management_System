@@ -34,7 +34,6 @@ Partial Class EditStaff
         Label11 = New Label()
         MiddleNameTxt = New TextBox()
         Label12 = New Label()
-        CardNumberTxt = New TextBox()
         Label10 = New Label()
         PictureTxt = New TextBox()
         Label9 = New Label()
@@ -58,6 +57,7 @@ Partial Class EditStaff
         UpdateStaffBtn = New Button()
         ReturnBtn = New Button()
         SelectImage = New OpenFileDialog()
+        CardNumberTxt = New TextBox()
         TableLayoutPanel1.SuspendLayout()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
@@ -107,6 +107,7 @@ Partial Class EditStaff
         ' 
         ' Panel1
         ' 
+        Panel1.Controls.Add(CardNumberTxt)
         Panel1.Controls.Add(StatusCmb)
         Panel1.Controls.Add(Label14)
         Panel1.Controls.Add(ResidentIDTxt)
@@ -115,7 +116,6 @@ Partial Class EditStaff
         Panel1.Controls.Add(Label11)
         Panel1.Controls.Add(MiddleNameTxt)
         Panel1.Controls.Add(Label12)
-        Panel1.Controls.Add(CardNumberTxt)
         Panel1.Controls.Add(Label10)
         Panel1.Controls.Add(PictureTxt)
         Panel1.Controls.Add(Label9)
@@ -176,10 +176,12 @@ Partial Class EditStaff
         ' ResidentIDTxt
         ' 
         ResidentIDTxt.Anchor = AnchorStyles.None
+        ResidentIDTxt.BackColor = Color.White
         ResidentIDTxt.BorderStyle = BorderStyle.FixedSingle
         ResidentIDTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
         ResidentIDTxt.Location = New Point(41, 92)
         ResidentIDTxt.Name = "ResidentIDTxt"
+        ResidentIDTxt.ReadOnly = True
         ResidentIDTxt.Size = New Size(200, 45)
         ResidentIDTxt.TabIndex = 41
         ' 
@@ -202,7 +204,6 @@ Partial Class EditStaff
         LastNameTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
         LastNameTxt.Location = New Point(778, 91)
         LastNameTxt.Name = "LastNameTxt"
-        LastNameTxt.ReadOnly = True
         LastNameTxt.Size = New Size(200, 45)
         LastNameTxt.TabIndex = 62
         ' 
@@ -225,7 +226,6 @@ Partial Class EditStaff
         MiddleNameTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
         MiddleNameTxt.Location = New Point(535, 91)
         MiddleNameTxt.Name = "MiddleNameTxt"
-        MiddleNameTxt.ReadOnly = True
         MiddleNameTxt.Size = New Size(200, 45)
         MiddleNameTxt.TabIndex = 61
         ' 
@@ -239,18 +239,6 @@ Partial Class EditStaff
         Label12.Size = New Size(172, 33)
         Label12.TabIndex = 63
         Label12.Text = "Middle Name"
-        ' 
-        ' CardNumberTxt
-        ' 
-        CardNumberTxt.Anchor = AnchorStyles.None
-        CardNumberTxt.BackColor = Color.White
-        CardNumberTxt.BorderStyle = BorderStyle.FixedSingle
-        CardNumberTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
-        CardNumberTxt.ForeColor = Color.Black
-        CardNumberTxt.Location = New Point(535, 468)
-        CardNumberTxt.Name = "CardNumberTxt"
-        CardNumberTxt.Size = New Size(443, 45)
-        CardNumberTxt.TabIndex = 50
         ' 
         ' Label10
         ' 
@@ -334,7 +322,6 @@ Partial Class EditStaff
         AddressTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
         AddressTxt.Location = New Point(527, 201)
         AddressTxt.Name = "AddressTxt"
-        AddressTxt.ReadOnly = True
         AddressTxt.Size = New Size(200, 45)
         AddressTxt.TabIndex = 55
         ' 
@@ -357,7 +344,6 @@ Partial Class EditStaff
         ContactTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
         ContactTxt.Location = New Point(284, 201)
         ContactTxt.Name = "ContactTxt"
-        ContactTxt.ReadOnly = True
         ContactTxt.Size = New Size(200, 45)
         ContactTxt.TabIndex = 53
         ' 
@@ -412,7 +398,6 @@ Partial Class EditStaff
         AgeTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
         AgeTxt.Location = New Point(41, 202)
         AgeTxt.Name = "AgeTxt"
-        AgeTxt.ReadOnly = True
         AgeTxt.Size = New Size(200, 45)
         AgeTxt.TabIndex = 45
         ' 
@@ -435,7 +420,6 @@ Partial Class EditStaff
         FirstNameTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
         FirstNameTxt.Location = New Point(284, 92)
         FirstNameTxt.Name = "FirstNameTxt"
-        FirstNameTxt.ReadOnly = True
         FirstNameTxt.Size = New Size(200, 45)
         FirstNameTxt.TabIndex = 43
         ' 
@@ -518,6 +502,19 @@ Partial Class EditStaff
         ReturnBtn.Text = "RETURN"
         ReturnBtn.UseVisualStyleBackColor = False
         ' 
+        ' CardNumberTxt
+        ' 
+        CardNumberTxt.Anchor = AnchorStyles.None
+        CardNumberTxt.BackColor = Color.White
+        CardNumberTxt.BorderStyle = BorderStyle.FixedSingle
+        CardNumberTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        CardNumberTxt.ForeColor = Color.Black
+        CardNumberTxt.Location = New Point(535, 468)
+        CardNumberTxt.Multiline = True
+        CardNumberTxt.Name = "CardNumberTxt"
+        CardNumberTxt.Size = New Size(443, 45)
+        CardNumberTxt.TabIndex = 71
+        ' 
         ' EditStaff
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -550,7 +547,6 @@ Partial Class EditStaff
     Friend WithEvents Label11 As Label
     Friend WithEvents MiddleNameTxt As TextBox
     Friend WithEvents Label12 As Label
-    Friend WithEvents CardNumberTxt As TextBox
     Friend WithEvents Label10 As Label
     Friend WithEvents PictureTxt As TextBox
     Friend WithEvents Label9 As Label
@@ -575,4 +571,5 @@ Partial Class EditStaff
     Friend WithEvents ReturnBtn As Button
     Friend WithEvents StatusCmb As ComboBox
     Friend WithEvents Label14 As Label
+    Friend WithEvents CardNumberTxt As TextBox
 End Class
