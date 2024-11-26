@@ -1,7 +1,9 @@
 ﻿Imports System.Drawing.Drawing2D
 Imports Npgsql
 
+
 Public Class Login
+    Public Shared LoggedInEmployeeID As String
 
     Private Sub StaffLogin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DatabaseConnection.OpenConnection()
@@ -153,6 +155,7 @@ Public Class Login
         End Using
     End Sub
 
+
     Private Sub LoginBtn_Click(sender As Object, e As EventArgs) Handles LoginBtn.Click
         Dim employeeID As String = StaffIDtxt.Text.Trim()
         Dim password As String = Passtxt.Text.Trim()
@@ -161,6 +164,7 @@ Public Class Login
             Dim isValid As Boolean = ValidateCredentials(employeeID, password)
 
             If isValid Then
+                LoggedInEmployeeID = employeeID
                 Dim adminForm As New Admin(employeeID)
                 CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
                 Me.Close()
@@ -176,20 +180,47 @@ Public Class Login
     Private Function ValidateCredentials(employeeID As String, password As String) As Boolean
         Try
             DatabaseConnection.OpenConnection()
-            Dim query As String = "SELECT COUNT(*) FROM ""Account"" WHERE ""EmployeeID"" = @EmployeeID AND ""Password"" = @Password"
 
-            Using cmd As New NpgsqlCommand(query, DatabaseConnection.conn)
-                cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
-                cmd.Parameters.AddWithValue("@Password", password)
+            Dim accountQuery As String = "SELECT COUNT(*) FROM ""Account"" WHERE ""EmployeeID"" = @EmployeeID AND ""Password"" = @Password"
+            Using accountCmd As New NpgsqlCommand(accountQuery, DatabaseConnection.conn)
+                accountCmd.Parameters.AddWithValue("@EmployeeID", employeeID)
+                accountCmd.Parameters.AddWithValue("@Password", password)
 
-                Dim result As Integer = Convert.ToInt32(cmd.ExecuteScalar())
-                Return result > 0
+                Dim accountResult As Integer = Convert.ToInt32(accountCmd.ExecuteScalar())
+                If accountResult = 0 Then
+                    Return False
+                End If
+            End Using
+
+            Dim employeeQuery As String = "SELECT ""EmployeePosition"" FROM public.employee WHERE ""EmployeeID"" = @EmployeeID"
+            Using employeeCmd As New NpgsqlCommand(employeeQuery, DatabaseConnection.conn)
+                employeeCmd.Parameters.AddWithValue("@EmployeeID", employeeID)
+
+                Using reader As NpgsqlDataReader = employeeCmd.ExecuteReader()
+                    If reader.Read() Then
+                        Dim employeePosition As String = reader("EmployeePosition").ToString()
+
+                        If employeePosition = "Secretary (HRMO)" Then
+                            Dim idPattern As String = "^02-\d{2}-\d{2}-\d{2}$"
+                            If System.Text.RegularExpressions.Regex.IsMatch(employeeID, idPattern) Then
+                                Return True
+                            Else
+                                MsgBox("Invalid EmployeeID format. It must follow '02-##-##-##'.", MsgBoxStyle.Exclamation, "Validation Error")
+                            End If
+                        Else
+                            MsgBox("Access restricted to 'Secretary (HRMO)' only.", MsgBoxStyle.Exclamation, "Validation Error")
+                        End If
+                    Else
+                        MsgBox("EmployeeID not found in the attendance table.", MsgBoxStyle.Exclamation, "Validation Error")
+                    End If
+                End Using
             End Using
         Catch ex As Exception
             MsgBox("Database error: " & ex.Message)
         Finally
             DatabaseConnection.CloseConnection()
         End Try
+
         Return False
     End Function
 

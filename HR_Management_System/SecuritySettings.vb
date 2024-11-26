@@ -144,10 +144,14 @@ Public Class SecuritySettings
         Return isSuccess
     End Function
 
-    Private Function GetLoggedInEmployeeID() As String
 
-        Return "02-10-28-02"
+    Private Function GetLoggedInEmployeeID() As String
+        If String.IsNullOrEmpty(Login.LoggedInEmployeeID) Then
+            Throw New Exception("No logged-in user found.")
+        End If
+        Return Login.LoggedInEmployeeID
     End Function
+
 
     Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
         Dim adminForm As New Admin()
