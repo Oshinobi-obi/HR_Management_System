@@ -280,9 +280,11 @@ Public Class HREditStaff
         End Try
     End Sub
 
-
     Private Sub UpdateStaffBtn_Click(sender As Object, e As EventArgs) Handles UpdateStaffBtn.Click
         UpdateEmployeeData()
+        Dim staffDBForm As New HRStaffDB()
+        CType(Me.MdiParent, MDIParent).LoadFormInMDI(staffDBForm)
+        Me.Close()
     End Sub
 
 End Class
