@@ -8,12 +8,17 @@
     <MyType>WindowsForms</MyType>
 	<ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
 	<ForceDesignerDPIUnaware>true</ForceDesignerDPIUnaware>
+	<ApplicationIcon>Logo_100x95_.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="EmployeeProfile\**" />
     <EmbeddedResource Remove="EmployeeProfile\**" />
     <None Remove="EmployeeProfile\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Logo_100x95_.ico" />
   </ItemGroup>
 
   <ItemGroup>
