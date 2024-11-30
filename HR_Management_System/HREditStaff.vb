@@ -53,6 +53,8 @@ Public Class HREditStaff
         WorkDayTxt.Enabled = isEnabled
         HrShiftTxt.Enabled = isEnabled
         PictureTxt.Enabled = isEnabled
+        StatusCmb.Enabled = isEnabled
+        PosCmb.Enabled = isEnabled
         CardNumberTxt.Enabled = isEnabled
 
         Dim backColor As Color = If(isEnabled, Color.White, Color.LightGray)
@@ -66,6 +68,8 @@ Public Class HREditStaff
         WorkDayTxt.BackColor = backColor
         HrShiftTxt.BackColor = backColor
         PictureTxt.BackColor = backColor
+        StatusCmb.BackColor = backColor
+        PosCmb.BackColor = backColor
         CardNumberTxt.BackColor = backColor
     End Sub
 

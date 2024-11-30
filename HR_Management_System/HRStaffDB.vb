@@ -240,7 +240,6 @@ Public Class HRStaffDB
         End Try
     End Sub
 
-
     Private Sub AddBtn_Click(sender As Object, e As EventArgs) Handles AddBtn.Click
         Dim addStaffForm As New HRAddStaff()
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(addStaffForm)
@@ -253,7 +252,6 @@ Public Class HRStaffDB
         Me.Close()
     End Sub
 
-
     Private Sub FilterBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles FilterBox.SelectedIndexChanged
         Dim selectedPosition As String = FilterBox.SelectedItem.ToString()
 
@@ -264,7 +262,6 @@ Public Class HRStaffDB
         End If
     End Sub
 
-
     Private Sub EditBtn_Click(sender As Object, e As EventArgs) Handles EditBtn.Click
         Dim editStaffForm As New HREditStaff()
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(editStaffForm)
@@ -272,39 +269,9 @@ Public Class HRStaffDB
     End Sub
 
     Private Sub AddPositionBtn_Click(sender As Object, e As EventArgs) Handles AddPositionBtn.Click
-        Dim positionName As String = InputBox("Enter the Position Name:", "Add Position Name")
-        If String.IsNullOrWhiteSpace(positionName) Then
-            Return
-        End If
-
-        Dim suggestedCode As String = GetNextPositionCode()
-        Dim positionCode As String = InputBox($"Enter the Position Code (suggested: {suggestedCode}):", "Add Position Code", suggestedCode)
-        If String.IsNullOrWhiteSpace(positionCode) OrElse positionCode.Length > 2 Then
-            MessageBox.Show("Position Code is required and must be 2 characters.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Return
-        End If
-
-        Dim nextPositionId As Integer = GetNextPositionId()
-
-        Try
-            Using conn As New NpgsqlConnection(connString)
-                conn.Open()
-
-                Dim query As String = "INSERT INTO public.employeeposition (positionid, positionname, positioncode, datecreated) VALUES (@id, @name, @code, CURRENT_DATE)"
-                Using cmd As New NpgsqlCommand(query, conn)
-                    cmd.Parameters.AddWithValue("@id", nextPositionId)
-                    cmd.Parameters.AddWithValue("@name", positionName.Trim())
-                    cmd.Parameters.AddWithValue("@code", positionCode.Trim())
-                    cmd.ExecuteNonQuery()
-                End Using
-            End Using
-
-            MessageBox.Show("Position added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            PopulateFilterBox()
-
-        Catch ex As Exception
-            MessageBox.Show("Error adding position: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+        Dim addPositionForm As New HRAddPosition()
+        CType(Me.MdiParent, MDIParent).LoadFormInMDI(addPositionForm)
+        Me.Close()
     End Sub
 
     Private Function GetNextPositionId() As Integer
@@ -357,4 +324,5 @@ Public Class HRStaffDB
             addStaffForm.LoadPositions()
         End If
     End Sub
+
 End Class

@@ -138,7 +138,7 @@ Partial Class HRAddStaff
         GenderTxt.Name = "GenderTxt"
         GenderTxt.ReadOnly = True
         GenderTxt.Size = New Size(200, 45)
-        GenderTxt.TabIndex = 25
+        GenderTxt.TabIndex = 7
         ' 
         ' Label14
         ' 
@@ -159,7 +159,7 @@ Partial Class HRAddStaff
         ResidentIDTxt.Location = New Point(41, 68)
         ResidentIDTxt.Name = "ResidentIDTxt"
         ResidentIDTxt.Size = New Size(200, 45)
-        ResidentIDTxt.TabIndex = 1
+        ResidentIDTxt.TabIndex = 2
         ' 
         ' Label13
         ' 
@@ -182,7 +182,7 @@ Partial Class HRAddStaff
         LastNameTxt.Name = "LastNameTxt"
         LastNameTxt.ReadOnly = True
         LastNameTxt.Size = New Size(200, 45)
-        LastNameTxt.TabIndex = 20
+        LastNameTxt.TabIndex = 5
         ' 
         ' Label11
         ' 
@@ -205,7 +205,7 @@ Partial Class HRAddStaff
         MiddleNameTxt.Name = "MiddleNameTxt"
         MiddleNameTxt.ReadOnly = True
         MiddleNameTxt.Size = New Size(200, 45)
-        MiddleNameTxt.TabIndex = 19
+        MiddleNameTxt.TabIndex = 4
         ' 
         ' Label12
         ' 
@@ -228,7 +228,7 @@ Partial Class HRAddStaff
         CardNumberTxt.Location = New Point(535, 444)
         CardNumberTxt.Name = "CardNumberTxt"
         CardNumberTxt.Size = New Size(443, 45)
-        CardNumberTxt.TabIndex = 6
+        CardNumberTxt.TabIndex = 14
         ' 
         ' Label10
         ' 
@@ -250,7 +250,7 @@ Partial Class HRAddStaff
         OpenBtn.Location = New Point(41, 514)
         OpenBtn.Name = "OpenBtn"
         OpenBtn.Size = New Size(120, 50)
-        OpenBtn.TabIndex = 7
+        OpenBtn.TabIndex = 16
         OpenBtn.Text = "ADD"
         OpenBtn.UseVisualStyleBackColor = False
         ' 
@@ -265,7 +265,7 @@ Partial Class HRAddStaff
         PictureTxt.Name = "PictureTxt"
         PictureTxt.ReadOnly = True
         PictureTxt.Size = New Size(443, 45)
-        PictureTxt.TabIndex = 5
+        PictureTxt.TabIndex = 13
         ' 
         ' Label9
         ' 
@@ -286,7 +286,7 @@ Partial Class HRAddStaff
         HrShiftTxt.Location = New Point(535, 326)
         HrShiftTxt.Name = "HrShiftTxt"
         HrShiftTxt.Size = New Size(200, 45)
-        HrShiftTxt.TabIndex = 3
+        HrShiftTxt.TabIndex = 11
         ' 
         ' Label8
         ' 
@@ -309,7 +309,7 @@ Partial Class HRAddStaff
         AddStaffBtn.Location = New Point(572, 558)
         AddStaffBtn.Name = "AddStaffBtn"
         AddStaffBtn.Size = New Size(200, 50)
-        AddStaffBtn.TabIndex = 8
+        AddStaffBtn.TabIndex = 15
         AddStaffBtn.Text = "ADD STAFF"
         AddStaffBtn.UseVisualStyleBackColor = False
         ' 
@@ -329,7 +329,7 @@ Partial Class HRAddStaff
         PosCmb.Name = "PosCmb"
         PosCmb.Size = New Size(200, 45)
         PosCmb.Sorted = True
-        PosCmb.TabIndex = 4
+        PosCmb.TabIndex = 12
         ' 
         ' AddressTxt
         ' 
@@ -341,7 +341,7 @@ Partial Class HRAddStaff
         AddressTxt.Name = "AddressTxt"
         AddressTxt.ReadOnly = True
         AddressTxt.Size = New Size(200, 45)
-        AddressTxt.TabIndex = 8
+        AddressTxt.TabIndex = 9
         ' 
         ' Label7
         ' 
@@ -364,7 +364,7 @@ Partial Class HRAddStaff
         ContactTxt.Name = "ContactTxt"
         ContactTxt.ReadOnly = True
         ContactTxt.Size = New Size(200, 45)
-        ContactTxt.TabIndex = 7
+        ContactTxt.TabIndex = 8
         ' 
         ' ReturnBtn
         ' 
@@ -375,7 +375,7 @@ Partial Class HRAddStaff
         ReturnBtn.Location = New Point(778, 558)
         ReturnBtn.Name = "ReturnBtn"
         ReturnBtn.Size = New Size(200, 50)
-        ReturnBtn.TabIndex = 9
+        ReturnBtn.TabIndex = 1
         ReturnBtn.Text = "RETURN"
         ReturnBtn.UseVisualStyleBackColor = False
         ' 
@@ -398,7 +398,7 @@ Partial Class HRAddStaff
         WorkDayTxt.Location = New Point(284, 326)
         WorkDayTxt.Name = "WorkDayTxt"
         WorkDayTxt.Size = New Size(200, 45)
-        WorkDayTxt.TabIndex = 2
+        WorkDayTxt.TabIndex = 10
         ' 
         ' Label5
         ' 
@@ -432,7 +432,7 @@ Partial Class HRAddStaff
         AgeTxt.Name = "AgeTxt"
         AgeTxt.ReadOnly = True
         AgeTxt.Size = New Size(200, 45)
-        AgeTxt.TabIndex = 3
+        AgeTxt.TabIndex = 6
         ' 
         ' Label3
         ' 
@@ -455,7 +455,7 @@ Partial Class HRAddStaff
         FirstNameTxt.Name = "FirstNameTxt"
         FirstNameTxt.ReadOnly = True
         FirstNameTxt.Size = New Size(200, 45)
-        FirstNameTxt.TabIndex = 2
+        FirstNameTxt.TabIndex = 3
         ' 
         ' Label2
         ' 
@@ -478,7 +478,7 @@ Partial Class HRAddStaff
         EmIDTxt.Name = "EmIDTxt"
         EmIDTxt.ReadOnly = True
         EmIDTxt.Size = New Size(200, 45)
-        EmIDTxt.TabIndex = 8
+        EmIDTxt.TabIndex = 17
         ' 
         ' Label1
         ' 

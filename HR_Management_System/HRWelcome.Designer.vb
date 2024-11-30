@@ -66,7 +66,7 @@ Partial Class Welcome
         ' 
         Label1.Anchor = AnchorStyles.None
         Label1.Font = New Font("Corbel", 45F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label1.Location = New Point(106, 15)
+        Label1.Location = New Point(102, 34)
         Label1.Name = "Label1"
         Label1.Size = New Size(323, 73)
         Label1.TabIndex = 2
@@ -79,7 +79,7 @@ Partial Class Welcome
         LoginBtn.BackColor = Color.White
         LoginBtn.Cursor = Cursors.Hand
         LoginBtn.Font = New Font("Corbel", 35.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        LoginBtn.Location = New Point(161, 107)
+        LoginBtn.Location = New Point(161, 126)
         LoginBtn.Name = "LoginBtn"
         LoginBtn.Size = New Size(204, 68)
         LoginBtn.TabIndex = 3
@@ -120,7 +120,7 @@ Partial Class Welcome
         ShutdownBtn.Anchor = AnchorStyles.None
         ShutdownBtn.Cursor = Cursors.Hand
         ShutdownBtn.Image = My.Resources.Resources.Shutdown
-        ShutdownBtn.Location = New Point(231, 218)
+        ShutdownBtn.Location = New Point(231, 221)
         ShutdownBtn.Name = "ShutdownBtn"
         ShutdownBtn.Size = New Size(65, 60)
         ShutdownBtn.SizeMode = PictureBoxSizeMode.StretchImage
