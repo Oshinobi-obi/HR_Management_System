@@ -28,16 +28,17 @@ Partial Class HRAttRecord
         ReturnBtn = New Button()
         TableLayoutPanel1 = New TableLayoutPanel()
         Panel1 = New Panel()
-        AttendanceGrid = New DataGridView()
+        AttendanceYear = New ComboBox()
         Panel2 = New Panel()
         Panel3 = New Panel()
+        AttendanceGrid = New DataGridView()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         TableLayoutPanel1.SuspendLayout()
         Panel1.SuspendLayout()
-        CType(AttendanceGrid, ComponentModel.ISupportInitialize).BeginInit()
         Panel2.SuspendLayout()
         Panel3.SuspendLayout()
+        CType(AttendanceGrid, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' PictureBox2
@@ -80,7 +81,7 @@ Partial Class HRAttRecord
         ReturnBtn.Anchor = AnchorStyles.None
         ReturnBtn.BackColor = Color.LightCoral
         ReturnBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        ReturnBtn.Location = New Point(279, 2)
+        ReturnBtn.Location = New Point(397, 463)
         ReturnBtn.Name = "ReturnBtn"
         ReturnBtn.Size = New Size(137, 42)
         ReturnBtn.TabIndex = 1
@@ -93,6 +94,7 @@ Partial Class HRAttRecord
         TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 12.5F))
         TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 75F))
         TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 12.5F))
+        TableLayoutPanel1.Controls.Add(ReturnBtn, 1, 3)
         TableLayoutPanel1.Controls.Add(PictureBox1, 0, 0)
         TableLayoutPanel1.Controls.Add(PictureBox2, 2, 0)
         TableLayoutPanel1.Controls.Add(Panel1, 1, 1)
@@ -101,31 +103,35 @@ Partial Class HRAttRecord
         TableLayoutPanel1.Dock = DockStyle.Fill
         TableLayoutPanel1.Location = New Point(0, 0)
         TableLayoutPanel1.Name = "TableLayoutPanel1"
-        TableLayoutPanel1.RowCount = 3
+        TableLayoutPanel1.RowCount = 4
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 20F))
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 70F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 12.5F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 57.5F))
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 10F))
         TableLayoutPanel1.Size = New Size(934, 511)
         TableLayoutPanel1.TabIndex = 16
         ' 
         ' Panel1
         ' 
-        Panel1.Controls.Add(AttendanceGrid)
+        Panel1.Controls.Add(AttendanceYear)
         Panel1.Dock = DockStyle.Fill
         Panel1.Location = New Point(119, 105)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(694, 351)
+        Panel1.Size = New Size(694, 57)
         Panel1.TabIndex = 7
         ' 
-        ' AttendanceGrid
+        ' AttendanceYear
         ' 
-        AttendanceGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-        AttendanceGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        AttendanceGrid.Dock = DockStyle.Fill
-        AttendanceGrid.Location = New Point(0, 0)
-        AttendanceGrid.Name = "AttendanceGrid"
-        AttendanceGrid.Size = New Size(694, 351)
-        AttendanceGrid.TabIndex = 0
+        AttendanceYear.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
+        AttendanceYear.Cursor = Cursors.Hand
+        AttendanceYear.DropDownStyle = ComboBoxStyle.DropDownList
+        AttendanceYear.Font = New Font("Corbel", 25.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        AttendanceYear.FormattingEnabled = True
+        AttendanceYear.Items.AddRange(New Object() {"TODAY", "YESTERDAY", "THIS WEEK", "THIS MONTH", "QUARTERLY", "SEMIANNUAL", "ANNUAL"})
+        AttendanceYear.Location = New Point(375, 4)
+        AttendanceYear.Name = "AttendanceYear"
+        AttendanceYear.Size = New Size(314, 49)
+        AttendanceYear.TabIndex = 2
         ' 
         ' Panel2
         ' 
@@ -138,12 +144,22 @@ Partial Class HRAttRecord
         ' 
         ' Panel3
         ' 
-        Panel3.Controls.Add(ReturnBtn)
+        Panel3.Controls.Add(AttendanceGrid)
         Panel3.Dock = DockStyle.Fill
-        Panel3.Location = New Point(119, 462)
+        Panel3.Location = New Point(119, 168)
         Panel3.Name = "Panel3"
-        Panel3.Size = New Size(694, 46)
+        Panel3.Size = New Size(694, 287)
         Panel3.TabIndex = 16
+        ' 
+        ' AttendanceGrid
+        ' 
+        AttendanceGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+        AttendanceGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        AttendanceGrid.Dock = DockStyle.Fill
+        AttendanceGrid.Location = New Point(0, 0)
+        AttendanceGrid.Name = "AttendanceGrid"
+        AttendanceGrid.Size = New Size(694, 287)
+        AttendanceGrid.TabIndex = 0
         ' 
         ' HRAttRecord
         ' 
@@ -162,9 +178,9 @@ Partial Class HRAttRecord
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         TableLayoutPanel1.ResumeLayout(False)
         Panel1.ResumeLayout(False)
-        CType(AttendanceGrid, ComponentModel.ISupportInitialize).EndInit()
         Panel2.ResumeLayout(False)
         Panel3.ResumeLayout(False)
+        CType(AttendanceGrid, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
     End Sub
 
@@ -177,4 +193,5 @@ Partial Class HRAttRecord
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Panel3 As Panel
     Friend WithEvents AttendanceGrid As DataGridView
+    Friend WithEvents AttendanceYear As ComboBox
 End Class

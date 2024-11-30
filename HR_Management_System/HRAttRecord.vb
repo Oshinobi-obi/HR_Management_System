@@ -5,6 +5,10 @@ Public Class HRAttRecord
     Private conn As NpgsqlConnection
 
     Private Sub AttRecord_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        AttendanceYear.Items.Clear()
+        AttendanceYear.Items.AddRange(New String() {"TODAY", "YESTERDAY", "THIS WEEK", "THIS MONTH", "QUARTERLY", "SEMIANNUAL", "ANNUAL"})
+        AttendanceYear.SelectedIndex = 0
+
         LoadAttendanceRecords()
 
         ReturnBtn.FlatStyle = FlatStyle.Flat
@@ -49,13 +53,13 @@ Public Class HRAttRecord
         path.Dispose()
     End Sub
 
-    Private Sub LoadAttendanceRecords()
+    Private Sub LoadAttendanceRecords(Optional filterQuery As String = "")
         Try
             OpenConnection()
             Dim query As String = "SELECT ""EmployeeName"", ""EmployeePosition"", ""EmployeeDaySchedule"" AS ""Schedule"", " &
-                                  """EmployeeTimeShift"" AS ""Time Shift"", ""Date"" AS ""Log Date"", " &
-                                  """TimeIn"", ""TimeOut"", ""EmployeeTotalHour"" AS ""TotalHours"" " &
-                                  "FROM public.attendance ORDER BY ""Date"" DESC"
+                              """EmployeeTimeShift"" AS ""Time Shift"", ""Date"" AS ""Log Date"", " &
+                              """TimeIn"", ""TimeOut"", ""EmployeeTotalHour"" AS ""TotalHours"" " &
+                              "FROM public.attendance " & filterQuery & " ORDER BY ""Date"" DESC"
             Dim cmd As New NpgsqlCommand(query, conn)
             Dim adapter As New NpgsqlDataAdapter(cmd)
             Dim table As New DataTable()
@@ -88,4 +92,27 @@ Public Class HRAttRecord
         Me.Close()
     End Sub
 
+    Private Sub AttendanceYear_SelectedIndexChanged(sender As Object, e As EventArgs) Handles AttendanceYear.SelectedIndexChanged
+        Dim selectedPeriod = AttendanceYear.SelectedItem.ToString
+        Dim filterQuery = ""
+
+        Select Case selectedPeriod
+            Case "TODAY"
+                filterQuery = "WHERE ""Date"" = CURRENT_DATE"
+            Case "YESTERDAY"
+                filterQuery = "WHERE ""Date"" = CURRENT_DATE - INTERVAL '1 day'"
+            Case "THIS WEEK"
+                filterQuery = "WHERE EXTRACT(WEEK FROM ""Date"") = EXTRACT(WEEK FROM CURRENT_DATE) AND EXTRACT(YEAR FROM ""Date"") = EXTRACT(YEAR FROM CURRENT_DATE)"
+            Case "THIS MONTH"
+                filterQuery = "WHERE EXTRACT(MONTH FROM ""Date"") = EXTRACT(MONTH FROM CURRENT_DATE) AND EXTRACT(YEAR FROM ""Date"") = EXTRACT(YEAR FROM CURRENT_DATE)"
+            Case "QUARTERLY"
+                filterQuery = "WHERE EXTRACT(QUARTER FROM ""Date"") = EXTRACT(QUARTER FROM CURRENT_DATE) AND EXTRACT(YEAR FROM ""Date"") = EXTRACT(YEAR FROM CURRENT_DATE)"
+            Case "SEMIANNUAL"
+                filterQuery = "WHERE EXTRACT(MONTH FROM ""Date"") IN (1, 2, 3, 4, 5, 6) AND EXTRACT(YEAR FROM ""Date"") = EXTRACT(YEAR FROM CURRENT_DATE)"
+            Case "ANNUAL"
+                filterQuery = "WHERE EXTRACT(YEAR FROM ""Date"") = EXTRACT(YEAR FROM CURRENT_DATE)"
+        End Select
+
+        LoadAttendanceRecords(filterQuery)
+    End Sub
 End Class
