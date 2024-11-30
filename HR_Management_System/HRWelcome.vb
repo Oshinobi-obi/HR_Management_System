@@ -8,50 +8,10 @@ Public Class Welcome
         LoginBtn.BackColor = Color.Transparent
         LoginBtn.Text = "LOGIN"
 
-        TimeBtn.FlatStyle = FlatStyle.Flat
-        TimeBtn.FlatAppearance.BorderSize = 0
-        TimeBtn.BackColor = Color.Transparent
-        TimeBtn.Text = "TIME-IN"
-
         AddHandler LoginBtn.Paint, AddressOf LoginBtn_Paint
-        AddHandler TimeBtn.Paint, AddressOf TimeBtn_Paint
     End Sub
 
     Private Sub LoginBtn_Paint(sender As Object, e As PaintEventArgs)
-        Dim button As Button = CType(sender, Button)
-        Dim graphics As Graphics = e.Graphics
-        Dim rect As New Rectangle(0, 0, button.Width - 1, button.Height - 1)
-
-        graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
-
-        Dim path As New Drawing2D.GraphicsPath()
-        Dim radius As Integer = 20
-        path.AddArc(rect.X, rect.Y, radius, radius, 180, 90)
-        path.AddArc(rect.Right - radius, rect.Y, radius, radius, 270, 90)
-        path.AddArc(rect.Right - radius, rect.Bottom - radius, radius, radius, 0, 90)
-        path.AddArc(rect.X, rect.Bottom - radius, radius, radius, 90, 90)
-        path.CloseFigure()
-
-        Using brush As New SolidBrush(Color.White)
-            graphics.FillPath(brush, path)
-        End Using
-
-        Using borderPen As New Pen(Color.Black, 2)
-            graphics.DrawPath(borderPen, path)
-        End Using
-
-        Dim textBrush As New SolidBrush(button.ForeColor)
-        Dim textFormat As New StringFormat() With {
-        .Alignment = StringAlignment.Center,
-        .LineAlignment = StringAlignment.Center
-    }
-        graphics.DrawString(button.Text, button.Font, textBrush, rect, textFormat)
-
-        textBrush.Dispose()
-        path.Dispose()
-    End Sub
-
-    Private Sub TimeBtn_Paint(sender As Object, e As PaintEventArgs)
         Dim button As Button = CType(sender, Button)
         Dim graphics As Graphics = e.Graphics
         Dim rect As New Rectangle(0, 0, button.Width - 1, button.Height - 1)
