@@ -21,6 +21,12 @@ Public Class HRAdmin
         AddHandler LogOutBtn.Paint, AddressOf LogOutBtn_Paint
         AddHandler AttBtn.Paint, AddressOf AttBtn_Paint
         AddHandler VSBtn.Paint, AddressOf VSBtn_Paint
+
+
+        Dim employeeID As String = CType(Me.MdiParent, MDIParent).LoggedInEmployeeID
+        NameTxt.Text = employeeID ' Display in NameTxt
+        NameTxt.TextAlign = HorizontalAlignment.Center
+        NameTxt.BorderStyle = BorderStyle.None
     End Sub
 
     Private Sub LogOutBtn_Paint(sender As Object, e As PaintEventArgs)
@@ -132,9 +138,7 @@ Public Class HRAdmin
     Public Sub New(employeeName As String)
         InitializeComponent()
         NameTxt.Text = employeeName
-        NameTxt.TextAlign = ContentAlignment.Center
         NameTxt.TextAlign = HorizontalAlignment.Center
-        NameTxt.TextAlign = VerticalAlignment.Center
         NameTxt.BorderStyle = BorderStyle.None
     End Sub
 
