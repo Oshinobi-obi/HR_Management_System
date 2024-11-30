@@ -78,7 +78,7 @@ Partial Class HRAdmin
         PictureBox3.BackColor = Color.Transparent
         PictureBox3.BackgroundImageLayout = ImageLayout.Stretch
         PictureBox3.Image = My.Resources.Resources.User
-        PictureBox3.Location = New Point(269, 11)
+        PictureBox3.Location = New Point(269, 24)
         PictureBox3.Name = "PictureBox3"
         PictureBox3.Size = New Size(60, 60)
         PictureBox3.SizeMode = PictureBoxSizeMode.StretchImage
@@ -91,7 +91,7 @@ Partial Class HRAdmin
         SecurityBtn.AutoSize = True
         SecurityBtn.Font = New Font("Corbel", 15F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         SecurityBtn.LinkColor = Color.Black
-        SecurityBtn.Location = New Point(201, 134)
+        SecurityBtn.Location = New Point(201, 147)
         SecurityBtn.Name = "SecurityBtn"
         SecurityBtn.Size = New Size(197, 24)
         SecurityBtn.TabIndex = 5
@@ -104,7 +104,7 @@ Partial Class HRAdmin
         AttBtn.AutoSize = True
         AttBtn.Cursor = Cursors.Hand
         AttBtn.Font = New Font("Corbel", 25.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        AttBtn.Location = New Point(22, 182)
+        AttBtn.Location = New Point(22, 195)
         AttBtn.Name = "AttBtn"
         AttBtn.Size = New Size(255, 55)
         AttBtn.TabIndex = 6
@@ -116,7 +116,7 @@ Partial Class HRAdmin
         VSBtn.Anchor = AnchorStyles.None
         VSBtn.Cursor = Cursors.Hand
         VSBtn.Font = New Font("Corbel", 25.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        VSBtn.Location = New Point(318, 182)
+        VSBtn.Location = New Point(318, 195)
         VSBtn.Name = "VSBtn"
         VSBtn.Size = New Size(255, 55)
         VSBtn.TabIndex = 0
@@ -133,7 +133,7 @@ Partial Class HRAdmin
         LogOutBtn.Font = New Font("Corbel", 24.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         LogOutBtn.ForeColor = Color.Black
         LogOutBtn.ImageAlign = ContentAlignment.MiddleLeft
-        LogOutBtn.Location = New Point(199, 266)
+        LogOutBtn.Location = New Point(199, 279)
         LogOutBtn.Name = "LogOutBtn"
         LogOutBtn.Size = New Size(201, 51)
         LogOutBtn.TabIndex = 7
@@ -179,13 +179,13 @@ Partial Class HRAdmin
         NameTxt.Anchor = AnchorStyles.None
         NameTxt.BackColor = Color.Transparent
         NameTxt.Font = New Font("Corbel", 24F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        NameTxt.Location = New Point(201, 83)
+        NameTxt.Location = New Point(201, 96)
         NameTxt.Name = "NameTxt"
         NameTxt.Size = New Size(197, 40)
         NameTxt.TabIndex = 9
         NameTxt.TextAlign = ContentAlignment.MiddleCenter
         ' 
-        ' Admin
+        ' HRAdmin
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
@@ -195,7 +195,7 @@ Partial Class HRAdmin
         Controls.Add(Label1)
         Controls.Add(TableLayoutPanel1)
         FormBorderStyle = FormBorderStyle.Fixed3D
-        Name = "Admin"
+        Name = "HRAdmin"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Admin"
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()

@@ -164,4 +164,5 @@ Public Class HRAdmin
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(staffDBForm)
         Me.Close()
     End Sub
+
 End Class
