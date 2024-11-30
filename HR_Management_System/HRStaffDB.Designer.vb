@@ -268,7 +268,7 @@ Partial Class HRStaffDB
         ClientSize = New Size(1280, 707)
         ControlBox = False
         Controls.Add(TableLayoutPanel1)
-        FormBorderStyle = FormBorderStyle.Fixed3D
+        FormBorderStyle = FormBorderStyle.FixedSingle
         Name = "HRStaffDB"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Staff List"

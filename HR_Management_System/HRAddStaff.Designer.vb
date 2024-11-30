@@ -522,7 +522,7 @@ Partial Class HRAddStaff
         ClientSize = New Size(1280, 841)
         ControlBox = False
         Controls.Add(TableLayoutPanel1)
-        FormBorderStyle = FormBorderStyle.Fixed3D
+        FormBorderStyle = FormBorderStyle.FixedSingle
         Name = "HRAddStaff"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Add Staff"

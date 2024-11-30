@@ -527,7 +527,7 @@ Partial Class HREditStaff
         ClientSize = New Size(1280, 841)
         ControlBox = False
         Controls.Add(TableLayoutPanel1)
-        FormBorderStyle = FormBorderStyle.Fixed3D
+        FormBorderStyle = FormBorderStyle.FixedSingle
         Name = "HREditStaff"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Edit Staff"

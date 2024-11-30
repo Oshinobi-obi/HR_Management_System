@@ -145,7 +145,7 @@ Partial Class HRAttRecord
         Panel3.Size = New Size(694, 46)
         Panel3.TabIndex = 16
         ' 
-        ' AttRecord
+        ' HRAttRecord
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
@@ -153,8 +153,8 @@ Partial Class HRAttRecord
         ClientSize = New Size(934, 511)
         ControlBox = False
         Controls.Add(TableLayoutPanel1)
-        FormBorderStyle = FormBorderStyle.Fixed3D
-        Name = "AttRecord"
+        FormBorderStyle = FormBorderStyle.FixedSingle
+        Name = "HRAttRecord"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Attendance Record"
         WindowState = FormWindowState.Maximized

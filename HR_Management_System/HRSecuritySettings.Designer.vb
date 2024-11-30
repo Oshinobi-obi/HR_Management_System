@@ -207,7 +207,7 @@ Partial Class HRSecuritySettings
         ClientSize = New Size(884, 557)
         ControlBox = False
         Controls.Add(TableLayoutPanel1)
-        FormBorderStyle = FormBorderStyle.Fixed3D
+        FormBorderStyle = FormBorderStyle.FixedSingle
         Name = "HRSecuritySettings"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Change Password"

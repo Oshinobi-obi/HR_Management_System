@@ -411,7 +411,7 @@ Partial Class HRAttendancePopUp
         Panel1.Size = New Size(882, 126)
         Panel1.TabIndex = 4
         ' 
-        ' AttendancePopUp
+        ' HRAttendancePopUp
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
@@ -419,8 +419,8 @@ Partial Class HRAttendancePopUp
         ClientSize = New Size(1184, 661)
         ControlBox = False
         Controls.Add(TableLayoutPanel1)
-        FormBorderStyle = FormBorderStyle.Fixed3D
-        Name = "AttendancePopUp"
+        FormBorderStyle = FormBorderStyle.FixedSingle
+        Name = "HRAttendancePopUp"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Attendance"
         WindowState = FormWindowState.Maximized

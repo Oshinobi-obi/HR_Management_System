@@ -106,7 +106,7 @@ Partial Class HRAttendance
         ShutdownBtn.TabIndex = 14
         ShutdownBtn.TabStop = False
         ' 
-        ' Attendance
+        ' HRAttendance
         ' 
         AutoScaleMode = AutoScaleMode.None
         BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
@@ -114,8 +114,8 @@ Partial Class HRAttendance
         ControlBox = False
         Controls.Add(TableLayoutPanel1)
         Controls.Add(RFIDTxt)
-        FormBorderStyle = FormBorderStyle.Fixed3D
-        Name = "Attendance"
+        FormBorderStyle = FormBorderStyle.FixedSingle
+        Name = "HRAttendance"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Attendance"
         WindowState = FormWindowState.Maximized

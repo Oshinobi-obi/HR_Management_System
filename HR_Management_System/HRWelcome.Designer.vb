@@ -151,7 +151,7 @@ Partial Class Welcome
         ClientSize = New Size(800, 419)
         ControlBox = False
         Controls.Add(TableLayoutPanel1)
-        FormBorderStyle = FormBorderStyle.Fixed3D
+        FormBorderStyle = FormBorderStyle.FixedSingle
         Name = "Welcome"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Brgy. Santa Monica"
