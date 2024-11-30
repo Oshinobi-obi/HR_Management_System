@@ -161,7 +161,7 @@ Partial Class HRAddPosition
         ReturnBtn.AutoSize = True
         ReturnBtn.BackColor = Color.LightCoral
         ReturnBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        ReturnBtn.Location = New Point(254, 306)
+        ReturnBtn.Location = New Point(247, 306)
         ReturnBtn.Name = "ReturnBtn"
         ReturnBtn.Size = New Size(128, 43)
         ReturnBtn.TabIndex = 4
@@ -174,7 +174,7 @@ Partial Class HRAddPosition
         AddBtn.AutoSize = True
         AddBtn.BackColor = Color.LightGreen
         AddBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        AddBtn.Location = New Point(167, 306)
+        AddBtn.Location = New Point(160, 306)
         AddBtn.Name = "AddBtn"
         AddBtn.Size = New Size(81, 43)
         AddBtn.TabIndex = 3
