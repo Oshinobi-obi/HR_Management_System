@@ -91,11 +91,6 @@ Public Class Welcome
         Me.Close()
     End Sub
 
-    Private Sub TimeBtn_Click(sender As Object, e As EventArgs) Handles TimeBtn.Click
-        Dim attendanceForm As New HRAttendance()
-        CType(Me.MdiParent, MDIParent).LoadFormInMDI(attendanceForm)
-    End Sub
-
     Private Sub ShutdownBtn_Click(sender As Object, e As EventArgs) Handles ShutdownBtn.Click
         Dim result As DialogResult = MessageBox.Show("Do you want to shut down the program?", "Shutdown Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If result = DialogResult.Yes Then

@@ -26,7 +26,6 @@ Partial Class Welcome
         PictureBox2 = New PictureBox()
         Label1 = New Label()
         LoginBtn = New Button()
-        TimeBtn = New Button()
         TableLayoutPanel1 = New TableLayoutPanel()
         Panel2 = New Panel()
         ShutdownBtn = New PictureBox()
@@ -80,26 +79,12 @@ Partial Class Welcome
         LoginBtn.BackColor = Color.White
         LoginBtn.Cursor = Cursors.Hand
         LoginBtn.Font = New Font("Corbel", 35.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        LoginBtn.Location = New Point(27, 107)
+        LoginBtn.Location = New Point(161, 107)
         LoginBtn.Name = "LoginBtn"
         LoginBtn.Size = New Size(204, 68)
         LoginBtn.TabIndex = 3
         LoginBtn.Text = "LOGIN"
         LoginBtn.UseVisualStyleBackColor = False
-        ' 
-        ' TimeBtn
-        ' 
-        TimeBtn.Anchor = AnchorStyles.None
-        TimeBtn.AutoSize = True
-        TimeBtn.BackColor = Color.White
-        TimeBtn.Cursor = Cursors.Hand
-        TimeBtn.Font = New Font("Corbel", 35.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        TimeBtn.Location = New Point(294, 107)
-        TimeBtn.Name = "TimeBtn"
-        TimeBtn.Size = New Size(204, 68)
-        TimeBtn.TabIndex = 4
-        TimeBtn.Text = "TIME-IN"
-        TimeBtn.UseVisualStyleBackColor = False
         ' 
         ' TableLayoutPanel1
         ' 
@@ -122,7 +107,6 @@ Partial Class Welcome
         ' Panel2
         ' 
         Panel2.Controls.Add(ShutdownBtn)
-        Panel2.Controls.Add(TimeBtn)
         Panel2.Controls.Add(LoginBtn)
         Panel2.Controls.Add(Label1)
         Panel2.Dock = DockStyle.Fill
@@ -168,7 +152,6 @@ Partial Class Welcome
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents Label1 As Label
     Friend WithEvents LoginBtn As Button
-    Friend WithEvents TimeBtn As Button
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents Panel2 As Panel
     Friend WithEvents ShutdownBtn As PictureBox
