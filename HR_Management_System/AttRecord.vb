@@ -87,4 +87,5 @@ Public Class AttRecord
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
         Me.Close()
     End Sub
+
 End Class

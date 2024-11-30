@@ -137,9 +137,28 @@ Public Class StaffDb
     End Sub
 
     Private Sub PopulateFilterBox()
-        Dim positions As String() = {"All", "Admin Staff", "Secretary (HRMO)", "BPSO", "Clerk", "Medical Aide"}
-        FilterBox.Items.AddRange(positions)
-        FilterBox.SelectedIndex = 0
+        Try
+            FilterBox.Items.Clear()
+            FilterBox.Items.Add("All")
+
+            Using conn As New NpgsqlConnection(connString)
+                conn.Open()
+
+                Dim query As String = "SELECT positionname FROM public.employeeposition ORDER BY positionname"
+                Using cmd As New NpgsqlCommand(query, conn)
+                    Using reader As NpgsqlDataReader = cmd.ExecuteReader()
+                        While reader.Read()
+                            FilterBox.Items.Add(reader("positionname").ToString().Trim())
+                        End While
+                    End Using
+                End Using
+            End Using
+
+            FilterBox.SelectedIndex = 0
+
+        Catch ex As Exception
+            MessageBox.Show("Error loading positions: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     Private Sub LoadEmployeeRecords(Optional positionFilter As String = "")
@@ -147,10 +166,11 @@ Public Class StaffDb
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
                 Dim query As String
+
                 If String.IsNullOrEmpty(positionFilter) OrElse positionFilter = "All" Then
-                    query = "SELECT ""EmployeeID"", ""EmployeeName"", ""EmployeePosition"", ""EmployeeDaySchedule"", ""EmployeeAge"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployedDate"" FROM ""employee"""
+                    query = "SELECT ""EmployeeID"", ""EmployeeName"", ""EmployeePosition"", ""EmployeeDaySchedule"", ""EmployeeAge"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployedDate"" FROM public.employee"
                 Else
-                    query = "SELECT ""EmployeeID"", ""EmployeeName"", ""EmployeePosition"", ""EmployeeDaySchedule"", ""EmployeeAge"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployedDate"" FROM ""employee"" WHERE ""EmployeePosition"" = @position"
+                    query = "SELECT ""EmployeeID"", ""EmployeeName"", ""EmployeePosition"", ""EmployeeDaySchedule"", ""EmployeeAge"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployedDate"" FROM public.employee WHERE ""EmployeePosition"" = @position"
                 End If
 
                 Using cmd As New NpgsqlCommand(query, conn)
@@ -163,6 +183,7 @@ Public Class StaffDb
                         dt.Load(reader)
                         StaffGrid.Columns.Clear()
                         StaffGrid.DataSource = dt
+
                         StaffGrid.Columns("EmployeeID").HeaderText = "EMPLOYEE ID"
                         StaffGrid.Columns("EmployeeName").HeaderText = "NAME"
                         StaffGrid.Columns("EmployeePosition").HeaderText = "POSITION"
@@ -172,13 +193,13 @@ Public Class StaffDb
                         StaffGrid.Columns("EmployeeAddress").HeaderText = "ADDRESS"
                         StaffGrid.Columns("EmployedDate").HeaderText = "DOE"
                     End Using
-
                 End Using
             End Using
         Catch ex As Exception
-            MessageBox.Show("An error occurred while loading employee records: " & ex.Message)
+            MessageBox.Show("Error loading employee records: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
+
 
     Private Sub AddBtn_Click(sender As Object, e As EventArgs) Handles AddBtn.Click
         Dim addStaffForm As New AddStaff()
@@ -192,6 +213,7 @@ Public Class StaffDb
         Me.Close()
     End Sub
 
+
     Private Sub FilterBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles FilterBox.SelectedIndexChanged
         Dim selectedPosition As String = FilterBox.SelectedItem.ToString()
 
@@ -202,9 +224,107 @@ Public Class StaffDb
         End If
     End Sub
 
+
     Private Sub EditBtn_Click(sender As Object, e As EventArgs) Handles EditBtn.Click
         Dim editStaffForm As New EditStaff()
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(editStaffForm)
         Me.Close()
+    End Sub
+
+    Private Sub AddPositionBtn_Click(sender As Object, e As EventArgs) Handles AddPositionBtn.Click
+        ' Step 1: Input position name
+        Dim positionName As String = InputBox("Enter the Position Name:", "Add Position Name")
+        If String.IsNullOrWhiteSpace(positionName) Then
+            Return
+        End If
+
+        ' Step 2: Suggest next position code based on the database
+        Dim suggestedCode As String = GetNextPositionCode()
+
+        ' Step 3: Input position code (allow admin to change suggested code)
+        Dim positionCode As String = InputBox($"Enter the Position Code (suggested: {suggestedCode}):", "Add Position Code", suggestedCode)
+        If String.IsNullOrWhiteSpace(positionCode) OrElse positionCode.Length > 2 Then
+            MessageBox.Show("Position Code is required and must be 2 characters.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
+        ' Step 4: Generate the next position ID
+        Dim nextPositionId As Integer = GetNextPositionId()
+
+        ' Step 5: Insert the new position into the database
+        Try
+            Using conn As New NpgsqlConnection(connString)
+                conn.Open()
+
+                Dim query As String = "INSERT INTO public.employeeposition (positionid, positionname, positioncode, datecreated) VALUES (@id, @name, @code, CURRENT_DATE)"
+                Using cmd As New NpgsqlCommand(query, conn)
+                    cmd.Parameters.AddWithValue("@id", nextPositionId)
+                    cmd.Parameters.AddWithValue("@name", positionName.Trim())
+                    cmd.Parameters.AddWithValue("@code", positionCode.Trim())
+                    cmd.ExecuteNonQuery()
+                End Using
+            End Using
+
+            MessageBox.Show("Position added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            PopulateFilterBox()
+
+        Catch ex As Exception
+            MessageBox.Show("Error adding position: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Function GetNextPositionId() As Integer
+        Try
+            Using conn As New NpgsqlConnection(connString)
+                conn.Open()
+
+                ' Query to get the maximum position ID
+                Dim query As String = "SELECT COALESCE(MAX(positionid), 0) FROM public.employeeposition"
+                Using cmd As New NpgsqlCommand(query, conn)
+                    Dim result As Object = cmd.ExecuteScalar()
+
+                    If result IsNot DBNull.Value AndAlso result IsNot Nothing Then
+                        Return Convert.ToInt32(result) + 1
+                    End If
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error retrieving next position ID: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+        Return 1 ' Default to 1 if no positions exist or an error occurs
+    End Function
+
+    Private Function GetNextPositionCode() As String
+        Try
+            Using conn As New NpgsqlConnection(connString)
+                conn.Open()
+
+                ' Query to get the maximum position code
+                Dim query As String = "SELECT MAX(positioncode) FROM public.employeeposition"
+                Using cmd As New NpgsqlCommand(query, conn)
+                    Dim result As Object = cmd.ExecuteScalar()
+
+                    If result IsNot DBNull.Value AndAlso result IsNot Nothing Then
+                        Dim maxCode As Integer
+                        If Integer.TryParse(result.ToString().Trim(), maxCode) Then
+                            Return (maxCode + 1).ToString("D2") ' Format as 2-digit string
+                        End If
+                    End If
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error retrieving next position code: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+        Return "01" ' Default to '01' if no positions exist or an error occurs
+    End Function
+
+
+    Private Sub RefreshPositionComboBox()
+        Dim addStaffForm As AddStaff = Application.OpenForms.OfType(Of AddStaff)().FirstOrDefault()
+        If addStaffForm IsNot Nothing Then
+            addStaffForm.LoadPositions()
+        End If
     End Sub
 End Class

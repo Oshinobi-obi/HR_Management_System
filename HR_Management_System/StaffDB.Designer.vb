@@ -43,6 +43,7 @@ Partial Class StaffDB
         Panel2 = New Panel()
         Panel3 = New Panel()
         EditBtn = New Button()
+        AddPositionBtn = New Button()
         CType(StaffGrid, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
@@ -215,6 +216,7 @@ Partial Class StaffDB
         ' 
         ' Panel2
         ' 
+        Panel2.Controls.Add(AddPositionBtn)
         Panel2.Controls.Add(ReturnBtn)
         Panel2.Dock = DockStyle.Fill
         Panel2.Location = New Point(113, 462)
@@ -245,6 +247,19 @@ Partial Class StaffDB
         EditBtn.TabIndex = 3
         EditBtn.Text = "EDIT"
         EditBtn.UseVisualStyleBackColor = False
+        ' 
+        ' AddPositionBtn
+        ' 
+        AddPositionBtn.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
+        AddPositionBtn.BackColor = Color.LightGreen
+        AddPositionBtn.Cursor = Cursors.Hand
+        AddPositionBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        AddPositionBtn.Location = New Point(68, 4)
+        AddPositionBtn.Name = "AddPositionBtn"
+        AddPositionBtn.Size = New Size(143, 42)
+        AddPositionBtn.TabIndex = 4
+        AddPositionBtn.Text = "ADD POS"
+        AddPositionBtn.UseVisualStyleBackColor = False
         ' 
         ' StaffDB
         ' 
@@ -287,4 +302,5 @@ Partial Class StaffDB
     Friend WithEvents EADD As DataGridViewTextBoxColumn
     Friend WithEvents EDOE As DataGridViewTextBoxColumn
     Friend WithEvents EditBtn As Button
+    Friend WithEvents AddPositionBtn As Button
 End Class

@@ -1,8 +1,13 @@
 ﻿Imports System.Windows.Forms.VisualStyles
 
 Public Class Admin
+    Private EmployeeID As String
 
     Private Sub Admin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Dim employeeID As String = CType(Me.MdiParent, MDIParent).LoggedInEmployeeID
+        NameTxt.Text = employeeID
+
         LogOutBtn.FlatStyle = FlatStyle.Flat
         LogOutBtn.FlatAppearance.BorderSize = 0
         LogOutBtn.BackColor = Color.Transparent
@@ -163,5 +168,10 @@ Public Class Admin
         Dim staffDBForm As New StaffDB()
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(staffDBForm)
         Me.Close()
+    End Sub
+
+
+    Private Sub NameTxt_Click(sender As Object, e As EventArgs) Handles NameTxt.Click
+
     End Sub
 End Class

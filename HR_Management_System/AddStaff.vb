@@ -9,13 +9,6 @@ Public Class AddStaff
                                    "Database=defaultdb;" &
                                    "SSL Mode=Require"
 
-    Public Sub AddStaff_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        InitializeButton(ReturnBtn, "RETURN", Color.LightCoral)
-        InitializeButton(AddStaffBtn, "ADD STAFF", Color.LightGreen)
-        InitializeButton(OpenBtn, "OPEN", Color.LightGreen)
-        ToggleControls(False)
-    End Sub
-
     Private Sub ToggleControls(isEnabled As Boolean)
         FirstNameTxt.Enabled = isEnabled
         MiddleNameTxt.Enabled = isEnabled
@@ -171,30 +164,39 @@ Public Class AddStaff
     End Sub
 
     Private Sub PosCmb_SelectedIndexChanged(sender As Object, e As EventArgs) Handles PosCmb.SelectedIndexChanged
-        If PosCmb.SelectedItem IsNot Nothing Then
-            Dim selectedPosition As String = PosCmb.SelectedItem.ToString()
-            Dim positionCode As String = PositionValues(selectedPosition)
-            Dim firstLetter As String = If(FirstNameTxt.Text.Length > 0, FirstNameTxt.Text.Substring(0, 1).ToUpper(), "A")
-            Dim firstLetterNumber As String = GetAlphabetPosition(firstLetter)
-            Dim age As String = AgeTxt.Text.Trim()
-
-            If IsNumeric(age) Then
-                Dim incrementingNumber As Integer = GetNextEmployeeID()
-                Dim employeeID As String = $"{positionCode}-{firstLetterNumber}-{age}-{incrementingNumber:D2}"
-                EmIDTxt.Text = employeeID
-            Else
-                MessageBox.Show("Please enter a valid age.")
-            End If
-
-            If selectedPosition = "Secretary (HRMO)" Then
-                HrShiftTxt.Text = "8:00 AM - 5:00 PM"
-                HrShiftTxt.ForeColor = Color.Black
-            Else
-                HrShiftTxt.Text = ""
-            End If
-        Else
-            MessageBox.Show("Please select a position.")
+        If PosCmb.SelectedItem Is Nothing Then
+            Return
         End If
+
+        Dim selectedPosition As String = PosCmb.SelectedItem.ToString()
+
+        Using conn As New NpgsqlConnection(connString)
+            conn.Open()
+            Dim query As String = "SELECT positioncode FROM employeeposition WHERE positionname = @positionname"
+            Using cmd As New NpgsqlCommand(query, conn)
+                cmd.Parameters.AddWithValue("@positionname", selectedPosition)
+                Dim positionCode As String = cmd.ExecuteScalar()?.ToString()
+
+                Dim firstLetter As String = If(FirstNameTxt.Text.Length > 0, FirstNameTxt.Text.Substring(0, 1).ToUpper(), "A")
+                Dim firstLetterNumber As String = GetAlphabetPosition(firstLetter)
+                Dim age As String = AgeTxt.Text.Trim()
+
+                If IsNumeric(age) Then
+                    Dim incrementingNumber As Integer = GetNextEmployeeID()
+                    Dim employeeID As String = $"{positionCode}-{firstLetterNumber}-{age}-{incrementingNumber:D2}"
+                    EmIDTxt.Text = employeeID
+                Else
+                    MessageBox.Show("Please enter a valid age.")
+                End If
+
+                If selectedPosition = "Secretary (HRMO)" Then
+                    HrShiftTxt.Text = "8:00 AM - 5:00 PM"
+                    HrShiftTxt.ForeColor = Color.Black
+                Else
+                    HrShiftTxt.Text = ""
+                End If
+            End Using
+        End Using
     End Sub
 
     Private Function GetAlphabetPosition(letter As String) As String
@@ -219,16 +221,16 @@ Public Class AddStaff
             Return
         End If
 
-        Dim employeeID As String = EmIDTxt.Text.Trim()
-        Dim employeeName As String = $"{FirstNameTxt.Text.Trim()} {MiddleNameTxt.Text.Trim()} {LastNameTxt.Text.Trim()}".Trim()
-        Dim employeeAge As Integer = Integer.Parse(AgeTxt.Text.Trim())
-        Dim employeePosition As String = PosCmb.SelectedItem.ToString()
-        Dim employeeDaySchedule As String = WorkDayTxt.Text.Trim()
-        Dim employeeTimeShift As String = HrShiftTxt.Text.Trim()
-        Dim employeeMobile As String = ContactTxt.Text.Trim()
-        Dim employeeAddress As String = AddressTxt.Text.Trim()
-        Dim employeeCardNumber As String = CardNumberTxt.Text.Trim()
-        Dim employeeStatus As String = "EMPLOYED"
+        Dim employeeID = EmIDTxt.Text.Trim
+        Dim employeeName = $"{FirstNameTxt.Text.Trim} {MiddleNameTxt.Text.Trim} {LastNameTxt.Text.Trim}".Trim
+        Dim employeeAge = Integer.Parse(AgeTxt.Text.Trim)
+        Dim employeePosition = PosCmb.SelectedItem.ToString
+        Dim employeeDaySchedule = WorkDayTxt.Text.Trim
+        Dim employeeTimeShift = HrShiftTxt.Text.Trim
+        Dim employeeMobile = ContactTxt.Text.Trim
+        Dim employeeAddress = AddressTxt.Text.Trim
+        Dim employeeCardNumber = CardNumberTxt.Text.Trim
+        Dim employeeStatus = "EMPLOYED"
         Dim employeeImage As Byte()
 
         If Not String.IsNullOrWhiteSpace(PictureTxt.Text) AndAlso IO.File.Exists(PictureTxt.Text) Then
@@ -240,21 +242,21 @@ Public Class AddStaff
 
         Try
             Using conn As New NpgsqlConnection(connString)
-                conn.Open()
+                conn.Open
 
-                Dim checkQuery As String = "SELECT COUNT(*) FROM employee WHERE ""EmployeeID"" = @EmployeeID OR ""EmployeeCardNumber"" = @EmployeeCardNumber"
+                Dim checkQuery = "SELECT COUNT(*) FROM employee WHERE ""EmployeeID"" = @EmployeeID OR ""EmployeeCardNumber"" = @EmployeeCardNumber"
                 Using checkCmd As New NpgsqlCommand(checkQuery, conn)
                     checkCmd.Parameters.AddWithValue("@EmployeeID", employeeID)
                     checkCmd.Parameters.AddWithValue("@EmployeeCardNumber", employeeCardNumber)
 
-                    Dim count As Integer = CInt(checkCmd.ExecuteScalar())
+                    Dim count As Integer = checkCmd.ExecuteScalar()
                     If count > 0 Then
                         MessageBox.Show("This resident is already employed.", "Duplicate Entry", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                         Return
                     End If
                 End Using
 
-                Dim query As String = "INSERT INTO employee (""EmployeeID"", ""EmployeeName"", ""EmployeeAge"", ""EmployeePosition"", ""EmployeeDaySchedule"", " &
+                Dim query = "INSERT INTO employee (""EmployeeID"", ""EmployeeName"", ""EmployeeAge"", ""EmployeePosition"", ""EmployeeDaySchedule"", " &
                                   """EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployeeImage"", ""EmployedDate"", ""EmployeeCardNumber"", ""EmployeeStatus"") " &
                                   "VALUES (@EmployeeID, @EmployeeName, @EmployeeAge, @EmployeePosition, @EmployeeDaySchedule, " &
                                   "@EmployeeTimeShift, @EmployeeMobile, @EmployeeAddress, @EmployeeImage, CURRENT_DATE, @EmployeeCardNumber, @EmployeeStatus)"
@@ -272,9 +274,9 @@ Public Class AddStaff
                     cmd.Parameters.AddWithValue("@EmployeeCardNumber", employeeCardNumber)
                     cmd.Parameters.AddWithValue("@EmployeeStatus", employeeStatus)
 
-                    cmd.ExecuteNonQuery()
+                    cmd.ExecuteNonQuery
                     MessageBox.Show("Staff added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    ClearFields()
+                    ClearFields
                 End Using
             End Using
         Catch ex As Exception
@@ -282,10 +284,30 @@ Public Class AddStaff
         End Try
     End Sub
 
+    Public Sub LoadPositions()
+        Try
+            Using conn As New NpgsqlConnection(connString)
+                conn.Open()
+                Dim query As String = "SELECT positionname FROM employeeposition"
 
-    Private PositionValues As New Dictionary(Of String, String) From {
-       {"Admin Staff", "01"}, {"Secretary (HRMO)", "02"}, {"BPSO", "03"}, {"Clerk", "04"}, {"Medical Aide", "05"}
-    }
+                Using cmd As New NpgsqlCommand(query, conn)
+                    Using reader As NpgsqlDataReader = cmd.ExecuteReader()
+                        PosCmb.Items.Clear()
+                        While reader.Read()
+                            Dim positionName As String = reader("positionname").ToString().Trim()
+                            PosCmb.Items.Add(positionName)
+                        End While
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error loading positions: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub AddStaff_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadPositions()
+    End Sub
 
     Private Sub OpenBtn_Click(sender As Object, e As EventArgs) Handles OpenBtn.Click
         SelectImage.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif"

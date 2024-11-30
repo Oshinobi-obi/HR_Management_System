@@ -5,6 +5,8 @@ Imports Npgsql
 Public Class Login
     Public Shared LoggedInEmployeeID As String
 
+    Private Const SystemID As Integer = 2
+
     Private Sub StaffLogin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DatabaseConnection.OpenConnection()
         DatabaseConnection.CloseConnection()
@@ -155,74 +157,80 @@ Public Class Login
         End Using
     End Sub
 
-
     Private Sub LoginBtn_Click(sender As Object, e As EventArgs) Handles LoginBtn.Click
         Dim employeeID As String = StaffIDtxt.Text.Trim()
         Dim password As String = Passtxt.Text.Trim()
+        Dim loginStatus As String = "INCORRECT PASSWORD"
 
         Try
-            Dim isValid As Boolean = ValidateCredentials(employeeID, password)
+            If Not System.Text.RegularExpressions.Regex.IsMatch(employeeID, "^02-\d{2}-\d{2}-\d{2}$") Then
+                MsgBox("Invalid EmployeeID format.", MsgBoxStyle.Exclamation, "Validation Error")
+                LogLoginAttempt(employeeID, password, "NO PERMISSION")
+                ResetLoginFields()
+                Return
+            End If
 
+            Dim isValid As Boolean = ValidateCredentials(employeeID, password)
             If isValid Then
-                LoggedInEmployeeID = employeeID
+                ' Store employeeID in MDIParent
+                CType(Me.MdiParent, MDIParent).LoggedInEmployeeID = employeeID
+
+                loginStatus = "SUCCESSFUL"
+                ' Pass employeeID to Admin form, if needed
                 Dim adminForm As New Admin(employeeID)
                 CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
                 Me.Close()
             Else
                 MsgBox("Wrong credentials.", MsgBoxStyle.Exclamation, "Login Failed")
-                ResetLoginFields()
             End If
         Catch ex As Exception
             MsgBox("Error validating credentials: " & ex.Message)
+        Finally
+            LogLoginAttempt(employeeID, password, loginStatus)
+            ResetLoginFields()
         End Try
     End Sub
+
 
     Private Function ValidateCredentials(employeeID As String, password As String) As Boolean
         Try
             DatabaseConnection.OpenConnection()
 
-            Dim accountQuery As String = "SELECT COUNT(*) FROM ""Account"" WHERE ""EmployeeID"" = @EmployeeID AND ""Password"" = @Password"
+            Dim accountQuery As String = "SELECT COUNT(*) FROM ""Account"" WHERE ""EmployeeID"" = @EmployeeID AND ""Password"" = @Password AND ""Status"" = 'ACTIVE'"
             Using accountCmd As New NpgsqlCommand(accountQuery, DatabaseConnection.conn)
                 accountCmd.Parameters.AddWithValue("@EmployeeID", employeeID)
                 accountCmd.Parameters.AddWithValue("@Password", password)
 
                 Dim accountResult As Integer = Convert.ToInt32(accountCmd.ExecuteScalar())
-                If accountResult = 0 Then
-                    Return False
-                End If
-            End Using
-
-            Dim employeeQuery As String = "SELECT ""EmployeePosition"" FROM public.employee WHERE ""EmployeeID"" = @EmployeeID"
-            Using employeeCmd As New NpgsqlCommand(employeeQuery, DatabaseConnection.conn)
-                employeeCmd.Parameters.AddWithValue("@EmployeeID", employeeID)
-
-                Using reader As NpgsqlDataReader = employeeCmd.ExecuteReader()
-                    If reader.Read() Then
-                        Dim employeePosition As String = reader("EmployeePosition").ToString()
-
-                        If employeePosition = "Secretary (HRMO)" Then
-                            Dim idPattern As String = "^02-\d{2}-\d{2}-\d{2}$"
-                            If System.Text.RegularExpressions.Regex.IsMatch(employeeID, idPattern) Then
-                                Return True
-                            Else
-                                MsgBox("Invalid EmployeeID format. It must follow '02-##-##-##'.", MsgBoxStyle.Exclamation, "Validation Error")
-                            End If
-                        Else
-                            MsgBox("Access restricted to 'Secretary (HRMO)' only.", MsgBoxStyle.Exclamation, "Validation Error")
-                        End If
-                    Else
-                        MsgBox("EmployeeID not found in the attendance table.", MsgBoxStyle.Exclamation, "Validation Error")
-                    End If
-                End Using
+                Return accountResult > 0
             End Using
         Catch ex As Exception
             MsgBox("Database error: " & ex.Message)
+            Return False
         Finally
             DatabaseConnection.CloseConnection()
         End Try
-
-        Return False
     End Function
+
+    Private Sub LogLoginAttempt(employeeID As String, password As String, loginStatus As String)
+        Try
+            DatabaseConnection.OpenConnection()
+
+            Dim insertQuery As String = "INSERT INTO ""Login_Attempt"" (""SystemID"", ""EmployeeID"", ""Password"", ""Login_Status"", ""Date_Of_Attempt"", ""Time"") " &
+                                        "VALUES (@SystemID, @EmployeeID, @Password, @LoginStatus, CURRENT_DATE, CURRENT_TIME)"
+            Using cmd As New NpgsqlCommand(insertQuery, DatabaseConnection.conn)
+                cmd.Parameters.AddWithValue("@SystemID", SystemID)
+                cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
+                cmd.Parameters.AddWithValue("@Password", password)
+                cmd.Parameters.AddWithValue("@LoginStatus", loginStatus)
+                cmd.ExecuteNonQuery()
+            End Using
+        Catch ex As Exception
+            MsgBox("Error login attempt: " & ex.Message)
+        Finally
+            DatabaseConnection.CloseConnection()
+        End Try
+    End Sub
 
     Private Sub ResetLoginFields()
         StaffIDtxt.Clear()

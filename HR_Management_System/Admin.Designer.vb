@@ -179,9 +179,9 @@ Partial Class Admin
         NameTxt.Anchor = AnchorStyles.None
         NameTxt.BackColor = Color.Transparent
         NameTxt.Font = New Font("Corbel", 24F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        NameTxt.Location = New Point(49, 83)
+        NameTxt.Location = New Point(201, 83)
         NameTxt.Name = "NameTxt"
-        NameTxt.Size = New Size(500, 40)
+        NameTxt.Size = New Size(197, 40)
         NameTxt.TabIndex = 9
         NameTxt.TextAlign = ContentAlignment.MiddleCenter
         ' 
