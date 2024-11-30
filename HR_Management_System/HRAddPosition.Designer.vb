@@ -161,7 +161,7 @@ Partial Class HRAddPosition
         ReturnBtn.AutoSize = True
         ReturnBtn.BackColor = Color.LightCoral
         ReturnBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        ReturnBtn.Location = New Point(214, 308)
+        ReturnBtn.Location = New Point(254, 306)
         ReturnBtn.Name = "ReturnBtn"
         ReturnBtn.Size = New Size(128, 43)
         ReturnBtn.TabIndex = 4
@@ -174,7 +174,7 @@ Partial Class HRAddPosition
         AddBtn.AutoSize = True
         AddBtn.BackColor = Color.LightGreen
         AddBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        AddBtn.Location = New Point(127, 308)
+        AddBtn.Location = New Point(167, 306)
         AddBtn.Name = "AddBtn"
         AddBtn.Size = New Size(81, 43)
         AddBtn.TabIndex = 3
@@ -185,20 +185,20 @@ Partial Class HRAddPosition
         ' 
         PCodeTxt.Anchor = AnchorStyles.None
         PCodeTxt.BorderStyle = BorderStyle.FixedSingle
-        PCodeTxt.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        PCodeTxt.Location = New Point(42, 238)
+        PCodeTxt.Font = New Font("Corbel", 22.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        PCodeTxt.Location = New Point(3, 240)
         PCodeTxt.Name = "PCodeTxt"
-        PCodeTxt.Size = New Size(300, 40)
+        PCodeTxt.Size = New Size(379, 44)
         PCodeTxt.TabIndex = 2
         ' 
         ' PNameTxt
         ' 
         PNameTxt.Anchor = AnchorStyles.None
         PNameTxt.BorderStyle = BorderStyle.FixedSingle
-        PNameTxt.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        PNameTxt.Location = New Point(42, 135)
+        PNameTxt.Font = New Font("Corbel", 22.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        PNameTxt.Location = New Point(3, 137)
         PNameTxt.Name = "PNameTxt"
-        PNameTxt.Size = New Size(300, 40)
+        PNameTxt.Size = New Size(379, 44)
         PNameTxt.TabIndex = 1
         ' 
         ' Label4
@@ -206,7 +206,7 @@ Partial Class HRAddPosition
         Label4.Anchor = AnchorStyles.None
         Label4.AutoSize = True
         Label4.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label4.Location = New Point(42, 202)
+        Label4.Location = New Point(3, 204)
         Label4.Name = "Label4"
         Label4.Size = New Size(175, 33)
         Label4.TabIndex = 1
@@ -217,7 +217,7 @@ Partial Class HRAddPosition
         Label3.Anchor = AnchorStyles.None
         Label3.AutoSize = True
         Label3.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label3.Location = New Point(42, 99)
+        Label3.Location = New Point(3, 101)
         Label3.Name = "Label3"
         Label3.Size = New Size(187, 33)
         Label3.TabIndex = 1
