@@ -31,12 +31,12 @@ Partial Class HRAddPosition
         Panel2 = New Panel()
         Label2 = New Label()
         Panel3 = New Panel()
+        ReturnBtn = New Button()
+        AddBtn = New Button()
+        PCodeTxt = New TextBox()
+        PNameTxt = New TextBox()
         Label4 = New Label()
         Label3 = New Label()
-        TextBox1 = New TextBox()
-        TextBox2 = New TextBox()
-        AddBtn = New Button()
-        ReturnBtn = New Button()
         TableLayoutPanel1.SuspendLayout()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
@@ -145,8 +145,8 @@ Partial Class HRAddPosition
         Panel3.BorderStyle = BorderStyle.FixedSingle
         Panel3.Controls.Add(ReturnBtn)
         Panel3.Controls.Add(AddBtn)
-        Panel3.Controls.Add(TextBox2)
-        Panel3.Controls.Add(TextBox1)
+        Panel3.Controls.Add(PCodeTxt)
+        Panel3.Controls.Add(PNameTxt)
         Panel3.Controls.Add(Label4)
         Panel3.Controls.Add(Label3)
         Panel3.Dock = DockStyle.Fill
@@ -155,48 +155,22 @@ Partial Class HRAddPosition
         Panel3.Size = New Size(387, 452)
         Panel3.TabIndex = 5
         ' 
-        ' Label4
+        ' ReturnBtn
         ' 
-        Label4.AutoSize = True
-        Label4.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label4.Location = New Point(42, 202)
-        Label4.Name = "Label4"
-        Label4.Size = New Size(175, 33)
-        Label4.TabIndex = 1
-        Label4.Text = "Position Code"
-        ' 
-        ' Label3
-        ' 
-        Label3.AutoSize = True
-        Label3.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label3.Location = New Point(42, 99)
-        Label3.Name = "Label3"
-        Label3.Size = New Size(187, 33)
-        Label3.TabIndex = 1
-        Label3.Text = "Position Name"
-        ' 
-        ' TextBox1
-        ' 
-        TextBox1.BorderStyle = BorderStyle.FixedSingle
-        TextBox1.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        TextBox1.Location = New Point(42, 135)
-        TextBox1.Multiline = True
-        TextBox1.Name = "TextBox1"
-        TextBox1.Size = New Size(300, 40)
-        TextBox1.TabIndex = 1
-        ' 
-        ' TextBox2
-        ' 
-        TextBox2.BorderStyle = BorderStyle.FixedSingle
-        TextBox2.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        TextBox2.Location = New Point(42, 238)
-        TextBox2.Multiline = True
-        TextBox2.Name = "TextBox2"
-        TextBox2.Size = New Size(300, 40)
-        TextBox2.TabIndex = 2
+        ReturnBtn.Anchor = AnchorStyles.None
+        ReturnBtn.AutoSize = True
+        ReturnBtn.BackColor = Color.LightCoral
+        ReturnBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        ReturnBtn.Location = New Point(214, 308)
+        ReturnBtn.Name = "ReturnBtn"
+        ReturnBtn.Size = New Size(128, 43)
+        ReturnBtn.TabIndex = 4
+        ReturnBtn.Text = "RETURN"
+        ReturnBtn.UseVisualStyleBackColor = False
         ' 
         ' AddBtn
         ' 
+        AddBtn.Anchor = AnchorStyles.None
         AddBtn.AutoSize = True
         AddBtn.BackColor = Color.LightGreen
         AddBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
@@ -207,17 +181,47 @@ Partial Class HRAddPosition
         AddBtn.Text = "ADD"
         AddBtn.UseVisualStyleBackColor = False
         ' 
-        ' ReturnBtn
+        ' PCodeTxt
         ' 
-        ReturnBtn.AutoSize = True
-        ReturnBtn.BackColor = Color.LightCoral
-        ReturnBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        ReturnBtn.Location = New Point(214, 308)
-        ReturnBtn.Name = "ReturnBtn"
-        ReturnBtn.Size = New Size(128, 43)
-        ReturnBtn.TabIndex = 4
-        ReturnBtn.Text = "RETURN"
-        ReturnBtn.UseVisualStyleBackColor = False
+        PCodeTxt.Anchor = AnchorStyles.None
+        PCodeTxt.BorderStyle = BorderStyle.FixedSingle
+        PCodeTxt.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        PCodeTxt.Location = New Point(42, 238)
+        PCodeTxt.Name = "PCodeTxt"
+        PCodeTxt.Size = New Size(300, 40)
+        PCodeTxt.TabIndex = 2
+        ' 
+        ' PNameTxt
+        ' 
+        PNameTxt.Anchor = AnchorStyles.None
+        PNameTxt.BorderStyle = BorderStyle.FixedSingle
+        PNameTxt.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        PNameTxt.Location = New Point(42, 135)
+        PNameTxt.Name = "PNameTxt"
+        PNameTxt.Size = New Size(300, 40)
+        PNameTxt.TabIndex = 1
+        ' 
+        ' Label4
+        ' 
+        Label4.Anchor = AnchorStyles.None
+        Label4.AutoSize = True
+        Label4.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label4.Location = New Point(42, 202)
+        Label4.Name = "Label4"
+        Label4.Size = New Size(175, 33)
+        Label4.TabIndex = 1
+        Label4.Text = "Position Code"
+        ' 
+        ' Label3
+        ' 
+        Label3.Anchor = AnchorStyles.None
+        Label3.AutoSize = True
+        Label3.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label3.Location = New Point(42, 99)
+        Label3.Name = "Label3"
+        Label3.Size = New Size(187, 33)
+        Label3.TabIndex = 1
+        Label3.Text = "Position Name"
         ' 
         ' HRAddPosition
         ' 
@@ -252,10 +256,10 @@ Partial Class HRAddPosition
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Label2 As Label
     Friend WithEvents Panel3 As Panel
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents PNameTxt As TextBox
     Friend WithEvents Label4 As Label
     Friend WithEvents Label3 As Label
-    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents PCodeTxt As TextBox
     Friend WithEvents AddBtn As Button
     Friend WithEvents ReturnBtn As Button
 End Class
