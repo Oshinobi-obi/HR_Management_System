@@ -1,9 +1,9 @@
 ﻿Imports Npgsql
 Imports System.Globalization
 
-Public Class Attendance
+Public Class HRAttendance
     Private Timer As New Timer()
-    Private PopUp As AttendancePopUp
+    Private PopUp As HRAttendancePopUp
     Private employeeSessions As New Dictionary(Of String, Dictionary(Of String, String))()
 
     Public Sub Attendance_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -144,7 +144,7 @@ Public Class Attendance
     End Function
 
     Private Sub ShowAttendancePopUp(employeeData As Dictionary(Of String, String))
-        PopUp = New AttendancePopUp()
+        PopUp = New HRAttendancePopUp()
         PopUp.SetEmployeeData(employeeData)
         PopUp.Show()
         Timer.Interval = 5000

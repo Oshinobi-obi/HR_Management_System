@@ -1,6 +1,6 @@
 ﻿Imports Npgsql
 
-Public Class StaffDb
+Public Class HRStaffDB
     Private connString As String = "Host=db-postgresql-sgp1-sbit3f-do-user-13901833-0.l.db.ondigitalocean.com;" &
                                    "Port=25060;" &
                                    "Username=doadmin;" &
@@ -17,16 +17,22 @@ Public Class StaffDb
         AddBtn.FlatStyle = FlatStyle.Flat
         AddBtn.FlatAppearance.BorderSize = 0
         AddBtn.BackColor = Color.Transparent
-        AddBtn.Text = "ADD"
+        AddBtn.Text = "ADD STAFF"
 
         EditBtn.FlatStyle = FlatStyle.Flat
         EditBtn.FlatAppearance.BorderSize = 0
         EditBtn.BackColor = Color.Transparent
-        EditBtn.Text = "EDIT"
+        EditBtn.Text = "EDIT STAFF"
+
+        AddPositionBtn.FlatStyle = FlatStyle.Flat
+        AddPositionBtn.FlatAppearance.BorderSize = 0
+        AddPositionBtn.BackColor = Color.Transparent
+        AddPositionBtn.Text = "ADD POS"
 
         AddHandler ReturnBtn.Paint, AddressOf ReturnBtn_Paint
         AddHandler AddBtn.Paint, AddressOf AddBtn_Paint
         AddHandler EditBtn.Paint, AddressOf EditBtn_Paint
+        AddHandler AddPositionBtn.Paint, AddressOf AddPositionBtn_Paint
     End Sub
 
     Private Sub ReturnBtn_Paint(sender As Object, e As PaintEventArgs)
@@ -45,6 +51,40 @@ Public Class StaffDb
         path.CloseFigure()
 
         Using brush As New SolidBrush(Color.LightCoral)
+            graphics.FillPath(brush, path)
+        End Using
+
+        Using borderPen As New Pen(Color.Black, 2)
+            graphics.DrawPath(borderPen, path)
+        End Using
+
+        Dim textBrush As New SolidBrush(button.ForeColor)
+        Dim textFormat As New StringFormat() With {
+        .Alignment = StringAlignment.Center,
+        .LineAlignment = StringAlignment.Center
+    }
+        graphics.DrawString(button.Text, button.Font, textBrush, rect, textFormat)
+
+        textBrush.Dispose()
+        path.Dispose()
+    End Sub
+
+    Private Sub AddPositionBtn_Paint(sender As Object, e As PaintEventArgs)
+        Dim button As Button = CType(sender, Button)
+        Dim graphics As Graphics = e.Graphics
+        Dim rect As New Rectangle(0, 0, button.Width - 1, button.Height - 1)
+
+        graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+
+        Dim path As New Drawing2D.GraphicsPath()
+        Dim radius As Integer = 20
+        path.AddArc(rect.X, rect.Y, radius, radius, 180, 90)
+        path.AddArc(rect.Right - radius, rect.Y, radius, radius, 270, 90)
+        path.AddArc(rect.Right - radius, rect.Bottom - radius, radius, radius, 0, 90)
+        path.AddArc(rect.X, rect.Bottom - radius, radius, radius, 90, 90)
+        path.CloseFigure()
+
+        Using brush As New SolidBrush(Color.LightGreen)
             graphics.FillPath(brush, path)
         End Using
 
@@ -202,13 +242,13 @@ Public Class StaffDb
 
 
     Private Sub AddBtn_Click(sender As Object, e As EventArgs) Handles AddBtn.Click
-        Dim addStaffForm As New AddStaff()
+        Dim addStaffForm As New HRAddStaff()
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(addStaffForm)
         Me.Close()
     End Sub
 
     Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
-        Dim adminForm As New Admin()
+        Dim adminForm As New HRAdmin()
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
         Me.Close()
     End Sub
@@ -226,32 +266,26 @@ Public Class StaffDb
 
 
     Private Sub EditBtn_Click(sender As Object, e As EventArgs) Handles EditBtn.Click
-        Dim editStaffForm As New EditStaff()
+        Dim editStaffForm As New HREditStaff()
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(editStaffForm)
         Me.Close()
     End Sub
 
     Private Sub AddPositionBtn_Click(sender As Object, e As EventArgs) Handles AddPositionBtn.Click
-        ' Step 1: Input position name
         Dim positionName As String = InputBox("Enter the Position Name:", "Add Position Name")
         If String.IsNullOrWhiteSpace(positionName) Then
             Return
         End If
 
-        ' Step 2: Suggest next position code based on the database
         Dim suggestedCode As String = GetNextPositionCode()
-
-        ' Step 3: Input position code (allow admin to change suggested code)
         Dim positionCode As String = InputBox($"Enter the Position Code (suggested: {suggestedCode}):", "Add Position Code", suggestedCode)
         If String.IsNullOrWhiteSpace(positionCode) OrElse positionCode.Length > 2 Then
             MessageBox.Show("Position Code is required and must be 2 characters.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return
         End If
 
-        ' Step 4: Generate the next position ID
         Dim nextPositionId As Integer = GetNextPositionId()
 
-        ' Step 5: Insert the new position into the database
         Try
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
@@ -277,8 +311,6 @@ Public Class StaffDb
         Try
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
-
-                ' Query to get the maximum position ID
                 Dim query As String = "SELECT COALESCE(MAX(positionid), 0) FROM public.employeeposition"
                 Using cmd As New NpgsqlCommand(query, conn)
                     Dim result As Object = cmd.ExecuteScalar()
@@ -292,7 +324,7 @@ Public Class StaffDb
             MessageBox.Show("Error retrieving next position ID: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
-        Return 1 ' Default to 1 if no positions exist or an error occurs
+        Return 1
     End Function
 
     Private Function GetNextPositionCode() As String
@@ -300,7 +332,6 @@ Public Class StaffDb
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
 
-                ' Query to get the maximum position code
                 Dim query As String = "SELECT MAX(positioncode) FROM public.employeeposition"
                 Using cmd As New NpgsqlCommand(query, conn)
                     Dim result As Object = cmd.ExecuteScalar()
@@ -308,7 +339,7 @@ Public Class StaffDb
                     If result IsNot DBNull.Value AndAlso result IsNot Nothing Then
                         Dim maxCode As Integer
                         If Integer.TryParse(result.ToString().Trim(), maxCode) Then
-                            Return (maxCode + 1).ToString("D2") ' Format as 2-digit string
+                            Return (maxCode + 1).ToString("D2")
                         End If
                     End If
                 End Using
@@ -317,12 +348,11 @@ Public Class StaffDb
             MessageBox.Show("Error retrieving next position code: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
-        Return "01" ' Default to '01' if no positions exist or an error occurs
+        Return "01"
     End Function
 
-
     Private Sub RefreshPositionComboBox()
-        Dim addStaffForm As AddStaff = Application.OpenForms.OfType(Of AddStaff)().FirstOrDefault()
+        Dim addStaffForm As HRAddStaff = Application.OpenForms.OfType(Of HRAddStaff)().FirstOrDefault()
         If addStaffForm IsNot Nothing Then
             addStaffForm.LoadPositions()
         End If

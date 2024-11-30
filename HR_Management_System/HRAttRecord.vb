@@ -1,7 +1,7 @@
 ﻿Imports Npgsql
 Imports System.Data
 
-Public Class AttRecord
+Public Class HRAttRecord
     Private conn As NpgsqlConnection
 
     Private Sub AttRecord_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -83,7 +83,7 @@ Public Class AttRecord
     End Sub
 
     Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
-        Dim adminForm As New Admin()
+        Dim adminForm As New HRAdmin()
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
         Me.Close()
     End Sub

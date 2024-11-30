@@ -4,7 +4,7 @@ Imports System.Data
 Imports System.Drawing.Drawing2D
 Imports Npgsql
 
-Public Class AttendancePopUp
+Public Class HRAttendancePopUp
 
     Private isEditable As Boolean = False
 

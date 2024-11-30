@@ -2,7 +2,7 @@
 Imports Npgsql
 
 
-Public Class Login
+Public Class HRLogin
     Public Shared LoggedInEmployeeID As String
 
     Private Const SystemID As Integer = 2
@@ -177,7 +177,7 @@ Public Class Login
 
                 loginStatus = "SUCCESSFUL"
                 ' Pass employeeID to Admin form, if needed
-                Dim adminForm As New Admin(employeeID)
+                Dim adminForm As New HRAdmin(employeeID)
                 CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
                 Me.Close()
             Else

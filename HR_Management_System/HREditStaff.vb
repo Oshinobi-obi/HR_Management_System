@@ -1,7 +1,7 @@
 ﻿Imports System.Drawing.Drawing2D
 Imports Npgsql
 
-Public Class EditStaff
+Public Class HREditStaff
 
     Private connString As String = "Host=db-postgresql-sgp1-sbit3f-do-user-13901833-0.l.db.ondigitalocean.com;" &
                                    "Port=25060;Username=doadmin;Password=AVNS_TVTvL-Hw2xMPJMthE_2;" &
@@ -10,11 +10,36 @@ Public Class EditStaff
     Public Sub EditStaff_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitializeButton(ReturnBtn, "RETURN", Color.LightCoral)
         InitializeButton(UpdateStaffBtn, "UPDATE", Color.LightGreen)
-        InitializeButton(OpenBtn, "OPEN", Color.LightGreen)
+        InitializeButton(OpenBtn, "ADD", Color.LightGreen)
 
         LoadPositionItems()
         LoadEmployeeIDs()
         ToggleControls(False)
+
+        AddHandler PosCmb.KeyPress, AddressOf DisableKeyPress
+        AddHandler PosCmb.MouseDown, AddressOf DisableMouseClick
+        AddHandler PosCmb.MouseWheel, AddressOf DisableMouseWheel
+        AddHandler StatusCmb.KeyPress, AddressOf DisableKeyPress
+        AddHandler StatusCmb.MouseDown, AddressOf DisableMouseClick
+        AddHandler StatusCmb.MouseDown, AddressOf DisableMouseClick
+        AddHandler StatusCmb.MouseWheel, AddressOf DisableMouseWheel
+    End Sub
+
+    Private Sub DisableKeyPress(sender As Object, e As KeyPressEventArgs)
+        e.Handled = True
+    End Sub
+
+    Private Sub DisableMouseClick(sender As Object, e As MouseEventArgs)
+        If e.Button = MouseButtons.Left Then
+            DirectCast(sender, ComboBox).DroppedDown = False
+        End If
+    End Sub
+
+    Private Sub DisableMouseWheel(sender As Object, e As MouseEventArgs) Handles PosCmb.MouseWheel, StatusCmb.MouseWheel
+        Dim mouseEvent = TryCast(e, HandledMouseEventArgs)
+        If mouseEvent IsNot Nothing Then
+            mouseEvent.Handled = True
+        End If
     End Sub
 
     Private Sub ToggleControls(isEnabled As Boolean)
@@ -23,12 +48,10 @@ Public Class EditStaff
         MiddleNameTxt.Enabled = isEnabled
         LastNameTxt.Enabled = isEnabled
         AgeTxt.Enabled = isEnabled
-        StatusCmb.Enabled = isEnabled
         ContactTxt.Enabled = isEnabled
         AddressTxt.Enabled = isEnabled
         WorkDayTxt.Enabled = isEnabled
         HrShiftTxt.Enabled = isEnabled
-        PosCmb.Enabled = isEnabled
         PictureTxt.Enabled = isEnabled
         CardNumberTxt.Enabled = isEnabled
 
@@ -38,12 +61,10 @@ Public Class EditStaff
         MiddleNameTxt.BackColor = backColor
         LastNameTxt.BackColor = backColor
         AgeTxt.BackColor = backColor
-        StatusCmb.BackColor = backColor
         ContactTxt.BackColor = backColor
         AddressTxt.BackColor = backColor
         WorkDayTxt.BackColor = backColor
         HrShiftTxt.BackColor = backColor
-        PosCmb.BackColor = backColor
         PictureTxt.BackColor = backColor
         CardNumberTxt.BackColor = backColor
     End Sub
@@ -63,27 +84,10 @@ Public Class EditStaff
         PosCmb.SelectedIndex = -1
     End Sub
 
-    Private Sub LoadPositions()
-        Try
-            Using conn As New NpgsqlConnection(connString)
-                conn.Open()
-                Dim query As String = "SELECT positionname FROM employeeposition"
-
-                Using cmd As New NpgsqlCommand(query, conn)
-                    Using reader As NpgsqlDataReader = cmd.ExecuteReader()
-                        PosCmb.Items.Clear()
-                        While reader.Read()
-                            Dim positionName As String = reader("positionname").ToString().Trim()
-                            PosCmb.Items.Add(positionName)
-                        End While
-                    End Using
-                End Using
-            End Using
-        Catch ex As Exception
-            MessageBox.Show("Error loading positions: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+    Private Sub LoadPositionItems()
+        PosCmb.Items.Clear()
+        PosCmb.Items.AddRange(New String() {"Admin Staff", "Secretary (HRMO)", "BPSO", "Clerk", "Medical Aide"})
     End Sub
-
 
     Private Sub LoadEmployeeIDs()
         Try
@@ -114,25 +118,20 @@ Public Class EditStaff
         End If
     End Sub
 
-    Private Sub LoadPositionItems()
-        LoadPositions()
-    End Sub
     Private Sub LoadEmployeeData(employeeID As String)
         Try
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
-                Dim sql As String = "SELECT ""EmployeeID"", ""EmployeeName"", ""EmployeeAge"", ""EmployeePosition"", ""EmployeeDaySchedule"", " &
+                Dim sql As String = "SELECT ""EmployeeName"", ""EmployeeAge"", ""EmployeePosition"", ""EmployeeDaySchedule"", " &
                                     """EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployeeImage"", ""EmployeeCardNumber"", ""EmployeeStatus"" " &
                                     "FROM employee WHERE ""EmployeeID"" = @EmployeeID"
                 Using cmd As New NpgsqlCommand(sql, conn)
                     cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
                     Using reader As NpgsqlDataReader = cmd.ExecuteReader()
                         If reader.Read() Then
-                            Dim employeeIDFromDb As String = reader("EmployeeID").ToString().Trim()
-                            EmIDCmb.SelectedItem = employeeIDFromDb
-
                             Dim fullName As String = reader("EmployeeName").ToString().Trim()
                             Dim nameParts As String() = fullName.Split(" "c)
+
                             If nameParts.Length > 0 Then FirstNameTxt.Text = nameParts(0)
                             If nameParts.Length > 1 Then MiddleNameTxt.Text = nameParts(1)
                             If nameParts.Length > 2 Then LastNameTxt.Text = nameParts(2)
@@ -151,7 +150,9 @@ Public Class EditStaff
                                 MessageBox.Show("Status '" & status & "' not found in StatusCmb.")
                             End If
 
+                            LoadPositionItems()
                             Dim position As String = reader("EmployeePosition").ToString().Trim()
+
                             Dim index As Integer = PosCmb.Items.IndexOf(position)
                             If index >= 0 Then
                                 PosCmb.SelectedIndex = index
@@ -226,7 +227,7 @@ Public Class EditStaff
     End Sub
 
     Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
-        Dim staffDBForm As New StaffDB()
+        Dim staffDBForm As New HRStaffDB()
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(staffDBForm)
         Me.Close()
     End Sub
@@ -278,6 +279,7 @@ Public Class EditStaff
             MessageBox.Show("An error occurred while updating employee data: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
+
 
     Private Sub UpdateStaffBtn_Click(sender As Object, e As EventArgs) Handles UpdateStaffBtn.Click
         UpdateEmployeeData()

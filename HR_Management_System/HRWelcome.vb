@@ -86,13 +86,13 @@ Public Class Welcome
     End Sub
 
     Private Sub LoginBtn_Click(sender As Object, e As EventArgs) Handles LoginBtn.Click
-        Dim loginForm As New Login()
+        Dim loginForm As New HRLogin()
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(loginForm)
         Me.Close()
     End Sub
 
     Private Sub TimeBtn_Click(sender As Object, e As EventArgs) Handles TimeBtn.Click
-        Dim attendanceForm As New Attendance()
+        Dim attendanceForm As New HRAttendance()
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(attendanceForm)
     End Sub
 

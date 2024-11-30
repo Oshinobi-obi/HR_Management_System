@@ -1,13 +1,8 @@
 ﻿Imports System.Windows.Forms.VisualStyles
 
-Public Class Admin
-    Private EmployeeID As String
+Public Class HRAdmin
 
     Private Sub Admin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-        Dim employeeID As String = CType(Me.MdiParent, MDIParent).LoggedInEmployeeID
-        NameTxt.Text = employeeID
-
         LogOutBtn.FlatStyle = FlatStyle.Flat
         LogOutBtn.FlatAppearance.BorderSize = 0
         LogOutBtn.BackColor = Color.Transparent
@@ -146,32 +141,27 @@ Public Class Admin
     Private Sub LogOutBtn_Click(sender As Object, e As EventArgs) Handles LogOutBtn.Click
         Dim result As DialogResult = MessageBox.Show("Are you sure you want to log out?", "Log Out", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If result = DialogResult.Yes Then
-            Dim loginForm As New Login()
+            Dim loginForm As New HRLogin()
             CType(Me.MdiParent, MDIParent).LoadFormInMDI(loginForm)
             Me.Close()
         End If
     End Sub
 
     Private Sub SecurityBtn_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles SecurityBtn.LinkClicked
-        Dim securitySettingsForm As New SecuritySettings()
+        Dim securitySettingsForm As New HRSecuritySettings()
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(securitySettingsForm)
         Me.Close()
     End Sub
 
     Private Sub AttBtn_Click(sender As Object, e As EventArgs) Handles AttBtn.Click
-        Dim attRecordForm As New AttRecord()
+        Dim attRecordForm As New HRAttRecord()
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(attRecordForm)
         Me.Close()
     End Sub
 
     Private Sub VSBtn_Click(sender As Object, e As EventArgs) Handles VSBtn.Click
-        Dim staffDBForm As New StaffDB()
+        Dim staffDBForm As New HRStaffDB()
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(staffDBForm)
         Me.Close()
-    End Sub
-
-
-    Private Sub NameTxt_Click(sender As Object, e As EventArgs) Handles NameTxt.Click
-
     End Sub
 End Class

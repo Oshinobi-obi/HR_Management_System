@@ -1,7 +1,7 @@
 ﻿Imports System.Drawing.Drawing2D
 Imports Npgsql
 
-Public Class SecuritySettings
+Public Class HRSecuritySettings
     Private Sub SecuritySettings_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         OldPassTxt.PasswordChar = "*"c
         OldPassTxt.UseSystemPasswordChar = False
@@ -103,7 +103,7 @@ Public Class SecuritySettings
 
         If UpdatePassword(oldPassword, newPassword) Then
             MessageBox.Show("Password changed successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Dim adminForm As New Admin()
+            Dim adminForm As New HRAdmin()
             CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
             Me.Close()
         Else
@@ -146,15 +146,15 @@ Public Class SecuritySettings
 
 
     Private Function GetLoggedInEmployeeID() As String
-        If String.IsNullOrEmpty(Login.LoggedInEmployeeID) Then
+        If String.IsNullOrEmpty(HRLogin.LoggedInEmployeeID) Then
             Throw New Exception("No logged-in user found.")
         End If
-        Return Login.LoggedInEmployeeID
+        Return HRLogin.LoggedInEmployeeID
     End Function
 
 
     Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
-        Dim adminForm As New Admin()
+        Dim adminForm As New HRAdmin()
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
         Me.Close()
     End Sub

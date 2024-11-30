@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class StaffDB
+Partial Class HRStaffDB
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -42,8 +42,8 @@ Partial Class StaffDB
         Panel1 = New Panel()
         Panel2 = New Panel()
         Panel3 = New Panel()
-        EditBtn = New Button()
         AddPositionBtn = New Button()
+        EditBtn = New Button()
         CType(StaffGrid, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
@@ -59,7 +59,7 @@ Partial Class StaffDB
         ReturnBtn.BackColor = Color.LightCoral
         ReturnBtn.Cursor = Cursors.Hand
         ReturnBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        ReturnBtn.Location = New Point(254, 2)
+        ReturnBtn.Location = New Point(402, 12)
         ReturnBtn.Name = "ReturnBtn"
         ReturnBtn.Size = New Size(150, 43)
         ReturnBtn.TabIndex = 3
@@ -92,7 +92,7 @@ Partial Class StaffDB
         DataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText
         DataGridViewCellStyle2.WrapMode = DataGridViewTriState.True
         StaffGrid.RowHeadersDefaultCellStyle = DataGridViewCellStyle2
-        StaffGrid.Size = New Size(657, 351)
+        StaffGrid.Size = New Size(954, 488)
         StaffGrid.TabIndex = 18
         ' 
         ' EID
@@ -141,7 +141,7 @@ Partial Class StaffDB
         PictureBox1.Image = My.Resources.Resources.Logo_100x95_
         PictureBox1.Location = New Point(3, 3)
         PictureBox1.Name = "PictureBox1"
-        PictureBox1.Size = New Size(104, 96)
+        PictureBox1.Size = New Size(154, 135)
         PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage
         PictureBox1.TabIndex = 19
         PictureBox1.TabStop = False
@@ -151,9 +151,9 @@ Partial Class StaffDB
         PictureBox2.BackColor = Color.Transparent
         PictureBox2.Dock = DockStyle.Fill
         PictureBox2.Image = My.Resources.Resources.SPLQ_100x95_
-        PictureBox2.Location = New Point(776, 3)
+        PictureBox2.Location = New Point(1123, 3)
         PictureBox2.Name = "PictureBox2"
-        PictureBox2.Size = New Size(105, 96)
+        PictureBox2.Size = New Size(154, 135)
         PictureBox2.SizeMode = PictureBoxSizeMode.StretchImage
         PictureBox2.TabIndex = 20
         PictureBox2.TabStop = False
@@ -163,12 +163,12 @@ Partial Class StaffDB
         AddBtn.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
         AddBtn.BackColor = Color.LightGreen
         AddBtn.Cursor = Cursors.Hand
-        AddBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        AddBtn.Location = New Point(198, 48)
+        AddBtn.Font = New Font("Corbel", 18F, FontStyle.Bold)
+        AddBtn.Location = New Point(246, 88)
         AddBtn.Name = "AddBtn"
-        AddBtn.Size = New Size(100, 42)
+        AddBtn.Size = New Size(200, 42)
         AddBtn.TabIndex = 1
-        AddBtn.Text = "ADD"
+        AddBtn.Text = "ADD STAFF"
         AddBtn.UseVisualStyleBackColor = False
         ' 
         ' FilterBox
@@ -178,7 +178,7 @@ Partial Class StaffDB
         FilterBox.DropDownStyle = ComboBoxStyle.DropDownList
         FilterBox.Font = New Font("Corbel", 22.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         FilterBox.FormattingEnabled = True
-        FilterBox.Location = New Point(304, 49)
+        FilterBox.Location = New Point(601, 88)
         FilterBox.Name = "FilterBox"
         FilterBox.Size = New Size(350, 45)
         FilterBox.TabIndex = 2
@@ -202,74 +202,74 @@ Partial Class StaffDB
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 20F))
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 70F))
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 10F))
-        TableLayoutPanel1.Size = New Size(884, 511)
+        TableLayoutPanel1.Size = New Size(1280, 707)
         TableLayoutPanel1.TabIndex = 23
         ' 
         ' Panel1
         ' 
         Panel1.Controls.Add(StaffGrid)
         Panel1.Dock = DockStyle.Fill
-        Panel1.Location = New Point(113, 105)
+        Panel1.Location = New Point(163, 144)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(657, 351)
+        Panel1.Size = New Size(954, 488)
         Panel1.TabIndex = 21
         ' 
         ' Panel2
         ' 
-        Panel2.Controls.Add(AddPositionBtn)
         Panel2.Controls.Add(ReturnBtn)
         Panel2.Dock = DockStyle.Fill
-        Panel2.Location = New Point(113, 462)
+        Panel2.Location = New Point(163, 638)
         Panel2.Name = "Panel2"
-        Panel2.Size = New Size(657, 46)
+        Panel2.Size = New Size(954, 66)
         Panel2.TabIndex = 22
         ' 
         ' Panel3
         ' 
+        Panel3.Controls.Add(AddPositionBtn)
         Panel3.Controls.Add(EditBtn)
         Panel3.Controls.Add(FilterBox)
         Panel3.Controls.Add(AddBtn)
         Panel3.Dock = DockStyle.Fill
-        Panel3.Location = New Point(113, 3)
+        Panel3.Location = New Point(163, 3)
         Panel3.Name = "Panel3"
-        Panel3.Size = New Size(657, 96)
+        Panel3.Size = New Size(954, 135)
         Panel3.TabIndex = 23
-        ' 
-        ' EditBtn
-        ' 
-        EditBtn.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
-        EditBtn.BackColor = Color.LightGreen
-        EditBtn.Cursor = Cursors.Hand
-        EditBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        EditBtn.Location = New Point(82, 48)
-        EditBtn.Name = "EditBtn"
-        EditBtn.Size = New Size(110, 42)
-        EditBtn.TabIndex = 3
-        EditBtn.Text = "EDIT"
-        EditBtn.UseVisualStyleBackColor = False
         ' 
         ' AddPositionBtn
         ' 
         AddPositionBtn.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
         AddPositionBtn.BackColor = Color.LightGreen
         AddPositionBtn.Cursor = Cursors.Hand
-        AddPositionBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        AddPositionBtn.Location = New Point(68, 4)
+        AddPositionBtn.Font = New Font("Corbel", 18F, FontStyle.Bold)
+        AddPositionBtn.Location = New Point(452, 88)
         AddPositionBtn.Name = "AddPositionBtn"
         AddPositionBtn.Size = New Size(143, 42)
         AddPositionBtn.TabIndex = 4
         AddPositionBtn.Text = "ADD POS"
         AddPositionBtn.UseVisualStyleBackColor = False
         ' 
-        ' StaffDB
+        ' EditBtn
+        ' 
+        EditBtn.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
+        EditBtn.BackColor = Color.LightGreen
+        EditBtn.Cursor = Cursors.Hand
+        EditBtn.Font = New Font("Corbel", 18F, FontStyle.Bold)
+        EditBtn.Location = New Point(40, 88)
+        EditBtn.Name = "EditBtn"
+        EditBtn.Size = New Size(200, 42)
+        EditBtn.TabIndex = 3
+        EditBtn.Text = "EDIT STAFF"
+        EditBtn.UseVisualStyleBackColor = False
+        ' 
+        ' HRStaffDB
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(884, 511)
+        ClientSize = New Size(1280, 707)
         ControlBox = False
         Controls.Add(TableLayoutPanel1)
         FormBorderStyle = FormBorderStyle.Fixed3D
-        Name = "StaffDB"
+        Name = "HRStaffDB"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Staff List"
         WindowState = FormWindowState.Maximized
