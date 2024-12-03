@@ -93,6 +93,7 @@ Partial Class HRAddPosition
         ' 
         ' PositionTable
         ' 
+        PositionTable.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         PositionTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         PositionTable.Dock = DockStyle.Fill
         PositionTable.Location = New Point(101, 79)

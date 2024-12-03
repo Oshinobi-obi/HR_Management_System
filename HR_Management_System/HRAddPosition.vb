@@ -8,7 +8,6 @@ Public Class HRAddPosition
                                    "Database=defaultdb;" &
                                    "SSL Mode=Require"
 
-    ' Function to reload the position table
     Private Sub ReloadPositionTable()
         Try
             Using conn As New NpgsqlConnection(connectionString)
@@ -24,7 +23,6 @@ Public Class HRAddPosition
         End Try
     End Sub
 
-    ' Function to add a new position
     Private Sub AddPosition(positionName As String, positionCode As String)
         Try
             Using conn As New NpgsqlConnection(connectionString)
@@ -43,8 +41,6 @@ Public Class HRAddPosition
         End Try
     End Sub
 
-
-    ' Event handler for Add button click
     Private Sub AddBtn_Click(sender As Object, e As EventArgs) Handles AddBtn.Click
         Dim positionName As String = PNameTxt.Text.Trim()
         Dim positionCode As String = PCodeTxt.Text.Trim()
@@ -57,14 +53,12 @@ Public Class HRAddPosition
         AddPosition(positionName, positionCode)
     End Sub
 
-    ' Event handler for Return button click
     Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
         Dim StaffDB As New HRStaffDB()
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(StaffDB)
         Me.Close()
     End Sub
 
-    ' Form load event to initialize and load the position table
     Private Sub HRAddPosition_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ReloadPositionTable()
     End Sub
