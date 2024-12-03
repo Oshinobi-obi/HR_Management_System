@@ -2,6 +2,7 @@
 Imports Npgsql
 
 Public Class HRSecuritySettings
+    Private loggedInEmployeeID As String
     Private Sub SecuritySettings_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         OldPassTxt.PasswordChar = "*"c
         OldPassTxt.UseSystemPasswordChar = False
@@ -144,6 +145,10 @@ Public Class HRSecuritySettings
         Return isSuccess
     End Function
 
+    Public Sub New(employeeID As String)
+        InitializeComponent()
+        loggedInEmployeeID = employeeID
+    End Sub
 
     Private Function GetLoggedInEmployeeID() As String
         If String.IsNullOrEmpty(HRLogin.LoggedInEmployeeID) Then
@@ -152,12 +157,12 @@ Public Class HRSecuritySettings
         Return HRLogin.LoggedInEmployeeID
     End Function
 
-
     Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
-        Dim adminForm As New HRAdmin()
+        Dim adminForm As New HRAdmin(HRLogin.LoggedInEmployeeID)
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
         Me.Close()
     End Sub
+
 
     Private Sub SecurityPanel_Paint(sender As Object, e As PaintEventArgs) Handles SecurityPanel.Paint
         DrawRoundedPanelBorder(e.Graphics, SecurityPanel, 20, 2)

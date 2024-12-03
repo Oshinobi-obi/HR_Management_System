@@ -152,10 +152,11 @@ Public Class HRAdmin
     End Sub
 
     Private Sub SecurityBtn_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles SecurityBtn.LinkClicked
-        Dim securitySettingsForm As New HRSecuritySettings()
+        Dim securitySettingsForm As New HRSecuritySettings(HRLogin.LoggedInEmployeeID)
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(securitySettingsForm)
         Me.Close()
     End Sub
+
 
     Private Sub AttBtn_Click(sender As Object, e As EventArgs) Handles AttBtn.Click
         Dim attRecordForm As New HRAttRecord()

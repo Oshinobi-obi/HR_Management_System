@@ -172,17 +172,19 @@ Public Class HRLogin
 
             Dim isValid As Boolean = ValidateCredentials(employeeID, password)
             If isValid Then
-                ' Store employeeID in MDIParent
+                ' Store the logged-in EmployeeID globally
+                HRLogin.LoggedInEmployeeID = employeeID
                 CType(Me.MdiParent, MDIParent).LoggedInEmployeeID = employeeID
 
                 loginStatus = "SUCCESSFUL"
-                ' Pass employeeID to Admin form, if needed
+                ' Pass EmployeeID to the admin form
                 Dim adminForm As New HRAdmin(employeeID)
                 CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
                 Me.Close()
             Else
                 MsgBox("Wrong credentials.", MsgBoxStyle.Exclamation, "Login Failed")
             End If
+
         Catch ex As Exception
             MsgBox("Error validating credentials: " & ex.Message)
         Finally
