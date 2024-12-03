@@ -172,12 +172,10 @@ Public Class HRLogin
 
             Dim isValid As Boolean = ValidateCredentials(employeeID, password)
             If isValid Then
-                ' Store the logged-in EmployeeID globally
                 HRLogin.LoggedInEmployeeID = employeeID
                 CType(Me.MdiParent, MDIParent).LoggedInEmployeeID = employeeID
 
                 loginStatus = "SUCCESSFUL"
-                ' Pass EmployeeID to the admin form
                 Dim adminForm As New HRAdmin(employeeID)
                 CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
                 Me.Close()

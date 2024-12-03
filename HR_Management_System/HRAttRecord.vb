@@ -3,14 +3,14 @@ Imports System.Data
 
 Public Class HRAttRecord
     Private conn As NpgsqlConnection
-    Private RefreshTimer As New Timer() ' Add the Timer object
+    Private RefreshTimer As New Timer()
 
     Private Sub AttRecord_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AttendanceYear.Items.Clear()
         AttendanceYear.Items.AddRange(New String() {"All", "TODAY", "YESTERDAY", "THIS WEEK", "THIS MONTH", "QUARTERLY", "SEMIANNUAL", "ANNUAL"})
-        AttendanceYear.SelectedIndex = 0 ' Set "All" as the default selection
+        AttendanceYear.SelectedIndex = 0
 
-        LoadAttendanceRecords() ' Load all records by default
+        LoadAttendanceRecords()
 
         ReturnBtn.FlatStyle = FlatStyle.Flat
         ReturnBtn.FlatAppearance.BorderSize = 0
@@ -19,8 +19,7 @@ Public Class HRAttRecord
 
         AddHandler ReturnBtn.Paint, AddressOf ReturnBtn_Paint
 
-        ' Configure the Refresh Timer
-        RefreshTimer.Interval = 5000 ' Set interval to 5 seconds (5000 ms)
+        RefreshTimer.Interval = 5000
         AddHandler RefreshTimer.Tick, AddressOf RefreshTimer_Tick
         RefreshTimer.Enabled = True
     End Sub
@@ -60,7 +59,6 @@ Public Class HRAttRecord
     End Sub
     Private Sub RefreshTimer_Tick(sender As Object, e As EventArgs)
         Try
-            ' Refresh attendance records with the currently selected filter
             Dim selectedPeriod = If(AttendanceYear.SelectedItem IsNot Nothing, AttendanceYear.SelectedItem.ToString(), "TODAY")
             Dim filterQuery = GetFilterQuery(selectedPeriod)
             LoadAttendanceRecords(filterQuery)
@@ -74,7 +72,7 @@ Public Class HRAttRecord
 
         Select Case selectedPeriod
             Case "All"
-                filterQuery = "" ' No filter for "All"
+                filterQuery = ""
             Case "TODAY"
                 filterQuery = "WHERE ""Date"" = CURRENT_DATE"
             Case "YESTERDAY"

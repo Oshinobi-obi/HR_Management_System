@@ -253,7 +253,6 @@ Public Class HRAddStaff
             Return
         End If
 
-        ' Convert Resident_ID to Integer
         Dim parsedResidentID As Integer
         If Not Integer.TryParse(residentID, parsedResidentID) Then
             MessageBox.Show("Please enter a valid Resident ID.", "Invalid ID", MessageBoxButtons.OK, MessageBoxIcon.Error)

@@ -163,7 +163,6 @@ Public Class HRSecuritySettings
         Me.Close()
     End Sub
 
-
     Private Sub SecurityPanel_Paint(sender As Object, e As PaintEventArgs) Handles SecurityPanel.Paint
         DrawRoundedPanelBorder(e.Graphics, SecurityPanel, 20, 2)
     End Sub

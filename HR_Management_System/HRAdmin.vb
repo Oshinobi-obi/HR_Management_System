@@ -24,7 +24,7 @@ Public Class HRAdmin
 
 
         Dim employeeID As String = CType(Me.MdiParent, MDIParent).LoggedInEmployeeID
-        NameTxt.Text = employeeID ' Display in NameTxt
+        NameTxt.Text = employeeID
         NameTxt.TextAlign = HorizontalAlignment.Center
         NameTxt.BorderStyle = BorderStyle.None
     End Sub
