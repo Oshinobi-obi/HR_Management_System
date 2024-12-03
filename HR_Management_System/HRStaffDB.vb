@@ -33,6 +33,10 @@ Public Class HRStaffDB
         AddHandler AddBtn.Paint, AddressOf AddBtn_Paint
         AddHandler EditBtn.Paint, AddressOf EditBtn_Paint
         AddHandler AddPositionBtn.Paint, AddressOf AddPositionBtn_Paint
+
+        ' Start the refresh timer
+        RefreshTimer.Interval = 5000 ' 5 seconds
+        RefreshTimer.Enabled = True
     End Sub
 
     Private Sub ReturnBtn_Paint(sender As Object, e As PaintEventArgs)
@@ -326,6 +330,13 @@ Public Class HRStaffDB
     End Sub
 
     Private Sub RefreshTimer_Tick(sender As Object, e As EventArgs) Handles RefreshTimer.Tick
-
+        Try
+            ' Reload employee records with the current filter applied
+            Dim currentFilter As String = If(FilterBox.SelectedItem IsNot Nothing, FilterBox.SelectedItem.ToString(), "All")
+            LoadEmployeeRecords(currentFilter)
+        Catch ex As Exception
+            ' Optional: Log or handle any refresh issues
+            MessageBox.Show("Error refreshing data: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 End Class
