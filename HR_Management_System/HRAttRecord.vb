@@ -3,13 +3,14 @@ Imports System.Data
 
 Public Class HRAttRecord
     Private conn As NpgsqlConnection
+    Private RefreshTimer As New Timer() ' Add the Timer object
 
     Private Sub AttRecord_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AttendanceYear.Items.Clear()
-        AttendanceYear.Items.AddRange(New String() {"TODAY", "YESTERDAY", "THIS WEEK", "THIS MONTH", "QUARTERLY", "SEMIANNUAL", "ANNUAL"})
-        AttendanceYear.SelectedIndex = 0
+        AttendanceYear.Items.AddRange(New String() {"All", "TODAY", "YESTERDAY", "THIS WEEK", "THIS MONTH", "QUARTERLY", "SEMIANNUAL", "ANNUAL"})
+        AttendanceYear.SelectedIndex = 0 ' Set "All" as the default selection
 
-        LoadAttendanceRecords()
+        LoadAttendanceRecords() ' Load all records by default
 
         ReturnBtn.FlatStyle = FlatStyle.Flat
         ReturnBtn.FlatAppearance.BorderSize = 0
@@ -17,6 +18,11 @@ Public Class HRAttRecord
         ReturnBtn.Text = "RETURN"
 
         AddHandler ReturnBtn.Paint, AddressOf ReturnBtn_Paint
+
+        ' Configure the Refresh Timer
+        RefreshTimer.Interval = 5000 ' Set interval to 5 seconds (5000 ms)
+        AddHandler RefreshTimer.Tick, AddressOf RefreshTimer_Tick
+        RefreshTimer.Enabled = True
     End Sub
 
     Private Sub ReturnBtn_Paint(sender As Object, e As PaintEventArgs)
@@ -52,6 +58,41 @@ Public Class HRAttRecord
         textBrush.Dispose()
         path.Dispose()
     End Sub
+    Private Sub RefreshTimer_Tick(sender As Object, e As EventArgs)
+        Try
+            ' Refresh attendance records with the currently selected filter
+            Dim selectedPeriod = If(AttendanceYear.SelectedItem IsNot Nothing, AttendanceYear.SelectedItem.ToString(), "TODAY")
+            Dim filterQuery = GetFilterQuery(selectedPeriod)
+            LoadAttendanceRecords(filterQuery)
+        Catch ex As Exception
+            MessageBox.Show("Error refreshing attendance data: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Function GetFilterQuery(selectedPeriod As String) As String
+        Dim filterQuery As String = ""
+
+        Select Case selectedPeriod
+            Case "All"
+                filterQuery = "" ' No filter for "All"
+            Case "TODAY"
+                filterQuery = "WHERE ""Date"" = CURRENT_DATE"
+            Case "YESTERDAY"
+                filterQuery = "WHERE ""Date"" = CURRENT_DATE - INTERVAL '1 day'"
+            Case "THIS WEEK"
+                filterQuery = "WHERE EXTRACT(WEEK FROM ""Date"") = EXTRACT(WEEK FROM CURRENT_DATE) AND EXTRACT(YEAR FROM ""Date"") = EXTRACT(YEAR FROM CURRENT_DATE)"
+            Case "THIS MONTH"
+                filterQuery = "WHERE EXTRACT(MONTH FROM ""Date"") = EXTRACT(MONTH FROM CURRENT_DATE) AND EXTRACT(YEAR FROM ""Date"") = EXTRACT(YEAR FROM CURRENT_DATE)"
+            Case "QUARTERLY"
+                filterQuery = "WHERE EXTRACT(QUARTER FROM ""Date"") = EXTRACT(QUARTER FROM CURRENT_DATE) AND EXTRACT(YEAR FROM ""Date"") = EXTRACT(YEAR FROM CURRENT_DATE)"
+            Case "SEMIANNUAL"
+                filterQuery = "WHERE EXTRACT(MONTH FROM ""Date"") IN (1, 2, 3, 4, 5, 6) AND EXTRACT(YEAR FROM ""Date"") = EXTRACT(YEAR FROM CURRENT_DATE)"
+            Case "ANNUAL"
+                filterQuery = "WHERE EXTRACT(YEAR FROM ""Date"") = EXTRACT(YEAR FROM CURRENT_DATE)"
+        End Select
+
+        Return filterQuery
+    End Function
 
     Private Sub LoadAttendanceRecords(Optional filterQuery As String = "")
         Try
@@ -93,26 +134,8 @@ Public Class HRAttRecord
     End Sub
 
     Private Sub AttendanceYear_SelectedIndexChanged(sender As Object, e As EventArgs) Handles AttendanceYear.SelectedIndexChanged
-        Dim selectedPeriod = AttendanceYear.SelectedItem.ToString
-        Dim filterQuery = ""
-
-        Select Case selectedPeriod
-            Case "TODAY"
-                filterQuery = "WHERE ""Date"" = CURRENT_DATE"
-            Case "YESTERDAY"
-                filterQuery = "WHERE ""Date"" = CURRENT_DATE - INTERVAL '1 day'"
-            Case "THIS WEEK"
-                filterQuery = "WHERE EXTRACT(WEEK FROM ""Date"") = EXTRACT(WEEK FROM CURRENT_DATE) AND EXTRACT(YEAR FROM ""Date"") = EXTRACT(YEAR FROM CURRENT_DATE)"
-            Case "THIS MONTH"
-                filterQuery = "WHERE EXTRACT(MONTH FROM ""Date"") = EXTRACT(MONTH FROM CURRENT_DATE) AND EXTRACT(YEAR FROM ""Date"") = EXTRACT(YEAR FROM CURRENT_DATE)"
-            Case "QUARTERLY"
-                filterQuery = "WHERE EXTRACT(QUARTER FROM ""Date"") = EXTRACT(QUARTER FROM CURRENT_DATE) AND EXTRACT(YEAR FROM ""Date"") = EXTRACT(YEAR FROM CURRENT_DATE)"
-            Case "SEMIANNUAL"
-                filterQuery = "WHERE EXTRACT(MONTH FROM ""Date"") IN (1, 2, 3, 4, 5, 6) AND EXTRACT(YEAR FROM ""Date"") = EXTRACT(YEAR FROM CURRENT_DATE)"
-            Case "ANNUAL"
-                filterQuery = "WHERE EXTRACT(YEAR FROM ""Date"") = EXTRACT(YEAR FROM CURRENT_DATE)"
-        End Select
-
+        Dim selectedPeriod As String = AttendanceYear.SelectedItem.ToString()
+        Dim filterQuery As String = GetFilterQuery(selectedPeriod)
         LoadAttendanceRecords(filterQuery)
     End Sub
 End Class
