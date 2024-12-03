@@ -66,11 +66,12 @@ Partial Class Welcome
         ' 
         Label1.Anchor = AnchorStyles.None
         Label1.Font = New Font("Corbel", 45F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label1.Location = New Point(102, 34)
+        Label1.Location = New Point(88, 34)
         Label1.Name = "Label1"
-        Label1.Size = New Size(323, 73)
+        Label1.Size = New Size(350, 73)
         Label1.TabIndex = 2
         Label1.Text = "WELCOME"
+        Label1.TextAlign = ContentAlignment.MiddleCenter
         ' 
         ' LoginBtn
         ' 

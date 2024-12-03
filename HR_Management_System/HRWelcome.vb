@@ -60,4 +60,5 @@ Public Class Welcome
             Me.Close()
         End If
     End Sub
+
 End Class
