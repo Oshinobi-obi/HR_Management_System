@@ -48,6 +48,7 @@ Public Class HRAddStaff
     End Sub
 
     Private Sub ClearFields()
+        ResidentIDTxt.Clear()
         FirstNameTxt.Clear()
         MiddleNameTxt.Clear()
         LastNameTxt.Clear()
@@ -123,6 +124,18 @@ Public Class HRAddStaff
 
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
+                Dim checkEmploymentQuery As String = "SELECT COUNT(*) FROM ""employee"" WHERE ""Resident_ID"" = @Resident_ID"
+                Using checkCmd As New NpgsqlCommand(checkEmploymentQuery, conn)
+                    checkCmd.Parameters.AddWithValue("@Resident_ID", parsedResidentID)
+                    Dim employmentCount As Integer = Convert.ToInt32(checkCmd.ExecuteScalar())
+
+                    If employmentCount > 0 Then
+                        MessageBox.Show("This Resident is already Employed!", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                        ClearFields()
+                        ToggleControls(False)
+                        Return
+                    End If
+                End Using
 
                 Dim query As String = "SELECT ""First_Name"", ""Middle_Name"", ""Last_Name"", ""Date_Of_Birth"", ""Sex"", ""Contact_Number"", " &
                                   "CONCAT(""House_Number"", ' ', ""Street_Name"", ' ', ""Subdivision"") AS ""ResidentAddress"" " &
@@ -165,6 +178,7 @@ Public Class HRAddStaff
             ToggleControls(False)
         End Try
     End Sub
+
 
     Private Sub ResidentIDTxt_LostFocus(sender As Object, e As EventArgs) Handles ResidentIDTxt.LostFocus
         CheckIfResident()
@@ -219,6 +233,7 @@ Public Class HRAddStaff
             Return
         End If
 
+        Dim residentID As String = ResidentIDTxt.Text.Trim()
         Dim employeeID As String = EmIDTxt.Text.Trim()
         Dim employeeName As String = $"{FirstNameTxt.Text.Trim()} {MiddleNameTxt.Text.Trim()} {LastNameTxt.Text.Trim()}".Trim()
         Dim employeeAge As Integer = Integer.Parse(AgeTxt.Text.Trim())
@@ -235,6 +250,13 @@ Public Class HRAddStaff
             employeeImage = IO.File.ReadAllBytes(PictureTxt.Text)
         Else
             MessageBox.Show("Please select a valid image file.", "Invalid Image", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return
+        End If
+
+        ' Convert Resident_ID to Integer
+        Dim parsedResidentID As Integer
+        If Not Integer.TryParse(residentID, parsedResidentID) Then
+            MessageBox.Show("Please enter a valid Resident ID.", "Invalid ID", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return
         End If
 
@@ -255,9 +277,9 @@ Public Class HRAddStaff
                 End Using
 
                 Dim query As String = "INSERT INTO employee (""EmployeeID"", ""EmployeeName"", ""EmployeeAge"", ""EmployeePosition"", ""EmployeeDaySchedule"", " &
-                                  """EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployeeImage"", ""EmployedDate"", ""EmployeeCardNumber"", ""EmployeeStatus"") " &
-                                  "VALUES (@EmployeeID, @EmployeeName, @EmployeeAge, @EmployeePosition, @EmployeeDaySchedule, " &
-                                  "@EmployeeTimeShift, @EmployeeMobile, @EmployeeAddress, @EmployeeImage, CURRENT_DATE, @EmployeeCardNumber, @EmployeeStatus)"
+                              """EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployeeImage"", ""EmployedDate"", ""EmployeeCardNumber"", ""EmployeeStatus"", ""Resident_ID"") " &
+                              "VALUES (@EmployeeID, @EmployeeName, @EmployeeAge, @EmployeePosition, @EmployeeDaySchedule, " &
+                              "@EmployeeTimeShift, @EmployeeMobile, @EmployeeAddress, @EmployeeImage, CURRENT_DATE, @EmployeeCardNumber, @EmployeeStatus, @Resident_ID)"
 
                 Using cmd As New NpgsqlCommand(query, conn)
                     cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
@@ -271,6 +293,7 @@ Public Class HRAddStaff
                     cmd.Parameters.AddWithValue("@EmployeeImage", employeeImage)
                     cmd.Parameters.AddWithValue("@EmployeeCardNumber", employeeCardNumber)
                     cmd.Parameters.AddWithValue("@EmployeeStatus", employeeStatus)
+                    cmd.Parameters.AddWithValue("@Resident_ID", parsedResidentID)
 
                     cmd.ExecuteNonQuery()
                     MessageBox.Show("Staff added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)

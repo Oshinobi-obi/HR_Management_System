@@ -325,4 +325,7 @@ Public Class HRStaffDB
         End If
     End Sub
 
+    Private Sub RefreshTimer_Tick(sender As Object, e As EventArgs) Handles RefreshTimer.Tick
+
+    End Sub
 End Class

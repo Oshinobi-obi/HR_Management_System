@@ -22,6 +22,7 @@ Partial Class HRStaffDB
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
         Dim DataGridViewCellStyle1 As DataGridViewCellStyle = New DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As DataGridViewCellStyle = New DataGridViewCellStyle()
         ReturnBtn = New Button()
@@ -44,6 +45,7 @@ Partial Class HRStaffDB
         Panel3 = New Panel()
         AddPositionBtn = New Button()
         EditBtn = New Button()
+        RefreshTimer = New Timer(components)
         CType(StaffGrid, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
@@ -261,6 +263,9 @@ Partial Class HRStaffDB
         EditBtn.Text = "EDIT STAFF"
         EditBtn.UseVisualStyleBackColor = False
         ' 
+        ' RefreshTimer
+        ' 
+        ' 
         ' HRStaffDB
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -303,4 +308,5 @@ Partial Class HRStaffDB
     Friend WithEvents EDOE As DataGridViewTextBoxColumn
     Friend WithEvents EditBtn As Button
     Friend WithEvents AddPositionBtn As Button
+    Friend WithEvents RefreshTimer As Timer
 End Class
