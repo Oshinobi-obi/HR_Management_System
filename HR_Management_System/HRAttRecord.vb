@@ -7,7 +7,7 @@ Public Class HRAttRecord
 
     Private Sub AttRecord_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         AttendanceYear.Items.Clear()
-        AttendanceYear.Items.AddRange(New String() {"All", "TODAY", "YESTERDAY", "THIS WEEK", "THIS MONTH", "QUARTERLY", "SEMIANNUAL", "ANNUAL"})
+        AttendanceYear.Items.AddRange(New String() {"All", "Today", "Yesterday", "This Week", "This Month", "Quarterly", "Semiannual", "Annual"})
         AttendanceYear.SelectedIndex = 0
 
         LoadAttendanceRecords()
@@ -73,19 +73,19 @@ Public Class HRAttRecord
         Select Case selectedPeriod
             Case "All"
                 filterQuery = ""
-            Case "TODAY"
+            Case "Today"
                 filterQuery = "WHERE ""Date"" = CURRENT_DATE"
-            Case "YESTERDAY"
+            Case "Yesterday"
                 filterQuery = "WHERE ""Date"" = CURRENT_DATE - INTERVAL '1 day'"
-            Case "THIS WEEK"
+            Case "This Week"
                 filterQuery = "WHERE EXTRACT(WEEK FROM ""Date"") = EXTRACT(WEEK FROM CURRENT_DATE) AND EXTRACT(YEAR FROM ""Date"") = EXTRACT(YEAR FROM CURRENT_DATE)"
-            Case "THIS MONTH"
+            Case "This Month"
                 filterQuery = "WHERE EXTRACT(MONTH FROM ""Date"") = EXTRACT(MONTH FROM CURRENT_DATE) AND EXTRACT(YEAR FROM ""Date"") = EXTRACT(YEAR FROM CURRENT_DATE)"
-            Case "QUARTERLY"
+            Case "Quarterly"
                 filterQuery = "WHERE EXTRACT(QUARTER FROM ""Date"") = EXTRACT(QUARTER FROM CURRENT_DATE) AND EXTRACT(YEAR FROM ""Date"") = EXTRACT(YEAR FROM CURRENT_DATE)"
-            Case "SEMIANNUAL"
+            Case "Semiannual"
                 filterQuery = "WHERE EXTRACT(MONTH FROM ""Date"") IN (1, 2, 3, 4, 5, 6) AND EXTRACT(YEAR FROM ""Date"") = EXTRACT(YEAR FROM CURRENT_DATE)"
-            Case "ANNUAL"
+            Case "Annual"
                 filterQuery = "WHERE EXTRACT(YEAR FROM ""Date"") = EXTRACT(YEAR FROM CURRENT_DATE)"
         End Select
 

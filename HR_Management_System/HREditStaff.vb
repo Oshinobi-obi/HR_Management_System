@@ -127,7 +127,7 @@ Public Class HREditStaff
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
                 Dim sql As String = "SELECT ""EmployeeName"", ""EmployeeAge"", ""EmployeePosition"", ""EmployeeDaySchedule"", " &
-                                    """EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployeeImage"", ""EmployeeCardNumber"", ""EmployeeStatus"" " &
+                                    """EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployeeImage"", ""EmployeeCardNumber"", ""EmployeeStatus"", ""Resident_ID"" " &
                                     "FROM employee WHERE ""EmployeeID"" = @EmployeeID"
                 Using cmd As New NpgsqlCommand(sql, conn)
                     cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
@@ -140,6 +140,7 @@ Public Class HREditStaff
                             If nameParts.Length > 1 Then MiddleNameTxt.Text = nameParts(1)
                             If nameParts.Length > 2 Then LastNameTxt.Text = nameParts(2)
 
+                            ResidentIDTxt.Text = reader("Resident_ID").ToString()
                             AgeTxt.Text = reader("EmployeeAge").ToString()
                             WorkDayTxt.Text = reader("EmployeeDaySchedule").ToString()
                             HrShiftTxt.Text = reader("EmployeeTimeShift").ToString()

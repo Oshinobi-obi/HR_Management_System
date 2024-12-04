@@ -22,6 +22,8 @@ Partial Class HRAttRecord
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim DataGridViewCellStyle1 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As DataGridViewCellStyle = New DataGridViewCellStyle()
         PictureBox2 = New PictureBox()
         PictureBox1 = New PictureBox()
         Label1 = New Label()
@@ -127,7 +129,7 @@ Partial Class HRAttRecord
         AttendanceYear.DropDownStyle = ComboBoxStyle.DropDownList
         AttendanceYear.Font = New Font("Corbel", 25.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         AttendanceYear.FormattingEnabled = True
-        AttendanceYear.Items.AddRange(New Object() {"TODAY", "YESTERDAY", "THIS WEEK", "THIS MONTH", "QUARTERLY", "SEMIANNUAL", "ANNUAL"})
+        AttendanceYear.Items.AddRange(New Object() {"All", "Today", "Yesterday", "This Week", "This Month", "Quarterly", "Semiannual", "Annual"})
         AttendanceYear.Location = New Point(375, 4)
         AttendanceYear.Name = "AttendanceYear"
         AttendanceYear.Size = New Size(314, 49)
@@ -154,10 +156,27 @@ Partial Class HRAttRecord
         ' AttendanceGrid
         ' 
         AttendanceGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+        AttendanceGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
+        DataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.BackColor = SystemColors.Control
+        DataGridViewCellStyle1.Font = New Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        DataGridViewCellStyle1.ForeColor = SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = DataGridViewTriState.True
+        AttendanceGrid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         AttendanceGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         AttendanceGrid.Dock = DockStyle.Fill
         AttendanceGrid.Location = New Point(0, 0)
         AttendanceGrid.Name = "AttendanceGrid"
+        DataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = SystemColors.Control
+        DataGridViewCellStyle2.Font = New Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        DataGridViewCellStyle2.ForeColor = SystemColors.WindowText
+        DataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = DataGridViewTriState.True
+        AttendanceGrid.RowHeadersDefaultCellStyle = DataGridViewCellStyle2
         AttendanceGrid.Size = New Size(694, 287)
         AttendanceGrid.TabIndex = 0
         ' 
