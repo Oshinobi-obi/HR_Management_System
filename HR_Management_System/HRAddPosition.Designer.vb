@@ -72,7 +72,7 @@ Partial Class HRAddPosition
         ' PictureBox1
         ' 
         PictureBox1.Dock = DockStyle.Fill
-        PictureBox1.Image = My.Resources.Resources.Logo_100x95_
+        PictureBox1.Image = My.Resources.Resources.St__Monica_Logo
         PictureBox1.Location = New Point(3, 3)
         PictureBox1.Name = "PictureBox1"
         PictureBox1.Size = New Size(92, 70)

@@ -227,7 +227,7 @@ Partial Class HRLogin
         ' PictureBox1
         ' 
         PictureBox1.Dock = DockStyle.Fill
-        PictureBox1.Image = My.Resources.Resources.Logo_100x95_
+        PictureBox1.Image = My.Resources.Resources.St__Monica_Logo
         PictureBox1.Location = New Point(3, 3)
         PictureBox1.Name = "PictureBox1"
         PictureBox1.Size = New Size(85, 63)
@@ -246,7 +246,7 @@ Partial Class HRLogin
         PictureBox2.TabIndex = 3
         PictureBox2.TabStop = False
         ' 
-        ' Login
+        ' HRLogin
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
@@ -255,7 +255,7 @@ Partial Class HRLogin
         ControlBox = False
         Controls.Add(TableLayoutPanel1)
         FormBorderStyle = FormBorderStyle.Fixed3D
-        Name = "Login"
+        Name = "HRLogin"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Login"
         PassPanel.ResumeLayout(False)
