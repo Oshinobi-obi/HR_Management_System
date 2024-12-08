@@ -131,21 +131,25 @@ Public Class HRLogin
 
     Private Sub Clock_Tick(sender As Object, e As EventArgs) Handles Clock.Tick
         TimeLbl.Text = DateTime.Now.ToString("hh:mm")
-        AmPmLbl.Text = DateTime.Now.ToString("tt")
+        AmPmLbl.Text = DateTime.Now.ToString("tt").ToUpper()
         DateLbl.Text = DateTime.Now.ToString("MMMM dd, yyyy")
     End Sub
 
     Private Sub ShutdownBtn_Click(sender As Object, e As EventArgs) Handles ShutdownBtn.Click
         Dim result As DialogResult = MessageBox.Show("Are you sure you want to leave the application?",
-                                                 "Exit Confirmation",
+                                                 "Are you leaving?",
                                                  MessageBoxButtons.YesNo,
                                                  MessageBoxIcon.Question)
 
         If result = DialogResult.Yes Then
-            MessageBox.Show("Thank you for using the HRMS!", "Goodbye", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Close()
+            MessageBox.Show("Thank you for using the HRMS!", "Goodbye!", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            If Me.MdiParent IsNot Nothing Then
+                Me.MdiParent.Close()
+            End If
+            Me.Close()
         End If
     End Sub
+
 
     Private Sub LoginBtn_Click(sender As Object, e As EventArgs) Handles LoginBtn.Click
         Dim employeeID = StaffIDtxt.Text.Trim

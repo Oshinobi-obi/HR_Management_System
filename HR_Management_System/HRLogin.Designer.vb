@@ -89,35 +89,37 @@ Partial Class HRLogin
         ' DateLbl
         ' 
         DateLbl.Anchor = AnchorStyles.None
-        DateLbl.Font = New Font("Arial Narrow", 15F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        DateLbl.Font = New Font("Arial Black", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         DateLbl.ForeColor = Color.White
-        DateLbl.Location = New Point(119, 94)
+        DateLbl.Location = New Point(65, 94)
         DateLbl.Name = "DateLbl"
-        DateLbl.Size = New Size(185, 33)
+        DateLbl.Size = New Size(296, 33)
         DateLbl.TabIndex = 2
         DateLbl.TextAlign = ContentAlignment.MiddleCenter
         ' 
         ' AmPmLbl
         ' 
         AmPmLbl.Anchor = AnchorStyles.None
-        AmPmLbl.Font = New Font("Corbel", 15F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        AmPmLbl.BackColor = Color.Transparent
+        AmPmLbl.Font = New Font("Arial Black", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         AmPmLbl.ForeColor = Color.White
-        AmPmLbl.Location = New Point(235, 27)
+        AmPmLbl.Location = New Point(244, 42)
         AmPmLbl.Name = "AmPmLbl"
         AmPmLbl.Size = New Size(78, 56)
         AmPmLbl.TabIndex = 1
-        AmPmLbl.TextAlign = ContentAlignment.BottomLeft
+        AmPmLbl.TextAlign = ContentAlignment.MiddleLeft
         ' 
         ' TimeLbl
         ' 
         TimeLbl.Anchor = AnchorStyles.None
-        TimeLbl.Font = New Font("Arial Narrow", 30F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        TimeLbl.BackColor = Color.Transparent
+        TimeLbl.Font = New Font("Arial Black", 25.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         TimeLbl.ForeColor = Color.White
-        TimeLbl.Location = New Point(131, 27)
+        TimeLbl.Location = New Point(109, 39)
         TimeLbl.Name = "TimeLbl"
-        TimeLbl.Size = New Size(121, 56)
+        TimeLbl.Size = New Size(159, 56)
         TimeLbl.TabIndex = 0
-        TimeLbl.TextAlign = ContentAlignment.BottomCenter
+        TimeLbl.TextAlign = ContentAlignment.MiddleCenter
         ' 
         ' Panel3
         ' 

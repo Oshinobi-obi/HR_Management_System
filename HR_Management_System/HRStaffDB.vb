@@ -17,7 +17,7 @@ Public Class HRStaffDB
         AddBtn.FlatStyle = FlatStyle.Flat
         AddBtn.FlatAppearance.BorderSize = 0
         AddBtn.BackColor = Color.Transparent
-        AddBtn.Text = "ADD STAFF"
+        AddBtn.Text = "RESIDENT LIST"
 
         EditBtn.FlatStyle = FlatStyle.Flat
         EditBtn.FlatAppearance.BorderSize = 0
@@ -244,8 +244,8 @@ Public Class HRStaffDB
     End Sub
 
     Private Sub AddBtn_Click(sender As Object, e As EventArgs) Handles AddBtn.Click
-        Dim addStaffForm As New HRAddStaff()
-        CType(Me.MdiParent, MDIParent).LoadFormInMDI(addStaffForm)
+        Dim residentListForm As New HRResidentDB()
+        CType(Me.MdiParent, MDIParent).LoadFormInMDI(residentListForm)
         Me.Close()
     End Sub
 

@@ -170,7 +170,7 @@ Partial Class HRStaffDB
         AddBtn.Name = "AddBtn"
         AddBtn.Size = New Size(200, 42)
         AddBtn.TabIndex = 1
-        AddBtn.Text = "ADD STAFF"
+        AddBtn.Text = "RESIDENT LIST"
         AddBtn.UseVisualStyleBackColor = False
         ' 
         ' FilterBox
