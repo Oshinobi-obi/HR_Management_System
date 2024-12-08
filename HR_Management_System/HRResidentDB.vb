@@ -12,7 +12,9 @@ Public Class HRResidentDB
     Public Sub HRResidentDB_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitializeButton(ReturnBtn, "RETURN", Color.LightCoral)
         InitializeButton(HireBtn, "HIRE", Color.LightGreen)
-        LoadResidentData()
+        SetupResidentView() ' Set up the columns for ResidentView
+        PopulateResidentView() ' Populate the data
+
     End Sub
 
     Private Sub InitializeButton(button As Button, text As String, backColor As Color)
@@ -59,37 +61,104 @@ Public Class HRResidentDB
         Me.Close()
     End Sub
 
-    Private Sub LoadResidentData()
-        Dim query As String = "SELECT ""Resident_ID"", ""First_Name"", ""Middle_Name"", ""Last_Name"", " &
-                              "EXTRACT(YEAR FROM AGE(NOW(), ""Date_Of_Birth"")) AS Age, " &
-                              """Sex"", ""Contact_Number"", ""House_Number"", ""Street_Name"", ""Subdivision"" " &
-                              "FROM ""Residents"";"
+    Private Sub PopulateResidentView()
+        ResidentView.Items.Clear()
+
+        ' Updated query with sorting by Resident_ID
+        Dim query As String = "
+    SELECT 
+        ""Resident_ID"",
+        ""First_Name"",
+        ""Middle_Name"",
+        ""Last_Name"",
+        EXTRACT(YEAR FROM AGE(CURRENT_DATE, ""Date_Of_Birth"")) AS ""Age"",
+        ""Sex"" AS ""Gender"",
+        ""Contact_Number"",
+        CONCAT(
+            COALESCE(""House_Number"", ''), ' ',
+            COALESCE(""Street_Name"", ''), ' ',
+            COALESCE(""Subdivision"", '')
+        ) AS ""Address""
+    FROM 
+        public.""Residents""
+    ORDER BY ""Resident_ID"";"  ' Make sure the order is by Resident_ID
 
         Try
-            Using conn As New NpgsqlConnection(connString)
-                conn.Open()
-                Using cmd As New NpgsqlCommand(query, conn)
-                    Using reader As NpgsqlDataReader = cmd.ExecuteReader()
-                        ResidentView.Items.Clear()
+            Using connection As New NpgsqlConnection(connString)
+                connection.Open()
+                Using command As New NpgsqlCommand(query, connection)
+                    Using reader As NpgsqlDataReader = command.ExecuteReader()
                         While reader.Read()
-                            Dim listItem As New ListViewItem(reader("Resident_ID").ToString())
-                            listItem.SubItems.Add(reader("First_Name").ToString())
-                            listItem.SubItems.Add(reader("Middle_Name").ToString())
-                            listItem.SubItems.Add(reader("Last_Name").ToString())
-                            listItem.SubItems.Add(reader("Age").ToString())
-                            listItem.SubItems.Add(reader("Sex").ToString())
-                            listItem.SubItems.Add(reader("Contact_Number").ToString())
-                            listItem.SubItems.Add(reader("House_Number").ToString())
-                            listItem.SubItems.Add(reader("Street_Name").ToString())
-                            listItem.SubItems.Add(reader("Subdivision").ToString())
-                            ResidentView.Items.Add(listItem)
+                            ' Retrieve values for each column
+                            Dim residentId As String = If(reader.IsDBNull(reader.GetOrdinal("Resident_ID")), "N/A", reader("Resident_ID").ToString())
+                            Dim firstName As String = If(reader.IsDBNull(reader.GetOrdinal("First_Name")), "N/A", reader("First_Name").ToString())
+                            Dim middleName As String = If(reader.IsDBNull(reader.GetOrdinal("Middle_Name")), "N/A", reader("Middle_Name").ToString())
+                            Dim lastName As String = If(reader.IsDBNull(reader.GetOrdinal("Last_Name")), "N/A", reader("Last_Name").ToString())
+                            Dim age As String = If(reader.IsDBNull(reader.GetOrdinal("Age")), "N/A", reader("Age").ToString())
+                            Dim gender As String = If(reader.IsDBNull(reader.GetOrdinal("Gender")), "N/A", reader("Gender").ToString())
+                            Dim contactNumber As String = If(reader.IsDBNull(reader.GetOrdinal("Contact_Number")), "N/A", reader("Contact_Number").ToString())
+                            Dim address As String = If(reader.IsDBNull(reader.GetOrdinal("Address")), "N/A", reader("Address").ToString())
+
+                            ' Create a new ListView item
+                            Dim item As New ListViewItem(residentId)
+                            item.SubItems.Add(firstName)
+                            item.SubItems.Add(middleName)
+                            item.SubItems.Add(lastName)
+                            item.SubItems.Add(age)
+                            item.SubItems.Add(gender)
+                            item.SubItems.Add(contactNumber)
+                            item.SubItems.Add(address)
+
+                            ' Add the item to the ResidentView
+                            ResidentView.Items.Add(item)
                         End While
                     End Using
                 End Using
             End Using
         Catch ex As Exception
-            MessageBox.Show("An error occurred while loading data: " & ex.Message)
+            MessageBox.Show("An error occurred while fetching data: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
+    Private Sub SetupResidentView()
+        ResidentView.Columns.Clear()
+        ResidentView.Columns.Add("ResidentID", 100)
+        ResidentView.Columns.Add("FirstName", 100)
+        ResidentView.Columns.Add("MiddleName", 100)
+        ResidentView.Columns.Add("LastName", 100)
+        ResidentView.Columns.Add("Age", 50)
+        ResidentView.Columns.Add("Sex", 50)
+        ResidentView.Columns.Add("Contact", 100)
+        ResidentView.Columns.Add("Address", 200) ' Combines House_Number, Street_Name, and Subdivision
+        ResidentView.View = View.Details
+        ResidentView.FullRowSelect = True
+        ResidentView.GridLines = True
+    End Sub
+
+    Private Sub HireBtn_Click(sender As Object, e As EventArgs) Handles HireBtn.Click
+        ' Ensure a row is selected
+        If ResidentView.SelectedItems.Count = 0 Then
+            MessageBox.Show("Please select a resident to hire.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        ' Retrieve the selected resident data
+        Dim selectedItem As ListViewItem = ResidentView.SelectedItems(0)
+        Dim residentId As String = selectedItem.SubItems(0).Text
+        Dim firstName As String = selectedItem.SubItems(1).Text
+        Dim middleName As String = selectedItem.SubItems(2).Text
+        Dim lastName As String = selectedItem.SubItems(3).Text
+        Dim age As String = selectedItem.SubItems(4).Text
+        Dim gender As String = selectedItem.SubItems(5).Text
+        Dim contactNumber As String = selectedItem.SubItems(6).Text
+        Dim address As String = selectedItem.SubItems(7).Text
+
+        ' Pass the data to HRAddStaff
+        Dim addStaffForm As New HRAddStaff()
+        addStaffForm.SetResidentData(residentId, firstName, middleName, lastName, age, gender, contactNumber, address)
+
+        ' Display HRAddStaff form
+        CType(Me.MdiParent, MDIParent).LoadFormInMDI(addStaffForm)
+        Me.Close()
+    End Sub
 End Class

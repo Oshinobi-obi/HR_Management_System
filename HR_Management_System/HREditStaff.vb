@@ -90,8 +90,24 @@ Public Class HREditStaff
 
     Private Sub LoadPositionItems()
         PosCmb.Items.Clear()
-        PosCmb.Items.AddRange(New String() {"Admin Staff", "Secretary (HRMO)", "BPSO", "Clerk", "Medical Aide"})
+
+        Try
+            Using conn As New NpgsqlConnection(connString)
+                conn.Open()
+                Dim sql As String = "SELECT ""positionname"" FROM public.""employeeposition"""
+                Using cmd As New NpgsqlCommand(sql, conn)
+                    Using reader As NpgsqlDataReader = cmd.ExecuteReader()
+                        While reader.Read()
+                            PosCmb.Items.Add(reader("positionname").ToString().Trim())
+                        End While
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error loading position items: " & ex.Message)
+        End Try
     End Sub
+
 
     Private Sub LoadEmployeeIDs()
         Try

@@ -158,6 +158,7 @@ Partial Class HRAddStaff
         ResidentIDTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
         ResidentIDTxt.Location = New Point(41, 68)
         ResidentIDTxt.Name = "ResidentIDTxt"
+        ResidentIDTxt.ReadOnly = True
         ResidentIDTxt.Size = New Size(200, 45)
         ResidentIDTxt.TabIndex = 2
         ' 
