@@ -316,6 +316,7 @@ Partial Class HRAddStaff
         ' PosCmb
         ' 
         PosCmb.Anchor = AnchorStyles.None
+        PosCmb.BackColor = Color.White
         PosCmb.Cursor = Cursors.Hand
         PosCmb.DropDownHeight = 200
         PosCmb.DropDownStyle = ComboBoxStyle.DropDownList

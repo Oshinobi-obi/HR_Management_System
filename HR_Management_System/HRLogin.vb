@@ -150,7 +150,6 @@ Public Class HRLogin
         End If
     End Sub
 
-
     Private Sub LoginBtn_Click(sender As Object, e As EventArgs) Handles LoginBtn.Click
         Dim employeeID = StaffIDtxt.Text.Trim
         Dim password = Passtxt.Text.Trim
@@ -166,6 +165,18 @@ Public Class HRLogin
 
             Dim isValid = ValidateCredentials(employeeID, password)
             If isValid Then
+                If IsDefaultPassword(employeeID) Then
+                    MessageBox.Show("One Time Password has not been changed! Please change your password before proceeding!",
+                                "Change Password Required",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning)
+
+                    Dim changePasswordForm As New outFrmChangePassword(employeeID)
+                    CType(Me.MdiParent, MDIParent).LoadFormInMDI(changePasswordForm)
+                    Me.Close()
+                    Return
+                End If
+
                 LoggedInEmployeeID = employeeID
                 CType(MdiParent, MDIParent).LoggedInEmployeeID = employeeID
 
@@ -184,6 +195,28 @@ Public Class HRLogin
             ResetLoginFields()
         End Try
     End Sub
+
+    Private Function IsDefaultPassword(employeeID As String) As Boolean
+        Try
+            DatabaseConnection.OpenConnection()
+
+            Dim query As String = "SELECT ""isDefaultPassword"" FROM ""Account"" WHERE ""EmployeeID"" = @EmployeeID"
+            Using cmd As New NpgsqlCommand(query, DatabaseConnection.conn)
+                cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
+                Dim result As Object = cmd.ExecuteScalar()
+
+                If result IsNot Nothing AndAlso Convert.ToBoolean(result) Then
+                    Return True
+                End If
+            End Using
+        Catch ex As Exception
+            MsgBox("Error checking default password: " & ex.Message)
+        Finally
+            DatabaseConnection.CloseConnection()
+        End Try
+
+        Return False
+    End Function
 
     Private Sub StaffLoginPanel_Paint(sender As Object, e As PaintEventArgs) Handles StaffLoginPanel.Paint
         DrawRoundedPanelBorder(e.Graphics, StaffLoginPanel, 20, 2)

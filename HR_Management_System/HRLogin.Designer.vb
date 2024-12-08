@@ -199,6 +199,7 @@ Partial Class HRLogin
         Passtxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Passtxt.Location = New Point(76, 257)
         Passtxt.Name = "Passtxt"
+        Passtxt.PlaceholderText = "Password"
         Passtxt.Size = New Size(250, 45)
         Passtxt.TabIndex = 2
         Passtxt.TextAlign = HorizontalAlignment.Center

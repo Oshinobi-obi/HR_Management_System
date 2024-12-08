@@ -12,7 +12,7 @@ Public Class HRResidentDB
     Public Sub HRResidentDB_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitializeButton(ReturnBtn, "RETURN", Color.LightCoral)
         InitializeButton(HireBtn, "HIRE", Color.LightGreen)
-        PopulateResidentView()
+        LoadResidentData()
     End Sub
 
     Private Sub InitializeButton(button As Button, text As String, backColor As Color)
@@ -59,59 +59,36 @@ Public Class HRResidentDB
         Me.Close()
     End Sub
 
-    Private Sub PopulateResidentView()
-        ResidentView.Items.Clear()
+    Private Sub LoadResidentData()
+        Dim query As String = "SELECT ""Resident_ID"", ""First_Name"", ""Middle_Name"", ""Last_Name"", " &
+                              "EXTRACT(YEAR FROM AGE(NOW(), ""Date_Of_Birth"")) AS Age, " &
+                              """Sex"", ""Contact_Number"", ""House_Number"", ""Street_Name"", ""Subdivision"" " &
+                              "FROM ""Residents"";"
 
-        Dim query As String = "
-        SELECT 
-            \"Resident_ID\",
-            \"First_Name\",
-            \"Middle_Name\",
-            \"Last_Name\",
-            EXTRACT(YEAR FROM AGE(CURRENT_DATE, \"Date_Of_Birth\")) AS \"Age\",
-            \"Sex\" AS \"Gender\",
-            \"Contact_Number\",
-            \"House_Number\",
-            \"Street_Name\",
-            \"Subdivision\"
-        FROM 
-            public.\"Residents\";"
-
-    Try
-            Using connection As New NpgsqlConnection(connString)
-                connection.Open()
-                Using command As New NpgsqlCommand(query, connection)
-                    Using reader As NpgsqlDataReader = command.ExecuteReader()
+        Try
+            Using conn As New NpgsqlConnection(connString)
+                conn.Open()
+                Using cmd As New NpgsqlCommand(query, conn)
+                    Using reader As NpgsqlDataReader = cmd.ExecuteReader()
+                        ResidentView.Items.Clear()
                         While reader.Read()
-                            Dim residentId As String = If(reader.IsDBNull(reader.GetOrdinal("Resident_ID")), "N/A", reader("Resident_ID").ToString())
-                            Dim firstName As String = If(reader.IsDBNull(reader.GetOrdinal("First_Name")), "N/A", reader("First_Name").ToString())
-                            Dim middleName As String = If(reader.IsDBNull(reader.GetOrdinal("Middle_Name")), "N/A", reader("Middle_Name").ToString())
-                            Dim lastName As String = If(reader.IsDBNull(reader.GetOrdinal("Last_Name")), "N/A", reader("Last_Name").ToString())
-                            Dim age As String = If(reader.IsDBNull(reader.GetOrdinal("Age")), "N/A", reader("Age").ToString())
-                            Dim gender As String = If(reader.IsDBNull(reader.GetOrdinal("Gender")), "N/A", reader("Gender").ToString())
-                            Dim contactNumber As String = If(reader.IsDBNull(reader.GetOrdinal("Contact_Number")), "N/A", reader("Contact_Number").ToString())
-                            Dim houseNumber As String = If(reader.IsDBNull(reader.GetOrdinal("House_Number")), "N/A", reader("House_Number").ToString())
-                            Dim streetName As String = If(reader.IsDBNull(reader.GetOrdinal("Street_Name")), "N/A", reader("Street_Name").ToString())
-                            Dim subdivision As String = If(reader.IsDBNull(reader.GetOrdinal("Subdivision")), "N/A", reader("Subdivision").ToString())
-
-                            Dim item As New ListViewItem(residentId)
-                            item.SubItems.Add(firstName)
-                            item.SubItems.Add(middleName)
-                            item.SubItems.Add(lastName)
-                            item.SubItems.Add(age)
-                            item.SubItems.Add(gender)
-                            item.SubItems.Add(contactNumber)
-                            item.SubItems.Add(houseNumber)
-                            item.SubItems.Add(streetName)
-                            item.SubItems.Add(subdivision)
-
-                            ResidentView.Items.Add(item)
+                            Dim listItem As New ListViewItem(reader("Resident_ID").ToString())
+                            listItem.SubItems.Add(reader("First_Name").ToString())
+                            listItem.SubItems.Add(reader("Middle_Name").ToString())
+                            listItem.SubItems.Add(reader("Last_Name").ToString())
+                            listItem.SubItems.Add(reader("Age").ToString())
+                            listItem.SubItems.Add(reader("Sex").ToString())
+                            listItem.SubItems.Add(reader("Contact_Number").ToString())
+                            listItem.SubItems.Add(reader("House_Number").ToString())
+                            listItem.SubItems.Add(reader("Street_Name").ToString())
+                            listItem.SubItems.Add(reader("Subdivision").ToString())
+                            ResidentView.Items.Add(listItem)
                         End While
                     End Using
                 End Using
             End Using
         Catch ex As Exception
-            MessageBox.Show("An error occurred while fetching data: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("An error occurred while loading data: " & ex.Message)
         End Try
     End Sub
 

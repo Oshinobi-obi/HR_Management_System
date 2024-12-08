@@ -14,10 +14,10 @@ Public Class HRStaffDB
         ReturnBtn.BackColor = Color.Transparent
         ReturnBtn.Text = "RETURN"
 
-        AddBtn.FlatStyle = FlatStyle.Flat
-        AddBtn.FlatAppearance.BorderSize = 0
-        AddBtn.BackColor = Color.Transparent
-        AddBtn.Text = "RESIDENT LIST"
+        ResidentListBtn.FlatStyle = FlatStyle.Flat
+        ResidentListBtn.FlatAppearance.BorderSize = 0
+        ResidentListBtn.BackColor = Color.Transparent
+        ResidentListBtn.Text = "RESIDENT LIST"
 
         EditBtn.FlatStyle = FlatStyle.Flat
         EditBtn.FlatAppearance.BorderSize = 0
@@ -30,7 +30,7 @@ Public Class HRStaffDB
         AddPositionBtn.Text = "ADD POS"
 
         AddHandler ReturnBtn.Paint, AddressOf ReturnBtn_Paint
-        AddHandler AddBtn.Paint, AddressOf AddBtn_Paint
+        AddHandler ResidentListBtn.Paint, AddressOf AddBtn_Paint
         AddHandler EditBtn.Paint, AddressOf EditBtn_Paint
         AddHandler AddPositionBtn.Paint, AddressOf AddPositionBtn_Paint
 
@@ -243,7 +243,7 @@ Public Class HRStaffDB
         End Try
     End Sub
 
-    Private Sub AddBtn_Click(sender As Object, e As EventArgs) Handles AddBtn.Click
+    Private Sub ResidentListBtn_Click(sender As Object, e As EventArgs) Handles ResidentListBtn.Click
         Dim residentListForm As New HRResidentDB()
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(residentListForm)
         Me.Close()

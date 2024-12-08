@@ -68,8 +68,10 @@ Partial Class HRResidentDB
         ' 
         ' ResidentView
         ' 
+        ResidentView.BorderStyle = BorderStyle.FixedSingle
         ResidentView.Columns.AddRange(New ColumnHeader() {Resident_ID, First_Name, Middle_Name, Last_Name, Age, Gender, Contact_Number, House_Number, Street_Name, Subdivision})
         ResidentView.Dock = DockStyle.Fill
+        ResidentView.FullRowSelect = True
         ResidentView.Location = New Point(126, 98)
         ResidentView.Name = "ResidentView"
         ResidentView.Size = New Size(732, 564)
