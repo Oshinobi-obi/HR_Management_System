@@ -2,8 +2,8 @@
     Public Property LoggedInEmployeeID As String
     Private Sub MDIParent_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.IsMdiContainer = True
-        Dim welcomeForm As New Welcome()
-        LoadFormInMDI(welcomeForm)
+        Dim loginForm As New HRLogin()
+        LoadFormInMDI(loginForm)
     End Sub
 
     Public Sub LoadFormInMDI(formToLoad As Form)

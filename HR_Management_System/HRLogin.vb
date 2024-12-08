@@ -11,24 +11,6 @@ Public Class HRLogin
         DatabaseConnection.OpenConnection()
         DatabaseConnection.CloseConnection()
 
-        UserIcon.SizeMode = PictureBoxSizeMode.StretchImage
-        PassIcon.SizeMode = PictureBoxSizeMode.StretchImage
-
-        StaffIDtxt.BorderStyle = BorderStyle.None
-        Passtxt.BorderStyle = BorderStyle.None
-
-        AddHandler StaffIDPanel.Paint, AddressOf StaffIDPanel_Paint
-        AddHandler PassPanel.Paint, AddressOf PassPanel_Paint
-
-        UserIcon.BorderStyle = BorderStyle.None
-        PassIcon.BorderStyle = BorderStyle.None
-
-        AddHandler UserIcon.Paint, AddressOf UserIcon_Paint
-        AddHandler PassIcon.Paint, AddressOf PassIcon_Paint
-
-        StaffIDtxt.Padding = New Padding(10)
-        Passtxt.Padding = New Padding(10)
-
         Passtxt.PasswordChar = "*"c
         Passtxt.UseSystemPasswordChar = False
 
@@ -37,70 +19,14 @@ Public Class HRLogin
         LoginBtn.BackColor = Color.Transparent
         LoginBtn.Text = "Login"
 
+        StaffLoginPanel.GetType().InvokeMember("DoubleBuffered",
+                                               Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.SetProperty,
+                                               Nothing, StaffLoginPanel, New Object() {True})
+
         AddHandler LoginBtn.Paint, AddressOf LoginBtn_Paint
+        Clock.Start()
 
         StaffLoginPanel.BringToFront()
-    End Sub
-
-    Private Sub StaffLoginPanel_Paint(sender As Object, e As PaintEventArgs) Handles StaffLoginPanel.Paint
-        DrawRoundedPanelBorder(e.Graphics, StaffLoginPanel, 20, 2)
-    End Sub
-
-    Private Sub StaffIDPanel_Paint(sender As Object, e As PaintEventArgs)
-        DrawCustomBorder(e.Graphics, StaffIDPanel, 15, 2, roundedRight:=False)
-    End Sub
-
-    Private Sub PassPanel_Paint(sender As Object, e As PaintEventArgs)
-        DrawCustomBorder(e.Graphics, PassPanel, 15, 2, roundedRight:=False)
-    End Sub
-
-    Private Sub UserIcon_Paint(sender As Object, e As PaintEventArgs)
-        DrawCustomBorder(e.Graphics, UserIcon, 15, 2, roundedLeft:=False)
-    End Sub
-
-    Private Sub PassIcon_Paint(sender As Object, e As PaintEventArgs)
-        DrawCustomBorder(e.Graphics, PassIcon, 15, 2, roundedLeft:=False)
-    End Sub
-
-    Private Sub DrawCustomBorder(graphics As Graphics, ctrl As Control,
-                                 cornerRadius As Integer, borderSize As Integer,
-                                 Optional roundedLeft As Boolean = True,
-                                 Optional roundedRight As Boolean = True)
-        graphics.SmoothingMode = SmoothingMode.AntiAlias
-
-        Using path As New GraphicsPath()
-            If roundedLeft Then
-                path.AddArc(0, 0, cornerRadius, cornerRadius, 180, 90)
-            Else
-                path.AddLine(0, 0, cornerRadius, 0)
-            End If
-
-            If roundedRight Then
-                path.AddArc(ctrl.Width - cornerRadius - 1, 0, cornerRadius, cornerRadius, 270, 90)
-            Else
-                path.AddLine(ctrl.Width - cornerRadius, 0, ctrl.Width, 0)
-            End If
-
-            If roundedRight Then
-                path.AddArc(ctrl.Width - cornerRadius - 1, ctrl.Height - cornerRadius - 1, cornerRadius, cornerRadius, 0, 90)
-            Else
-                path.AddLine(ctrl.Width, cornerRadius, ctrl.Width, ctrl.Height)
-            End If
-
-            path.AddLine(ctrl.Width - cornerRadius, ctrl.Height, cornerRadius, ctrl.Height)
-
-            If roundedLeft Then
-                path.AddArc(0, ctrl.Height - cornerRadius - 1, cornerRadius, cornerRadius, 90, 90)
-            Else
-                path.AddLine(0, ctrl.Height, 0, cornerRadius)
-            End If
-
-            path.CloseFigure()
-
-            Using pen As New Pen(Color.Black, borderSize)
-                graphics.DrawPath(pen, path)
-            End Using
-        End Using
     End Sub
 
     Private Sub LoginBtn_Paint(sender As Object, e As PaintEventArgs)
@@ -118,7 +44,7 @@ Public Class HRLogin
         path.AddArc(rect.X, rect.Bottom - radius, radius, radius, 90, 90)
         path.CloseFigure()
 
-        Using brush As New SolidBrush(Color.LightGreen)
+        Using brush As New SolidBrush(Color.FromArgb(&HFF, &HF, &HF, &H46))
             graphics.FillPath(brush, path)
         End Using
 
@@ -141,10 +67,10 @@ Public Class HRLogin
         graphics.SmoothingMode = SmoothingMode.AntiAlias
 
         Using path As New GraphicsPath()
-            path.AddArc(0, 0, cornerRadius, cornerRadius, 180, 90)
-            path.AddArc(panel.Width - cornerRadius - 1, 0, cornerRadius, cornerRadius, 270, 90)
-            path.AddArc(panel.Width - cornerRadius - 1, panel.Height - cornerRadius - 1, cornerRadius, cornerRadius, 0, 90)
-            path.AddArc(0, panel.Height - cornerRadius - 1, cornerRadius, cornerRadius, 90, 90)
+            path.AddArc(0, 0, cornerRadius * 2, cornerRadius * 2, 180, 90)
+            path.AddArc(panel.Width - cornerRadius * 2 - 1, 0, cornerRadius * 2, cornerRadius * 2, 270, 90)
+            path.AddArc(panel.Width - cornerRadius * 2 - 1, panel.Height - cornerRadius * 2 - 1, cornerRadius * 2, cornerRadius * 2, 0, 90)
+            path.AddArc(0, panel.Height - cornerRadius * 2 - 1, cornerRadius * 2, cornerRadius * 2, 90, 90)
             path.CloseFigure()
 
             Using brush As New SolidBrush(panel.BackColor)
@@ -156,41 +82,6 @@ Public Class HRLogin
             End Using
         End Using
     End Sub
-
-    Private Sub LoginBtn_Click(sender As Object, e As EventArgs) Handles LoginBtn.Click
-        Dim employeeID As String = StaffIDtxt.Text.Trim()
-        Dim password As String = Passtxt.Text.Trim()
-        Dim loginStatus As String = "INCORRECT PASSWORD"
-
-        Try
-            If Not System.Text.RegularExpressions.Regex.IsMatch(employeeID, "^02-\d{2}-\d{2}-\d{2}$") Then
-                MsgBox("Invalid EmployeeID format.", MsgBoxStyle.Exclamation, "Validation Error")
-                LogLoginAttempt(employeeID, password, "NO PERMISSION")
-                ResetLoginFields()
-                Return
-            End If
-
-            Dim isValid As Boolean = ValidateCredentials(employeeID, password)
-            If isValid Then
-                HRLogin.LoggedInEmployeeID = employeeID
-                CType(Me.MdiParent, MDIParent).LoggedInEmployeeID = employeeID
-
-                loginStatus = "SUCCESSFUL"
-                Dim adminForm As New HRAdmin(employeeID)
-                CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
-                Me.Close()
-            Else
-                MsgBox("Wrong credentials.", MsgBoxStyle.Exclamation, "Login Failed")
-            End If
-
-        Catch ex As Exception
-            MsgBox("Error validating credentials: " & ex.Message)
-        Finally
-            LogLoginAttempt(employeeID, password, loginStatus)
-            ResetLoginFields()
-        End Try
-    End Sub
-
 
     Private Function ValidateCredentials(employeeID As String, password As String) As Boolean
         Try
@@ -238,9 +129,59 @@ Public Class HRLogin
         StaffIDtxt.Focus()
     End Sub
 
+    Private Sub Clock_Tick(sender As Object, e As EventArgs) Handles Clock.Tick
+        TimeLbl.Text = DateTime.Now.ToString("hh:mm")
+        AmPmLbl.Text = DateTime.Now.ToString("tt")
+        DateLbl.Text = DateTime.Now.ToString("MMMM dd, yyyy")
+    End Sub
+
     Private Sub ShutdownBtn_Click(sender As Object, e As EventArgs) Handles ShutdownBtn.Click
-        Dim Welcome As New Welcome()
-        CType(Me.MdiParent, MDIParent).LoadFormInMDI(Welcome)
-        Me.Close()
+        Dim result As DialogResult = MessageBox.Show("Are you sure you want to leave the application?",
+                                                 "Exit Confirmation",
+                                                 MessageBoxButtons.YesNo,
+                                                 MessageBoxIcon.Question)
+
+        If result = DialogResult.Yes Then
+            MessageBox.Show("Thank you for using the HRMS!", "Goodbye", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Close()
+        End If
+    End Sub
+
+    Private Sub LoginBtn_Click(sender As Object, e As EventArgs) Handles LoginBtn.Click
+        Dim employeeID = StaffIDtxt.Text.Trim
+        Dim password = Passtxt.Text.Trim
+        Dim loginStatus = "INCORRECT PASSWORD"
+
+        Try
+            If Not System.Text.RegularExpressions.Regex.IsMatch(employeeID, "^02-\d{2}-\d{2}-\d{2}$") Then
+                MsgBox("Invalid EmployeeID format.", MsgBoxStyle.Exclamation, "Validation Error")
+                LogLoginAttempt(employeeID, password, "NO PERMISSION")
+                ResetLoginFields()
+                Return
+            End If
+
+            Dim isValid = ValidateCredentials(employeeID, password)
+            If isValid Then
+                LoggedInEmployeeID = employeeID
+                CType(MdiParent, MDIParent).LoggedInEmployeeID = employeeID
+
+                loginStatus = "SUCCESSFUL"
+                Dim adminForm As New HRAdmin(employeeID)
+                CType(MdiParent, MDIParent).LoadFormInMDI(adminForm)
+                Close()
+            Else
+                MsgBox("Wrong credentials.", MsgBoxStyle.Exclamation, "Login Failed")
+            End If
+
+        Catch ex As Exception
+            MsgBox("Error validating credentials: " & ex.Message)
+        Finally
+            LogLoginAttempt(employeeID, password, loginStatus)
+            ResetLoginFields()
+        End Try
+    End Sub
+
+    Private Sub StaffLoginPanel_Paint(sender As Object, e As PaintEventArgs) Handles StaffLoginPanel.Paint
+        DrawRoundedPanelBorder(e.Graphics, StaffLoginPanel, 20, 2)
     End Sub
 End Class
