@@ -29,7 +29,6 @@ Partial Class HRResidentDB
         PictureBox1 = New PictureBox()
         PictureBox2 = New PictureBox()
         Panel1 = New Panel()
-        HireBtn = New Button()
         ReturnBtn = New Button()
         ResidentView = New DataGridView()
         Resident_ID = New DataGridViewTextBoxColumn()
@@ -93,7 +92,6 @@ Partial Class HRResidentDB
         ' 
         ' Panel1
         ' 
-        Panel1.Controls.Add(HireBtn)
         Panel1.Controls.Add(ReturnBtn)
         Panel1.Dock = DockStyle.Fill
         Panel1.Location = New Point(126, 687)
@@ -101,27 +99,13 @@ Partial Class HRResidentDB
         Panel1.Size = New Size(732, 71)
         Panel1.TabIndex = 3
         ' 
-        ' HireBtn
-        ' 
-        HireBtn.Anchor = AnchorStyles.None
-        HireBtn.BackColor = Color.LightGreen
-        HireBtn.Cursor = Cursors.Hand
-        HireBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        HireBtn.ForeColor = Color.Black
-        HireBtn.Location = New Point(210, 10)
-        HireBtn.Name = "HireBtn"
-        HireBtn.Size = New Size(140, 50)
-        HireBtn.TabIndex = 16
-        HireBtn.Text = "HIRE"
-        HireBtn.UseVisualStyleBackColor = False
-        ' 
         ' ReturnBtn
         ' 
         ReturnBtn.Anchor = AnchorStyles.None
         ReturnBtn.BackColor = Color.LightCoral
         ReturnBtn.Cursor = Cursors.Hand
         ReturnBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        ReturnBtn.Location = New Point(382, 10)
+        ReturnBtn.Location = New Point(296, 10)
         ReturnBtn.Name = "ReturnBtn"
         ReturnBtn.Size = New Size(140, 50)
         ReturnBtn.TabIndex = 2
@@ -239,7 +223,6 @@ Partial Class HRResidentDB
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents Panel1 As Panel
     Friend WithEvents ReturnBtn As Button
-    Friend WithEvents HireBtn As Button
     Friend WithEvents ResidentView As DataGridView
     Friend WithEvents Resident_ID As DataGridViewTextBoxColumn
     Friend WithEvents First_Name As DataGridViewTextBoxColumn

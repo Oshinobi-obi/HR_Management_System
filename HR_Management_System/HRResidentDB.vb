@@ -11,7 +11,6 @@ Public Class HRResidentDB
 
     Public Sub HRResidentDB_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitializeButton(ReturnBtn, "RETURN", Color.LightCoral)
-        InitializeButton(HireBtn, "HIRE", Color.LightGreen)
         SetupResidentView()
         PopulateResidentView()
     End Sub
@@ -126,10 +125,36 @@ Public Class HRResidentDB
         ResidentView.Columns.Add(actionColumn)
     End Sub
 
+    Private Function IsResidentAlreadyEmployed(residentId As String) As Boolean
+        Dim query As String = "SELECT COUNT(*) FROM employee WHERE ""Resident_ID"" = @ResidentID;"
+
+        Try
+            Using connection As New NpgsqlConnection(connString)
+                connection.Open()
+                Using command As New NpgsqlCommand(query, connection)
+                    Dim id As Integer = Convert.ToInt32(residentId)
+                    command.Parameters.AddWithValue("@ResidentID", id)
+                    Dim result As Integer = Convert.ToInt32(command.ExecuteScalar())
+                    Return result > 0
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("An error occurred while checking employment status: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return False
+        End Try
+    End Function
+
+
     Private Sub ResidentView_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles ResidentView.CellClick
         If e.ColumnIndex = ResidentView.Columns("Action").Index AndAlso e.RowIndex >= 0 Then
             Dim selectedRow As DataGridViewRow = ResidentView.Rows(e.RowIndex)
             Dim residentId As String = selectedRow.Cells("Resident_ID").Value.ToString()
+
+            If IsResidentAlreadyEmployed(residentId) Then
+                MessageBox.Show("This resident is already employed! Please choose another resident.", "Employment Check", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Return
+            End If
+
             Dim firstName As String = selectedRow.Cells("First_Name").Value.ToString()
             Dim middleName As String = selectedRow.Cells("Middle_Name").Value.ToString()
             Dim lastName As String = selectedRow.Cells("Last_Name").Value.ToString()
