@@ -87,29 +87,55 @@ Public Class HRLogin
         Try
             DatabaseConnection.OpenConnection()
 
-            Dim accountQuery As String = "SELECT COUNT(*) FROM ""Account"" WHERE ""EmployeeID"" = @EmployeeID AND ""Password"" = @Password AND ""Status"" = 'ACTIVE'"
-            Using accountCmd As New NpgsqlCommand(accountQuery, DatabaseConnection.conn)
-                accountCmd.Parameters.AddWithValue("@EmployeeID", employeeID)
-                accountCmd.Parameters.AddWithValue("@Password", password)
+            Dim query As String = "SELECT COUNT(*) FROM ""Account"" WHERE ""EmployeeID"" = @EmployeeID AND ""Password"" = @Password AND ""Status"" = 'ACTIVE'"
+            Using cmd As New NpgsqlCommand(query, DatabaseConnection.conn)
+                cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
+                cmd.Parameters.AddWithValue("@Password", password)
 
-                Dim accountResult As Integer = Convert.ToInt32(accountCmd.ExecuteScalar())
-                Return accountResult > 0
+                Dim result As Integer = Convert.ToInt32(cmd.ExecuteScalar())
+                Return result > 0
             End Using
         Catch ex As Exception
-            MsgBox("Database error: " & ex.Message)
-            Return False
+            Throw New Exception("Error validating credentials: " & ex.Message)
         Finally
             DatabaseConnection.CloseConnection()
         End Try
+    End Function
+
+    Private Function GetUserPermission(employeeID As String) As String
+        Try
+            DatabaseConnection.OpenConnection()
+
+            Dim query As String = "SELECT p.""Value""
+                                   FROM ""System_Permissions"" sp
+                                   INNER JOIN ""Permissions"" p ON sp.""PermissionID"" = p.""PermissionID""
+                                   INNER JOIN ""Account"" a ON sp.""AccountID"" = a.""AccountID""
+                                   WHERE a.""EmployeeID"" = @EmployeeID AND sp.""SystemID"" = @SystemID"
+            Using cmd As New NpgsqlCommand(query, DatabaseConnection.conn)
+                cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
+                cmd.Parameters.AddWithValue("@SystemID", SystemID)
+
+                Dim permission As Object = cmd.ExecuteScalar()
+                If permission IsNot Nothing Then
+                    Return permission.ToString()
+                End If
+            End Using
+        Catch ex As Exception
+            Throw New Exception("Error retrieving permissions: " & ex.Message)
+        Finally
+            DatabaseConnection.CloseConnection()
+        End Try
+
+        Return String.Empty
     End Function
 
     Private Sub LogLoginAttempt(employeeID As String, password As String, loginStatus As String)
         Try
             DatabaseConnection.OpenConnection()
 
-            Dim insertQuery As String = "INSERT INTO ""Login_Attempt"" (""SystemID"", ""EmployeeID"", ""Password"", ""Login_Status"", ""Date_Of_Attempt"", ""Time"") " &
-                                        "VALUES (@SystemID, @EmployeeID, @Password, @LoginStatus, CURRENT_DATE, CURRENT_TIME)"
-            Using cmd As New NpgsqlCommand(insertQuery, DatabaseConnection.conn)
+            Dim query As String = "INSERT INTO ""Login_Attempt"" (""SystemID"", ""EmployeeID"", ""Password"", ""Login_Status"", ""Date_Of_Attempt"", ""Time"") 
+                                   VALUES (@SystemID, @EmployeeID, @Password, @LoginStatus, CURRENT_DATE, CURRENT_TIME)"
+            Using cmd As New NpgsqlCommand(query, DatabaseConnection.conn)
                 cmd.Parameters.AddWithValue("@SystemID", SystemID)
                 cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
                 cmd.Parameters.AddWithValue("@Password", password)
@@ -117,7 +143,7 @@ Public Class HRLogin
                 cmd.ExecuteNonQuery()
             End Using
         Catch ex As Exception
-            MsgBox("Error login attempt: " & ex.Message)
+            MsgBox("Error logging login attempt: " & ex.Message)
         Finally
             DatabaseConnection.CloseConnection()
         End Try
@@ -151,11 +177,12 @@ Public Class HRLogin
     End Sub
 
     Private Sub LoginBtn_Click(sender As Object, e As EventArgs) Handles LoginBtn.Click
-        Dim employeeID = StaffIDtxt.Text.Trim
-        Dim password = Passtxt.Text.Trim
+        Dim employeeID = StaffIDtxt.Text.Trim()
+        Dim password = Passtxt.Text.Trim()
         Dim loginStatus = "INCORRECT PASSWORD"
 
         Try
+            ' Validate EmployeeID format
             If Not System.Text.RegularExpressions.Regex.IsMatch(employeeID, "^02-\d{2}-\d{2}-\d{2}$") Then
                 MsgBox("Invalid EmployeeID format.", MsgBoxStyle.Exclamation, "Validation Error")
                 LogLoginAttempt(employeeID, password, "NO PERMISSION")
@@ -163,38 +190,68 @@ Public Class HRLogin
                 Return
             End If
 
-            Dim isValid = ValidateCredentials(employeeID, password)
-            If isValid Then
-                If IsDefaultPassword(employeeID) Then
-                    MessageBox.Show("One Time Password has not been changed! Please change your password before proceeding!",
-                                "Change Password Required",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning)
+            ' Validate credentials
+            If ValidateCredentials(employeeID, password) Then
+                ' Check permissions
+                Dim permission As String = GetUserPermission(employeeID)
+                If String.IsNullOrEmpty(permission) Then
+                    MsgBox("You do not have permission to access the Human Resources System.", MsgBoxStyle.Exclamation, "Access Denied")
+                    loginStatus = "NO PERMISSION"
+                Else
+                    ' Successful login
+                    Dim employeeName As String = GetEmployeeName(employeeID)
+                    If String.IsNullOrEmpty(employeeName) Then
+                        MsgBox("Failed to retrieve employee name.", MsgBoxStyle.Critical, "Error")
+                        Return
+                    End If
 
-                    Dim changePasswordForm As New outFrmChangePassword(employeeID)
-                    CType(Me.MdiParent, MDIParent).LoadFormInMDI(changePasswordForm)
-                    Me.Close()
-                    Return
+                    loginStatus = "SUCCESSFUL"
+                    MsgBox($"Welcome {employeeName}, you have {permission} access.", MsgBoxStyle.Information, "Login Successful")
+
+                    LoggedInEmployeeID = employeeID
+
+                    ' Pass employee name to HRAdmin
+                    Dim hrForm As New HRAdmin(employeeName)
+                    CType(MdiParent, MDIParent).LoadFormInMDI(hrForm)
+                    Close()
                 End If
-
-                LoggedInEmployeeID = employeeID
-                CType(MdiParent, MDIParent).LoggedInEmployeeID = employeeID
-
-                loginStatus = "SUCCESSFUL"
-                Dim adminForm As New HRAdmin(employeeID)
-                CType(MdiParent, MDIParent).LoadFormInMDI(adminForm)
-                Close()
             Else
-                MsgBox("Wrong credentials.", MsgBoxStyle.Exclamation, "Login Failed")
+                MsgBox("Invalid credentials. Please try again.", MsgBoxStyle.Exclamation, "Login Failed")
             End If
-
         Catch ex As Exception
-            MsgBox("Error validating credentials: " & ex.Message)
+            MsgBox("Error during login: " & ex.Message, MsgBoxStyle.Critical, "Error")
         Finally
             LogLoginAttempt(employeeID, password, loginStatus)
             ResetLoginFields()
         End Try
     End Sub
+
+
+    Private Function GetEmployeeName(employeeID As String) As String
+        Try
+            DatabaseConnection.OpenConnection()
+
+            ' Query to fetch the employee name
+            Dim query As String = "SELECT ""EmployeeName"" FROM public.employee WHERE ""EmployeeID"" = @EmployeeID"
+            Using cmd As New NpgsqlCommand(query, DatabaseConnection.conn)
+                cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
+
+                Dim result As Object = cmd.ExecuteScalar()
+                If result IsNot Nothing Then
+                    Return result.ToString()
+                Else
+                    MsgBox("Employee not found with the given ID.", MsgBoxStyle.Information, "Not Found")
+                    Return String.Empty
+                End If
+            End Using
+        Catch ex As Exception
+            MsgBox("Error retrieving employee name: " & ex.Message, MsgBoxStyle.Critical, "Database Error")
+            Return String.Empty
+        Finally
+            DatabaseConnection.CloseConnection()
+        End Try
+    End Function
+
 
     Private Function IsDefaultPassword(employeeID As String) As Boolean
         Try
@@ -221,4 +278,5 @@ Public Class HRLogin
     Private Sub StaffLoginPanel_Paint(sender As Object, e As PaintEventArgs) Handles StaffLoginPanel.Paint
         DrawRoundedPanelBorder(e.Graphics, StaffLoginPanel, 20, 2)
     End Sub
+
 End Class

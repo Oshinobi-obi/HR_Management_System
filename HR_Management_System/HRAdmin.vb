@@ -1,7 +1,7 @@
-﻿Imports System.Windows.Forms.VisualStyles
+﻿Imports System.Reflection.Emit
+Imports System.Windows.Forms.VisualStyles
 
 Public Class HRAdmin
-
     Private Sub Admin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LogOutBtn.FlatStyle = FlatStyle.Flat
         LogOutBtn.FlatAppearance.BorderSize = 0
@@ -23,10 +23,6 @@ Public Class HRAdmin
         AddHandler VSBtn.Paint, AddressOf VSBtn_Paint
 
 
-        Dim employeeID As String = CType(Me.MdiParent, MDIParent).LoggedInEmployeeID
-        NameTxt.Text = employeeID
-        NameTxt.TextAlign = HorizontalAlignment.Center
-        NameTxt.BorderStyle = BorderStyle.None
     End Sub
 
     Private Sub LogOutBtn_Paint(sender As Object, e As PaintEventArgs)
@@ -169,5 +165,6 @@ Public Class HRAdmin
         CType(Me.MdiParent, MDIParent).LoadFormInMDI(staffDBForm)
         Me.Close()
     End Sub
+
 
 End Class
