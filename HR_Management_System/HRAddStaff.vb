@@ -238,8 +238,8 @@ Public Class HRAddStaff
     End Sub
 
     Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
-        Dim StaffDB As New HRStaffDB()
-        CType(Me.MdiParent, MDIParent).LoadFormInMDI(StaffDB)
+        Dim residentDBForm As New HRResidentDB()
+        CType(Me.MdiParent, MDIParent).LoadFormInMDI(residentDBForm)
         Me.Close()
     End Sub
 End Class

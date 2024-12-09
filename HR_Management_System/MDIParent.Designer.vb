@@ -30,9 +30,15 @@ Partial Class MDIParent
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
         ClientSize = New Size(800, 450)
+        ControlBox = False
         ForeColor = SystemColors.ControlText
-        FormBorderStyle = FormBorderStyle.Fixed3D
+        FormBorderStyle = FormBorderStyle.FixedSingle
+        IsMdiContainer = True
+        MaximizeBox = False
+        MdiChildrenMinimizedAnchorBottom = False
+        MinimizeBox = False
         Name = "MDIParent"
+        SizeGripStyle = SizeGripStyle.Hide
         StartPosition = FormStartPosition.CenterScreen
         Text = "Brgy. Santa Monica HR Management System"
         WindowState = FormWindowState.Maximized

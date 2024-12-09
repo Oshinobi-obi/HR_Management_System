@@ -528,9 +528,12 @@ Partial Class HREditStaff
         ControlBox = False
         Controls.Add(TableLayoutPanel1)
         FormBorderStyle = FormBorderStyle.FixedSingle
+        MaximizeBox = False
+        MinimizeBox = False
         Name = "HREditStaff"
+        SizeGripStyle = SizeGripStyle.Hide
         StartPosition = FormStartPosition.CenterScreen
-        Text = "Edit Staff"
+        Text = "."
         WindowState = FormWindowState.Maximized
         TableLayoutPanel1.ResumeLayout(False)
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
