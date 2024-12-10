@@ -12,13 +12,6 @@ Public Class HRAttRecord
 
         LoadAttendanceRecords()
 
-        ReturnBtn.FlatStyle = FlatStyle.Flat
-        ReturnBtn.FlatAppearance.BorderSize = 0
-        ReturnBtn.BackColor = Color.Transparent
-        ReturnBtn.Text = "RETURN"
-
-        AddHandler ReturnBtn.Paint, AddressOf ReturnBtn_Paint
-
         RefreshTimer.Interval = 5000
         AddHandler RefreshTimer.Tick, AddressOf RefreshTimer_Tick
         RefreshTimer.Enabled = True
@@ -125,10 +118,10 @@ Public Class HRAttRecord
         End If
     End Sub
 
-    Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
-        Dim adminForm As New HRAdmin()
-        CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
-        Me.Close()
+    Private Sub ReturnBtn_Click(sender As Object, e As EventArgs)
+        Dim adminForm As New HRAdmin
+        CType(MdiParent, MDIParent).LoadFormInMDI(adminForm)
+        Close
     End Sub
 
     Private Sub AttendanceYear_SelectedIndexChanged(sender As Object, e As EventArgs) Handles AttendanceYear.SelectedIndexChanged

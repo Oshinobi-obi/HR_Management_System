@@ -6,23 +6,31 @@ Public Class HRAdmin
         LogOutBtn.FlatStyle = FlatStyle.Flat
         LogOutBtn.FlatAppearance.BorderSize = 0
         LogOutBtn.BackColor = Color.Transparent
-        LogOutBtn.Text = "LOG OUT"
 
         AttBtn.FlatStyle = FlatStyle.Flat
         AttBtn.FlatAppearance.BorderSize = 0
         AttBtn.BackColor = Color.Transparent
-        AttBtn.Text = "ATTENDANCE"
 
         VSBtn.FlatStyle = FlatStyle.Flat
         VSBtn.FlatAppearance.BorderSize = 0
         VSBtn.BackColor = Color.Transparent
-        VSBtn.Text = "VIEW STAFF"
 
         AddHandler LogOutBtn.Paint, AddressOf LogOutBtn_Paint
         AddHandler AttBtn.Paint, AddressOf AttBtn_Paint
         AddHandler VSBtn.Paint, AddressOf VSBtn_Paint
 
+    End Sub
 
+    Private Sub LoadFormInPanel(form As Form)
+        MainPanel.Controls.Clear()
+
+        form.TopLevel = False
+        form.ControlBox = False
+        form.FormBorderStyle = FormBorderStyle.None
+        form.Dock = DockStyle.Fill
+
+        MainPanel.Controls.Add(form)
+        form.Show()
     End Sub
 
     Private Sub LogOutBtn_Paint(sender As Object, e As PaintEventArgs)
@@ -139,32 +147,29 @@ Public Class HRAdmin
     End Sub
 
     Private Sub LogOutBtn_Click(sender As Object, e As EventArgs) Handles LogOutBtn.Click
-        Dim result As DialogResult = MessageBox.Show("Are you sure you want to log out?", "Log Out", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        Dim result = MessageBox.Show("Are you sure you want to log out?", "Log Out", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If result = DialogResult.Yes Then
-            Dim loginForm As New HRLogin()
-            CType(Me.MdiParent, MDIParent).LoadFormInMDI(loginForm)
-            Me.Close()
+            Dim loginForm As New HRLogin
+            CType(MdiParent, MDIParent).LoadFormInMDI(loginForm)
+            Close()
         End If
     End Sub
 
-    Private Sub SecurityBtn_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles SecurityBtn.LinkClicked
-        Dim securitySettingsForm As New HRSecuritySettings(HRLogin.LoggedInEmployeeID)
-        CType(Me.MdiParent, MDIParent).LoadFormInMDI(securitySettingsForm)
-        Me.Close()
-    End Sub
-
-
     Private Sub AttBtn_Click(sender As Object, e As EventArgs) Handles AttBtn.Click
-        Dim attRecordForm As New HRAttRecord()
-        CType(Me.MdiParent, MDIParent).LoadFormInMDI(attRecordForm)
+        Dim attRecordForm As New HRAttRecord
+        LoadFormInPanel(attRecordForm)
         Me.Close()
     End Sub
 
     Private Sub VSBtn_Click(sender As Object, e As EventArgs) Handles VSBtn.Click
-        Dim staffDBForm As New HRStaffDB()
-        CType(Me.MdiParent, MDIParent).LoadFormInMDI(staffDBForm)
+        Dim staffDBForm As New HRStaffDB(MainPanel)
+        LoadFormInPanel(staffDBForm)
         Me.Close()
     End Sub
 
+    Private Sub SecurityBtn_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles SecurityBtn.LinkClicked
+        Dim securitySettingsForm As New HRSecuritySettings(HRLogin.LoggedInEmployeeID)
+        LoadFormInPanel(securitySettingsForm)
+    End Sub
 
 End Class

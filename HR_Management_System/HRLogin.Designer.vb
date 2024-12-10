@@ -66,13 +66,13 @@ Partial Class HRLogin
         TableLayoutPanel1.Controls.Add(Panel2, 0, 0)
         TableLayoutPanel1.Controls.Add(Panel3, 0, 1)
         TableLayoutPanel1.Dock = DockStyle.Right
-        TableLayoutPanel1.Location = New Point(439, 0)
+        TableLayoutPanel1.Location = New Point(435, 0)
         TableLayoutPanel1.Name = "TableLayoutPanel1"
         TableLayoutPanel1.RowCount = 3
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 20F))
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 65F))
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 15F))
-        TableLayoutPanel1.Size = New Size(433, 749)
+        TableLayoutPanel1.Size = New Size(433, 745)
         TableLayoutPanel1.TabIndex = 1
         ' 
         ' Panel2
@@ -89,7 +89,7 @@ Partial Class HRLogin
         ' DateLbl
         ' 
         DateLbl.Anchor = AnchorStyles.None
-        DateLbl.Font = New Font("Arial Black", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        DateLbl.Font = New Font("Arial", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         DateLbl.ForeColor = Color.White
         DateLbl.Location = New Point(65, 93)
         DateLbl.Name = "DateLbl"
@@ -101,7 +101,7 @@ Partial Class HRLogin
         ' 
         AmPmLbl.Anchor = AnchorStyles.None
         AmPmLbl.BackColor = Color.Transparent
-        AmPmLbl.Font = New Font("Arial Black", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        AmPmLbl.Font = New Font("Arial", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         AmPmLbl.ForeColor = Color.White
         AmPmLbl.Location = New Point(244, 41)
         AmPmLbl.Name = "AmPmLbl"
@@ -113,7 +113,7 @@ Partial Class HRLogin
         ' 
         TimeLbl.Anchor = AnchorStyles.None
         TimeLbl.BackColor = Color.Transparent
-        TimeLbl.Font = New Font("Arial Black", 25.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        TimeLbl.Font = New Font("Arial", 25.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         TimeLbl.ForeColor = Color.White
         TimeLbl.Location = New Point(109, 38)
         TimeLbl.Name = "TimeLbl"
@@ -127,7 +127,7 @@ Partial Class HRLogin
         Panel3.Dock = DockStyle.Fill
         Panel3.Location = New Point(3, 152)
         Panel3.Name = "Panel3"
-        Panel3.Size = New Size(427, 480)
+        Panel3.Size = New Size(427, 478)
         Panel3.TabIndex = 2
         ' 
         ' StaffLoginPanel
@@ -142,7 +142,7 @@ Partial Class HRLogin
         StaffLoginPanel.Controls.Add(StaffIDtxt)
         StaffLoginPanel.Controls.Add(ShutdownBtn)
         StaffLoginPanel.Controls.Add(LoginBtn)
-        StaffLoginPanel.Location = New Point(38, 30)
+        StaffLoginPanel.Location = New Point(38, 29)
         StaffLoginPanel.Name = "StaffLoginPanel"
         StaffLoginPanel.Size = New Size(350, 420)
         StaffLoginPanel.TabIndex = 1
@@ -255,7 +255,7 @@ Partial Class HRLogin
         TableLayoutPanel2.RowCount = 2
         TableLayoutPanel2.RowStyles.Add(New RowStyle(SizeType.Percent, 85F))
         TableLayoutPanel2.RowStyles.Add(New RowStyle(SizeType.Percent, 15F))
-        TableLayoutPanel2.Size = New Size(439, 749)
+        TableLayoutPanel2.Size = New Size(435, 745)
         TableLayoutPanel2.TabIndex = 2
         ' 
         ' PictureBox1
@@ -264,7 +264,7 @@ Partial Class HRLogin
         PictureBox1.Image = My.Resources.Resources.St__Monica_Logo
         PictureBox1.Location = New Point(3, 3)
         PictureBox1.Name = "PictureBox1"
-        PictureBox1.Size = New Size(433, 630)
+        PictureBox1.Size = New Size(429, 627)
         PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage
         PictureBox1.TabIndex = 0
         PictureBox1.TabStop = False
@@ -273,9 +273,9 @@ Partial Class HRLogin
         ' 
         Panel1.Controls.Add(Label1)
         Panel1.Dock = DockStyle.Fill
-        Panel1.Location = New Point(3, 639)
+        Panel1.Location = New Point(3, 636)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(433, 107)
+        Panel1.Size = New Size(429, 106)
         Panel1.TabIndex = 1
         ' 
         ' Label1
@@ -285,7 +285,7 @@ Partial Class HRLogin
         Label1.ForeColor = Color.FromArgb(CByte(15), CByte(15), CByte(70))
         Label1.Location = New Point(0, 0)
         Label1.Name = "Label1"
-        Label1.Size = New Size(433, 107)
+        Label1.Size = New Size(429, 106)
         Label1.TabIndex = 0
         Label1.Text = "BRGY. STA. MONICA"
         Label1.TextAlign = ContentAlignment.MiddleCenter
@@ -298,7 +298,7 @@ Partial Class HRLogin
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
-        ClientSize = New Size(872, 749)
+        ClientSize = New Size(868, 745)
         ControlBox = False
         Controls.Add(TableLayoutPanel2)
         Controls.Add(TableLayoutPanel1)

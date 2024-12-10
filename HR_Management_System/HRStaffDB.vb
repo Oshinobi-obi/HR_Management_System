@@ -1,4 +1,5 @@
 ﻿Imports Npgsql
+Imports HR_Management_System.HRAdmin
 
 Public Class HRStaffDB
     Private connString As String = "Host=db-postgresql-sgp1-sbit3f-do-user-13901833-0.l.db.ondigitalocean.com;" &
@@ -8,11 +9,9 @@ Public Class HRStaffDB
                                    "Database=defaultdb;" &
                                    "SSL Mode=Require"
 
+    Private targetPanel As Panel
+
     Private Sub StaffDB_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ReturnBtn.FlatStyle = FlatStyle.Flat
-        ReturnBtn.FlatAppearance.BorderSize = 0
-        ReturnBtn.BackColor = Color.Transparent
-        ReturnBtn.Text = "RETURN"
 
         ResidentListBtn.FlatStyle = FlatStyle.Flat
         ResidentListBtn.FlatAppearance.BorderSize = 0
@@ -29,47 +28,12 @@ Public Class HRStaffDB
         AddPositionBtn.BackColor = Color.Transparent
         AddPositionBtn.Text = "ADD POS"
 
-        AddHandler ReturnBtn.Paint, AddressOf ReturnBtn_Paint
         AddHandler ResidentListBtn.Paint, AddressOf AddBtn_Paint
         AddHandler EditBtn.Paint, AddressOf EditBtn_Paint
         AddHandler AddPositionBtn.Paint, AddressOf AddPositionBtn_Paint
 
         RefreshTimer.Interval = 5000
         RefreshTimer.Enabled = True
-    End Sub
-
-    Private Sub ReturnBtn_Paint(sender As Object, e As PaintEventArgs)
-        Dim button As Button = CType(sender, Button)
-        Dim graphics As Graphics = e.Graphics
-        Dim rect As New Rectangle(0, 0, button.Width - 1, button.Height - 1)
-
-        graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
-
-        Dim path As New Drawing2D.GraphicsPath()
-        Dim radius As Integer = 20
-        path.AddArc(rect.X, rect.Y, radius, radius, 180, 90)
-        path.AddArc(rect.Right - radius, rect.Y, radius, radius, 270, 90)
-        path.AddArc(rect.Right - radius, rect.Bottom - radius, radius, radius, 0, 90)
-        path.AddArc(rect.X, rect.Bottom - radius, radius, radius, 90, 90)
-        path.CloseFigure()
-
-        Using brush As New SolidBrush(Color.LightCoral)
-            graphics.FillPath(brush, path)
-        End Using
-
-        Using borderPen As New Pen(Color.Black, 2)
-            graphics.DrawPath(borderPen, path)
-        End Using
-
-        Dim textBrush As New SolidBrush(button.ForeColor)
-        Dim textFormat As New StringFormat() With {
-        .Alignment = StringAlignment.Center,
-        .LineAlignment = StringAlignment.Center
-    }
-        graphics.DrawString(button.Text, button.Font, textBrush, rect, textFormat)
-
-        textBrush.Dispose()
-        path.Dispose()
     End Sub
 
     Private Sub AddPositionBtn_Paint(sender As Object, e As PaintEventArgs)
@@ -243,16 +207,26 @@ Public Class HRStaffDB
         End Try
     End Sub
 
-    Private Sub ResidentListBtn_Click(sender As Object, e As EventArgs) Handles ResidentListBtn.Click
-        Dim residentListForm As New HRResidentDB()
-        CType(Me.MdiParent, MDIParent).LoadFormInMDI(residentListForm)
-        Me.Close()
+    Public Sub New(panel As Panel)
+        InitializeComponent()
+        targetPanel = panel
     End Sub
 
-    Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
-        Dim adminForm As New HRAdmin()
-        CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
-        Me.Close()
+    Private Sub LoadFormInPanel(form As Form)
+        targetPanel.Controls.Clear()
+
+        form.TopLevel = False
+        form.ControlBox = False
+        form.FormBorderStyle = FormBorderStyle.None
+        form.Dock = DockStyle.Fill
+
+        targetPanel.Controls.Add(form)
+        form.Show()
+    End Sub
+
+    Private Sub ResidentListBtn_Click(sender As Object, e As EventArgs) Handles ResidentListBtn.Click
+        Dim residentListForm As New HRResidentDB()
+        LoadFormInPanel(residentListForm)
     End Sub
 
     Private Sub FilterBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles FilterBox.SelectedIndexChanged
@@ -266,15 +240,13 @@ Public Class HRStaffDB
     End Sub
 
     Private Sub EditBtn_Click(sender As Object, e As EventArgs) Handles EditBtn.Click
-        Dim editStaffForm As New HREditStaff()
-        CType(Me.MdiParent, MDIParent).LoadFormInMDI(editStaffForm)
-        Me.Close()
+        Dim editForm As New HREditStaff()
+        LoadFormInPanel(editForm)
     End Sub
 
     Private Sub AddPositionBtn_Click(sender As Object, e As EventArgs) Handles AddPositionBtn.Click
         Dim addPositionForm As New HRAddPosition()
-        CType(Me.MdiParent, MDIParent).LoadFormInMDI(addPositionForm)
-        Me.Close()
+        LoadFormInPanel(addPositionForm)
     End Sub
 
     Private Function GetNextPositionId() As Integer

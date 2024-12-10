@@ -23,9 +23,8 @@ Partial Class HRStaffDB
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         components = New ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As DataGridViewCellStyle = New DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As DataGridViewCellStyle = New DataGridViewCellStyle()
-        ReturnBtn = New Button()
+        Dim DataGridViewCellStyle5 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As DataGridViewCellStyle = New DataGridViewCellStyle()
         StaffGrid = New DataGridView()
         EID = New DataGridViewTextBoxColumn()
         EN = New DataGridViewTextBoxColumn()
@@ -35,66 +34,47 @@ Partial Class HRStaffDB
         ECONTACT = New DataGridViewTextBoxColumn()
         EADD = New DataGridViewTextBoxColumn()
         EDOE = New DataGridViewTextBoxColumn()
-        PictureBox1 = New PictureBox()
-        PictureBox2 = New PictureBox()
         ResidentListBtn = New Button()
         FilterBox = New ComboBox()
         TableLayoutPanel1 = New TableLayoutPanel()
         Panel1 = New Panel()
-        Panel2 = New Panel()
         Panel3 = New Panel()
         AddPositionBtn = New Button()
         EditBtn = New Button()
         RefreshTimer = New Timer(components)
         CType(StaffGrid, ComponentModel.ISupportInitialize).BeginInit()
-        CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
-        CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
         TableLayoutPanel1.SuspendLayout()
         Panel1.SuspendLayout()
-        Panel2.SuspendLayout()
         Panel3.SuspendLayout()
         SuspendLayout()
-        ' 
-        ' ReturnBtn
-        ' 
-        ReturnBtn.Anchor = AnchorStyles.None
-        ReturnBtn.BackColor = Color.LightCoral
-        ReturnBtn.Cursor = Cursors.Hand
-        ReturnBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        ReturnBtn.Location = New Point(402, 12)
-        ReturnBtn.Name = "ReturnBtn"
-        ReturnBtn.Size = New Size(150, 43)
-        ReturnBtn.TabIndex = 3
-        ReturnBtn.Text = "RETURN"
-        ReturnBtn.UseVisualStyleBackColor = False
         ' 
         ' StaffGrid
         ' 
         StaffGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         StaffGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
         StaffGrid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single
-        DataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = SystemColors.Control
-        DataGridViewCellStyle1.Font = New Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        DataGridViewCellStyle1.ForeColor = SystemColors.WindowText
-        DataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText
-        DataGridViewCellStyle1.WrapMode = DataGridViewTriState.True
-        StaffGrid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle5.BackColor = SystemColors.Control
+        DataGridViewCellStyle5.Font = New Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        DataGridViewCellStyle5.ForeColor = SystemColors.WindowText
+        DataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText
+        DataGridViewCellStyle5.WrapMode = DataGridViewTriState.True
+        StaffGrid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
         StaffGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         StaffGrid.Columns.AddRange(New DataGridViewColumn() {EID, EN, EP, ESCHED, EAGE, ECONTACT, EADD, EDOE})
         StaffGrid.Dock = DockStyle.Fill
         StaffGrid.Location = New Point(0, 0)
         StaffGrid.Name = "StaffGrid"
-        DataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = SystemColors.Control
-        DataGridViewCellStyle2.Font = New Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        DataGridViewCellStyle2.ForeColor = SystemColors.WindowText
-        DataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = DataGridViewTriState.True
-        StaffGrid.RowHeadersDefaultCellStyle = DataGridViewCellStyle2
-        StaffGrid.Size = New Size(954, 488)
+        DataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = SystemColors.Control
+        DataGridViewCellStyle6.Font = New Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        DataGridViewCellStyle6.ForeColor = SystemColors.WindowText
+        DataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText
+        DataGridViewCellStyle6.WrapMode = DataGridViewTriState.True
+        StaffGrid.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        StaffGrid.Size = New Size(1146, 589)
         StaffGrid.TabIndex = 18
         ' 
         ' EID
@@ -137,36 +117,13 @@ Partial Class HRStaffDB
         EDOE.HeaderText = "DOE"
         EDOE.Name = "EDOE"
         ' 
-        ' PictureBox1
-        ' 
-        PictureBox1.Dock = DockStyle.Fill
-        PictureBox1.Image = My.Resources.Resources.St__Monica_Logo
-        PictureBox1.Location = New Point(3, 3)
-        PictureBox1.Name = "PictureBox1"
-        PictureBox1.Size = New Size(154, 135)
-        PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage
-        PictureBox1.TabIndex = 19
-        PictureBox1.TabStop = False
-        ' 
-        ' PictureBox2
-        ' 
-        PictureBox2.BackColor = Color.Transparent
-        PictureBox2.Dock = DockStyle.Fill
-        PictureBox2.Image = My.Resources.Resources.SPLQ_100x95_
-        PictureBox2.Location = New Point(1123, 3)
-        PictureBox2.Name = "PictureBox2"
-        PictureBox2.Size = New Size(154, 135)
-        PictureBox2.SizeMode = PictureBoxSizeMode.StretchImage
-        PictureBox2.TabIndex = 20
-        PictureBox2.TabStop = False
-        ' 
         ' ResidentListBtn
         ' 
         ResidentListBtn.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
         ResidentListBtn.BackColor = Color.LightGreen
         ResidentListBtn.Cursor = Cursors.Hand
         ResidentListBtn.Font = New Font("Corbel", 18F, FontStyle.Bold)
-        ResidentListBtn.Location = New Point(246, 88)
+        ResidentListBtn.Location = New Point(438, 21)
         ResidentListBtn.Name = "ResidentListBtn"
         ResidentListBtn.Size = New Size(200, 42)
         ResidentListBtn.TabIndex = 1
@@ -180,7 +137,7 @@ Partial Class HRStaffDB
         FilterBox.DropDownStyle = ComboBoxStyle.DropDownList
         FilterBox.Font = New Font("Corbel", 22.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         FilterBox.FormattingEnabled = True
-        FilterBox.Location = New Point(601, 88)
+        FilterBox.Location = New Point(796, 20)
         FilterBox.Name = "FilterBox"
         FilterBox.Size = New Size(350, 45)
         FilterBox.TabIndex = 2
@@ -189,21 +146,18 @@ Partial Class HRStaffDB
         ' 
         TableLayoutPanel1.BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
         TableLayoutPanel1.ColumnCount = 3
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 12.5F))
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 75F))
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 12.5F))
-        TableLayoutPanel1.Controls.Add(PictureBox1, 0, 0)
-        TableLayoutPanel1.Controls.Add(PictureBox2, 2, 0)
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 5F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 90F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 5F))
         TableLayoutPanel1.Controls.Add(Panel1, 1, 1)
-        TableLayoutPanel1.Controls.Add(Panel2, 1, 2)
         TableLayoutPanel1.Controls.Add(Panel3, 1, 0)
         TableLayoutPanel1.Dock = DockStyle.Fill
         TableLayoutPanel1.Location = New Point(0, 0)
         TableLayoutPanel1.Name = "TableLayoutPanel1"
         TableLayoutPanel1.RowCount = 3
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 20F))
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 70F))
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 10F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 10.5263157F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 84.2105255F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 5.263158F))
         TableLayoutPanel1.Size = New Size(1280, 707)
         TableLayoutPanel1.TabIndex = 23
         ' 
@@ -211,19 +165,10 @@ Partial Class HRStaffDB
         ' 
         Panel1.Controls.Add(StaffGrid)
         Panel1.Dock = DockStyle.Fill
-        Panel1.Location = New Point(163, 144)
+        Panel1.Location = New Point(67, 77)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(954, 488)
+        Panel1.Size = New Size(1146, 589)
         Panel1.TabIndex = 21
-        ' 
-        ' Panel2
-        ' 
-        Panel2.Controls.Add(ReturnBtn)
-        Panel2.Dock = DockStyle.Fill
-        Panel2.Location = New Point(163, 638)
-        Panel2.Name = "Panel2"
-        Panel2.Size = New Size(954, 66)
-        Panel2.TabIndex = 22
         ' 
         ' Panel3
         ' 
@@ -232,9 +177,9 @@ Partial Class HRStaffDB
         Panel3.Controls.Add(FilterBox)
         Panel3.Controls.Add(ResidentListBtn)
         Panel3.Dock = DockStyle.Fill
-        Panel3.Location = New Point(163, 3)
+        Panel3.Location = New Point(67, 3)
         Panel3.Name = "Panel3"
-        Panel3.Size = New Size(954, 135)
+        Panel3.Size = New Size(1146, 68)
         Panel3.TabIndex = 23
         ' 
         ' AddPositionBtn
@@ -243,7 +188,7 @@ Partial Class HRStaffDB
         AddPositionBtn.BackColor = Color.LightGreen
         AddPositionBtn.Cursor = Cursors.Hand
         AddPositionBtn.Font = New Font("Corbel", 18F, FontStyle.Bold)
-        AddPositionBtn.Location = New Point(452, 88)
+        AddPositionBtn.Location = New Point(644, 21)
         AddPositionBtn.Name = "AddPositionBtn"
         AddPositionBtn.Size = New Size(143, 42)
         AddPositionBtn.TabIndex = 4
@@ -256,7 +201,7 @@ Partial Class HRStaffDB
         EditBtn.BackColor = Color.LightGreen
         EditBtn.Cursor = Cursors.Hand
         EditBtn.Font = New Font("Corbel", 18F, FontStyle.Bold)
-        EditBtn.Location = New Point(40, 88)
+        EditBtn.Location = New Point(232, 21)
         EditBtn.Name = "EditBtn"
         EditBtn.Size = New Size(200, 42)
         EditBtn.TabIndex = 3
@@ -282,24 +227,16 @@ Partial Class HRStaffDB
         Text = "."
         WindowState = FormWindowState.Maximized
         CType(StaffGrid, ComponentModel.ISupportInitialize).EndInit()
-        CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
-        CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
         TableLayoutPanel1.ResumeLayout(False)
         Panel1.ResumeLayout(False)
-        Panel2.ResumeLayout(False)
         Panel3.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
-
-    Friend WithEvents ReturnBtn As Button
     Friend WithEvents StaffGrid As DataGridView
-    Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents ResidentListBtn As Button
     Friend WithEvents FilterBox As ComboBox
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents Panel2 As Panel
     Friend WithEvents Panel3 As Panel
     Friend WithEvents EID As DataGridViewTextBoxColumn
     Friend WithEvents EN As DataGridViewTextBoxColumn

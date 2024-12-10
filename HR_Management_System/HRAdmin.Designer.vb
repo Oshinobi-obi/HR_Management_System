@@ -22,177 +22,169 @@ Partial Class HRAdmin
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        PictureBox1 = New PictureBox()
-        PictureBox2 = New PictureBox()
-        Label1 = New Label()
-        PictureBox3 = New PictureBox()
-        SecurityBtn = New LinkLabel()
-        AttBtn = New Button()
-        VSBtn = New Button()
-        LogOutBtn = New Button()
         TableLayoutPanel1 = New TableLayoutPanel()
-        Panel1 = New Panel()
+        PictureBox1 = New PictureBox()
+        ButtonsPanel = New Panel()
+        LogOutBtn = New Button()
+        SecurityBtn = New LinkLabel()
+        VSBtn = New Button()
+        AttBtn = New Button()
         NameTxt = New Label()
-        CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
-        CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
-        CType(PictureBox3, ComponentModel.ISupportInitialize).BeginInit()
+        PictureBox2 = New PictureBox()
+        TableLayoutPanel2 = New TableLayoutPanel()
+        MainPanel = New Panel()
         TableLayoutPanel1.SuspendLayout()
-        Panel1.SuspendLayout()
+        CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
+        ButtonsPanel.SuspendLayout()
+        CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
+        TableLayoutPanel2.SuspendLayout()
         SuspendLayout()
-        ' 
-        ' PictureBox1
-        ' 
-        PictureBox1.BackColor = Color.Transparent
-        PictureBox1.Dock = DockStyle.Fill
-        PictureBox1.Image = My.Resources.Resources.St__Monica_Logo
-        PictureBox1.Location = New Point(3, 3)
-        PictureBox1.Name = "PictureBox1"
-        PictureBox1.Size = New Size(94, 84)
-        PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage
-        PictureBox1.TabIndex = 0
-        PictureBox1.TabStop = False
-        ' 
-        ' PictureBox2
-        ' 
-        PictureBox2.BackColor = Color.Transparent
-        PictureBox2.Dock = DockStyle.Fill
-        PictureBox2.Image = My.Resources.Resources.SPLQ_100x95_
-        PictureBox2.Location = New Point(703, 3)
-        PictureBox2.Name = "PictureBox2"
-        PictureBox2.Size = New Size(94, 84)
-        PictureBox2.SizeMode = PictureBoxSizeMode.StretchImage
-        PictureBox2.TabIndex = 1
-        PictureBox2.TabStop = False
-        ' 
-        ' Label1
-        ' 
-        Label1.AutoSize = True
-        Label1.Location = New Point(257, 110)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(0, 15)
-        Label1.TabIndex = 2
-        ' 
-        ' PictureBox3
-        ' 
-        PictureBox3.Anchor = AnchorStyles.None
-        PictureBox3.BackColor = Color.Transparent
-        PictureBox3.BackgroundImageLayout = ImageLayout.Stretch
-        PictureBox3.Image = My.Resources.Resources.User
-        PictureBox3.Location = New Point(269, 24)
-        PictureBox3.Name = "PictureBox3"
-        PictureBox3.Size = New Size(60, 60)
-        PictureBox3.SizeMode = PictureBoxSizeMode.StretchImage
-        PictureBox3.TabIndex = 3
-        PictureBox3.TabStop = False
-        ' 
-        ' SecurityBtn
-        ' 
-        SecurityBtn.Anchor = AnchorStyles.None
-        SecurityBtn.AutoSize = True
-        SecurityBtn.Font = New Font("Corbel", 15F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        SecurityBtn.LinkColor = Color.Black
-        SecurityBtn.Location = New Point(201, 147)
-        SecurityBtn.Name = "SecurityBtn"
-        SecurityBtn.Size = New Size(197, 24)
-        SecurityBtn.TabIndex = 5
-        SecurityBtn.TabStop = True
-        SecurityBtn.Text = "SECURITY SETTINGS"
-        ' 
-        ' AttBtn
-        ' 
-        AttBtn.Anchor = AnchorStyles.None
-        AttBtn.AutoSize = True
-        AttBtn.Cursor = Cursors.Hand
-        AttBtn.Font = New Font("Corbel", 25.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        AttBtn.Location = New Point(22, 195)
-        AttBtn.Name = "AttBtn"
-        AttBtn.Size = New Size(255, 55)
-        AttBtn.TabIndex = 6
-        AttBtn.Text = "ATTENDANCE"
-        AttBtn.UseVisualStyleBackColor = True
-        ' 
-        ' VSBtn
-        ' 
-        VSBtn.Anchor = AnchorStyles.None
-        VSBtn.Cursor = Cursors.Hand
-        VSBtn.Font = New Font("Corbel", 25.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        VSBtn.Location = New Point(318, 195)
-        VSBtn.Name = "VSBtn"
-        VSBtn.Size = New Size(255, 55)
-        VSBtn.TabIndex = 0
-        VSBtn.Text = "VIEW STAFF"
-        VSBtn.UseVisualStyleBackColor = True
-        ' 
-        ' LogOutBtn
-        ' 
-        LogOutBtn.Anchor = AnchorStyles.None
-        LogOutBtn.AutoSize = True
-        LogOutBtn.BackColor = Color.LightCoral
-        LogOutBtn.BackgroundImageLayout = ImageLayout.Center
-        LogOutBtn.Cursor = Cursors.Hand
-        LogOutBtn.Font = New Font("Corbel", 24.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        LogOutBtn.ForeColor = Color.Black
-        LogOutBtn.ImageAlign = ContentAlignment.MiddleLeft
-        LogOutBtn.Location = New Point(199, 279)
-        LogOutBtn.Name = "LogOutBtn"
-        LogOutBtn.Size = New Size(201, 51)
-        LogOutBtn.TabIndex = 7
-        LogOutBtn.Text = "LOGOUT"
-        LogOutBtn.TextImageRelation = TextImageRelation.ImageBeforeText
-        LogOutBtn.UseVisualStyleBackColor = False
         ' 
         ' TableLayoutPanel1
         ' 
-        TableLayoutPanel1.ColumnCount = 3
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 12.5F))
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 75F))
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 12.5F))
-        TableLayoutPanel1.Controls.Add(PictureBox2, 2, 0)
+        TableLayoutPanel1.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single
+        TableLayoutPanel1.ColumnCount = 1
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100F))
         TableLayoutPanel1.Controls.Add(PictureBox1, 0, 0)
-        TableLayoutPanel1.Controls.Add(Panel1, 1, 1)
-        TableLayoutPanel1.Dock = DockStyle.Fill
+        TableLayoutPanel1.Controls.Add(ButtonsPanel, 0, 1)
+        TableLayoutPanel1.Dock = DockStyle.Left
         TableLayoutPanel1.Location = New Point(0, 0)
         TableLayoutPanel1.Name = "TableLayoutPanel1"
         TableLayoutPanel1.RowCount = 2
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 20F))
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 80F))
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Absolute, 20F))
-        TableLayoutPanel1.Size = New Size(800, 450)
+        TableLayoutPanel1.Size = New Size(200, 845)
         TableLayoutPanel1.TabIndex = 9
         ' 
-        ' Panel1
+        ' PictureBox1
         ' 
-        Panel1.Controls.Add(NameTxt)
-        Panel1.Controls.Add(LogOutBtn)
-        Panel1.Controls.Add(VSBtn)
-        Panel1.Controls.Add(PictureBox3)
-        Panel1.Controls.Add(AttBtn)
-        Panel1.Controls.Add(SecurityBtn)
-        Panel1.Dock = DockStyle.Fill
-        Panel1.Location = New Point(103, 93)
-        Panel1.Name = "Panel1"
-        Panel1.Size = New Size(594, 354)
-        Panel1.TabIndex = 2
+        PictureBox1.Dock = DockStyle.Fill
+        PictureBox1.Image = My.Resources.Resources.St__Monica_Logo
+        PictureBox1.Location = New Point(4, 4)
+        PictureBox1.Name = "PictureBox1"
+        PictureBox1.Size = New Size(192, 162)
+        PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage
+        PictureBox1.TabIndex = 0
+        PictureBox1.TabStop = False
+        ' 
+        ' ButtonsPanel
+        ' 
+        ButtonsPanel.Controls.Add(LogOutBtn)
+        ButtonsPanel.Controls.Add(SecurityBtn)
+        ButtonsPanel.Controls.Add(VSBtn)
+        ButtonsPanel.Controls.Add(AttBtn)
+        ButtonsPanel.Controls.Add(NameTxt)
+        ButtonsPanel.Controls.Add(PictureBox2)
+        ButtonsPanel.Dock = DockStyle.Fill
+        ButtonsPanel.Location = New Point(4, 173)
+        ButtonsPanel.Name = "ButtonsPanel"
+        ButtonsPanel.Size = New Size(192, 668)
+        ButtonsPanel.TabIndex = 1
+        ' 
+        ' LogOutBtn
+        ' 
+        LogOutBtn.Anchor = AnchorStyles.None
+        LogOutBtn.Cursor = Cursors.Hand
+        LogOutBtn.Font = New Font("Corbel", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        LogOutBtn.Image = My.Resources.Resources.Logout_1
+        LogOutBtn.Location = New Point(21, 611)
+        LogOutBtn.Name = "LogOutBtn"
+        LogOutBtn.Size = New Size(150, 39)
+        LogOutBtn.TabIndex = 5
+        LogOutBtn.Text = "Logout"
+        LogOutBtn.TextAlign = ContentAlignment.MiddleRight
+        LogOutBtn.TextImageRelation = TextImageRelation.TextBeforeImage
+        LogOutBtn.UseVisualStyleBackColor = True
+        ' 
+        ' SecurityBtn
+        ' 
+        SecurityBtn.Anchor = AnchorStyles.None
+        SecurityBtn.Cursor = Cursors.Hand
+        SecurityBtn.Font = New Font("Arial", 15F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        SecurityBtn.LinkBehavior = LinkBehavior.NeverUnderline
+        SecurityBtn.LinkColor = Color.Black
+        SecurityBtn.Location = New Point(21, 243)
+        SecurityBtn.Name = "SecurityBtn"
+        SecurityBtn.Size = New Size(150, 23)
+        SecurityBtn.TabIndex = 4
+        SecurityBtn.TabStop = True
+        SecurityBtn.Text = "Sec. Settings"
+        SecurityBtn.TextAlign = ContentAlignment.MiddleCenter
+        ' 
+        ' VSBtn
+        ' 
+        VSBtn.Cursor = Cursors.Hand
+        VSBtn.Font = New Font("Corbel", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        VSBtn.Location = New Point(22, 338)
+        VSBtn.Name = "VSBtn"
+        VSBtn.Size = New Size(150, 39)
+        VSBtn.TabIndex = 3
+        VSBtn.Text = "View Staff"
+        VSBtn.UseVisualStyleBackColor = True
+        ' 
+        ' AttBtn
+        ' 
+        AttBtn.Cursor = Cursors.Hand
+        AttBtn.Font = New Font("Corbel", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        AttBtn.Location = New Point(22, 283)
+        AttBtn.Name = "AttBtn"
+        AttBtn.Size = New Size(150, 39)
+        AttBtn.TabIndex = 2
+        AttBtn.Text = "Att. Record"
+        AttBtn.UseVisualStyleBackColor = True
         ' 
         ' NameTxt
         ' 
         NameTxt.Anchor = AnchorStyles.None
-        NameTxt.BackColor = Color.Transparent
-        NameTxt.Font = New Font("Corbel", 24F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        NameTxt.Location = New Point(201, 96)
+        NameTxt.Font = New Font("Arial", 15F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        NameTxt.Location = New Point(21, 187)
         NameTxt.Name = "NameTxt"
-        NameTxt.Size = New Size(197, 40)
-        NameTxt.TabIndex = 9
+        NameTxt.Size = New Size(150, 40)
+        NameTxt.TabIndex = 1
         NameTxt.TextAlign = ContentAlignment.MiddleCenter
+        ' 
+        ' PictureBox2
+        ' 
+        PictureBox2.Anchor = AnchorStyles.None
+        PictureBox2.Image = My.Resources.Resources.Male_User1
+        PictureBox2.Location = New Point(21, 21)
+        PictureBox2.Name = "PictureBox2"
+        PictureBox2.Size = New Size(150, 150)
+        PictureBox2.SizeMode = PictureBoxSizeMode.StretchImage
+        PictureBox2.TabIndex = 0
+        PictureBox2.TabStop = False
+        ' 
+        ' TableLayoutPanel2
+        ' 
+        TableLayoutPanel2.ColumnCount = 1
+        TableLayoutPanel2.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 100F))
+        TableLayoutPanel2.ColumnStyles.Add(New ColumnStyle(SizeType.Absolute, 20F))
+        TableLayoutPanel2.Controls.Add(MainPanel, 0, 0)
+        TableLayoutPanel2.Dock = DockStyle.Fill
+        TableLayoutPanel2.Location = New Point(200, 0)
+        TableLayoutPanel2.Name = "TableLayoutPanel2"
+        TableLayoutPanel2.RowCount = 1
+        TableLayoutPanel2.RowStyles.Add(New RowStyle(SizeType.Percent, 100F))
+        TableLayoutPanel2.RowStyles.Add(New RowStyle(SizeType.Absolute, 20F))
+        TableLayoutPanel2.Size = New Size(1340, 845)
+        TableLayoutPanel2.TabIndex = 10
+        ' 
+        ' MainPanel
+        ' 
+        MainPanel.Dock = DockStyle.Fill
+        MainPanel.Location = New Point(3, 3)
+        MainPanel.Name = "MainPanel"
+        MainPanel.Size = New Size(1334, 839)
+        MainPanel.TabIndex = 0
         ' 
         ' HRAdmin
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        BackColor = Color.FromArgb(CByte(242), CByte(233), CByte(233))
-        ClientSize = New Size(800, 450)
+        BackColor = Color.White
+        ClientSize = New Size(1540, 845)
         ControlBox = False
-        Controls.Add(Label1)
+        Controls.Add(TableLayoutPanel2)
         Controls.Add(TableLayoutPanel1)
         FormBorderStyle = FormBorderStyle.FixedSingle
         MaximizeBox = False
@@ -201,25 +193,24 @@ Partial Class HRAdmin
         SizeGripStyle = SizeGripStyle.Hide
         StartPosition = FormStartPosition.CenterScreen
         Text = "."
-        CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
-        CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
-        CType(PictureBox3, ComponentModel.ISupportInitialize).EndInit()
+        WindowState = FormWindowState.Maximized
         TableLayoutPanel1.ResumeLayout(False)
-        Panel1.ResumeLayout(False)
-        Panel1.PerformLayout()
+        CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
+        ButtonsPanel.ResumeLayout(False)
+        CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
+        TableLayoutPanel2.ResumeLayout(False)
         ResumeLayout(False)
-        PerformLayout()
     End Sub
-
-    Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents Label1 As Label
-    Friend WithEvents PictureBox3 As PictureBox
-    Friend WithEvents SecurityBtn As LinkLabel
-    Friend WithEvents AttBtn As Button
-    Friend WithEvents VSBtn As Button
-    Friend WithEvents LogOutBtn As Button
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents ButtonsPanel As Panel
+    Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
+    Friend WithEvents MainPanel As Panel
+    Friend WithEvents PictureBox2 As PictureBox
+    Friend WithEvents AttBtn As Button
     Friend WithEvents NameTxt As Label
+    Friend WithEvents VSBtn As Button
+    Friend WithEvents SecurityBtn As LinkLabel
+    Friend WithEvents LogOutBtn As Button
 End Class
