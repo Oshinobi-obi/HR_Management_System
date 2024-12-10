@@ -56,7 +56,6 @@ Partial Class HREditStaff
         EmIDCmb = New ComboBox()
         OpenBtn = New Button()
         UpdateStaffBtn = New Button()
-        ReturnBtn = New Button()
         SelectImage = New OpenFileDialog()
         TableLayoutPanel1.SuspendLayout()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
@@ -137,7 +136,6 @@ Partial Class HREditStaff
         Panel1.Controls.Add(EmIDCmb)
         Panel1.Controls.Add(OpenBtn)
         Panel1.Controls.Add(UpdateStaffBtn)
-        Panel1.Controls.Add(ReturnBtn)
         Panel1.Dock = DockStyle.Fill
         Panel1.Location = New Point(131, 129)
         Panel1.Name = "Panel1"
@@ -506,19 +504,6 @@ Partial Class HREditStaff
         UpdateStaffBtn.Text = "UPDATE"
         UpdateStaffBtn.UseVisualStyleBackColor = False
         ' 
-        ' ReturnBtn
-        ' 
-        ReturnBtn.Anchor = AnchorStyles.None
-        ReturnBtn.BackColor = Color.LightCoral
-        ReturnBtn.Cursor = Cursors.Hand
-        ReturnBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        ReturnBtn.Location = New Point(778, 592)
-        ReturnBtn.Name = "ReturnBtn"
-        ReturnBtn.Size = New Size(200, 50)
-        ReturnBtn.TabIndex = 29
-        ReturnBtn.Text = "RETURN"
-        ReturnBtn.UseVisualStyleBackColor = False
-        ' 
         ' HREditStaff
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -575,7 +560,6 @@ Partial Class HREditStaff
     Friend WithEvents EmIDCmb As ComboBox
     Friend WithEvents OpenBtn As Button
     Friend WithEvents UpdateStaffBtn As Button
-    Friend WithEvents ReturnBtn As Button
     Friend WithEvents StatusCmb As ComboBox
     Friend WithEvents Label14 As Label
     Friend WithEvents CardNumberTxt As TextBox

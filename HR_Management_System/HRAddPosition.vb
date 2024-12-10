@@ -54,10 +54,12 @@ Public Class HRAddPosition
     End Sub
 
     Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
-        Dim StaffDB As New HRStaffDB()
-        CType(Me.MdiParent, MDIParent).LoadFormInMDI(StaffDB)
+        ' Return to HRAdmin form and load in the ButtonPanel or wherever it should appear
+        Dim adminForm As New HRAdmin()
+        CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
         Me.Close()
     End Sub
+
 
     Private Sub HRAddPosition_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ReloadPositionTable()

@@ -54,10 +54,12 @@ Public Class HRResidentDB
     End Sub
 
     Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
-        Dim StaffDB As New HRStaffDB()
-        CType(Me.MdiParent, MDIParent).LoadFormInMDI(StaffDB)
+        ' Return to HRAdmin form and load in the ButtonPanel or wherever it should appear
+        Dim adminForm As New HRAdmin()
+        CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
         Me.Close()
     End Sub
+
 
     Private Sub PopulateResidentView()
         ResidentView.Rows.Clear()
@@ -117,12 +119,12 @@ Public Class HRResidentDB
         ResidentView.Columns.Add("Contact_Number", "Contact")
         ResidentView.Columns.Add("Address", "Address")
 
-        Dim actionColumn As New DataGridViewButtonColumn()
-        actionColumn.HeaderText = "Action"
-        actionColumn.Name = "Action"
-        actionColumn.Text = "HIRE"
-        actionColumn.UseColumnTextForButtonValue = True
-        ResidentView.Columns.Add(actionColumn)
+        Dim hireButtonColumn As New DataGridViewButtonColumn()
+        hireButtonColumn.HeaderText = "Action"
+        hireButtonColumn.Text = "Hire"
+        hireButtonColumn.Name = "HireBtnColumn"
+        hireButtonColumn.UseColumnTextForButtonValue = True
+        ResidentView.Columns.Add(hireButtonColumn)
     End Sub
 
     Private Function IsResidentAlreadyEmployed(residentId As String) As Boolean
@@ -143,45 +145,76 @@ Public Class HRResidentDB
             Return False
         End Try
     End Function
-
-
     Private Sub ResidentView_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles ResidentView.CellClick
-        If e.ColumnIndex = ResidentView.Columns("Action").Index AndAlso e.RowIndex >= 0 Then
-            Dim selectedRow As DataGridViewRow = ResidentView.Rows(e.RowIndex)
-            Dim residentId As String = selectedRow.Cells("Resident_ID").Value.ToString()
+        If e.ColumnIndex = ResidentView.Columns("HireBtnColumn").Index Then
+            Try
+                ' Get the selected resident's data
+                Dim selectedRow As DataGridViewRow = ResidentView.Rows(e.RowIndex)
+                Dim residentId As String = selectedRow.Cells("Resident_ID").Value.ToString()
 
-            If IsResidentAlreadyEmployed(residentId) Then
-                MessageBox.Show("This resident is already employed! Please choose another resident.", "Employment Check", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                Return
-            End If
+                If String.IsNullOrWhiteSpace(residentId) Then
+                    MessageBox.Show("Invalid Resident ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Return
+                End If
 
-            Dim firstName As String = selectedRow.Cells("First_Name").Value.ToString()
-            Dim middleName As String = selectedRow.Cells("Middle_Name").Value.ToString()
-            Dim lastName As String = selectedRow.Cells("Last_Name").Value.ToString()
-            Dim ageString As String = selectedRow.Cells("Age").Value.ToString()
-            Dim gender As String = selectedRow.Cells("Sex").Value.ToString()
-            Dim contactNumber As String = selectedRow.Cells("Contact_Number").Value.ToString()
-            Dim address As String = selectedRow.Cells("Address").Value.ToString()
+                ' Check if the resident is already employed
+                If IsResidentAlreadyEmployed(residentId) Then
+                    MessageBox.Show("This resident is already employed! Please choose another resident.", "Employment Check", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    Return
+                End If
 
-            Dim age As Integer
-            If Integer.TryParse(ageString, age) Then
+                ' Retrieve other data (first name, last name, age, etc.)
+                Dim firstName As String = selectedRow.Cells("First_Name").Value.ToString()
+                Dim middleName As String = selectedRow.Cells("Middle_Name").Value.ToString()
+                Dim lastName As String = selectedRow.Cells("Last_Name").Value.ToString()
+                Dim ageString As String = selectedRow.Cells("Age").Value.ToString()
+                Dim gender As String = selectedRow.Cells("Sex").Value.ToString()
+                Dim contactNumber As String = selectedRow.Cells("Contact_Number").Value.ToString()
+                Dim address As String = selectedRow.Cells("Address").Value.ToString()
+
+                ' Convert age to integer and validate legal age
+                Dim age As Integer
+                If Not Integer.TryParse(ageString, age) Then
+                    MessageBox.Show("Invalid age value for the selected resident. Unable to proceed.", "Data Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Return
+                End If
+
                 If age < 18 Then
                     MessageBox.Show("This resident is not of legal age! Unable to hire.", "Age Restriction", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                     Return
-                Else
-                    MessageBox.Show("This resident is of legal age! Proceeding to hiring.", "Age Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End If
-            Else
-                MessageBox.Show("Invalid age value for the selected resident. Unable to proceed.", "Data Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                Return
-            End If
 
-            Dim addStaffForm As New HRAddStaff()
-            addStaffForm.SetResidentData(residentId, firstName, middleName, lastName, ageString, gender, contactNumber, address)
+                ' Pass data to the HRAddStaff form
+                Dim addStaffForm As New HRAddStaff()
+                addStaffForm.SetResidentData(residentId, firstName, middleName, lastName, ageString, gender, contactNumber, address)
 
-            CType(Me.MdiParent, MDIParent).LoadFormInMDI(addStaffForm)
-            Me.Close()
+                ' Ensure MdiParent is set before proceeding
+                If Me.MdiParent IsNot Nothing Then
+                    ' Check if MainPanel exists
+                    Dim mainPanel As Panel = CType(Me.MdiParent.Controls("MainPanel"), Panel)
+                    If mainPanel Is Nothing Then
+                        MessageBox.Show("MainPanel not found in MdiParent.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Return
+                    End If
+
+                    ' Clear the current form in MainPanel
+                    mainPanel.Controls.Clear()
+                    ' Add the HRAddStaff form to MainPanel
+                    addStaffForm.TopLevel = False
+                    mainPanel.Controls.Add(addStaffForm)
+                    addStaffForm.Show()
+
+                    ' Optionally, close the HRResidentDB form if needed
+                    Me.Close()
+                Else
+                    MessageBox.Show("MdiParent is not set.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End If
+
+            Catch ex As Exception
+                MessageBox.Show("An error occurred: " & ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
         End If
     End Sub
+
 
 End Class

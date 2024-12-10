@@ -33,6 +33,9 @@ Partial Class HRAdmin
         PictureBox2 = New PictureBox()
         TableLayoutPanel2 = New TableLayoutPanel()
         MainPanel = New Panel()
+        EditBtn = New Button()
+        ResidentListBtn = New Button()
+        AddPositionBtn = New Button()
         TableLayoutPanel1.SuspendLayout()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         ButtonsPanel.SuspendLayout()
@@ -69,6 +72,9 @@ Partial Class HRAdmin
         ' 
         ' ButtonsPanel
         ' 
+        ButtonsPanel.Controls.Add(AddPositionBtn)
+        ButtonsPanel.Controls.Add(ResidentListBtn)
+        ButtonsPanel.Controls.Add(EditBtn)
         ButtonsPanel.Controls.Add(LogOutBtn)
         ButtonsPanel.Controls.Add(SecurityBtn)
         ButtonsPanel.Controls.Add(VSBtn)
@@ -177,6 +183,45 @@ Partial Class HRAdmin
         MainPanel.Size = New Size(1334, 839)
         MainPanel.TabIndex = 0
         ' 
+        ' EditBtn
+        ' 
+        EditBtn.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
+        EditBtn.BackColor = Color.LightGreen
+        EditBtn.Cursor = Cursors.Hand
+        EditBtn.Font = New Font("Corbel", 18F, FontStyle.Bold)
+        EditBtn.Location = New Point(21, 400)
+        EditBtn.Name = "EditBtn"
+        EditBtn.Size = New Size(200, 42)
+        EditBtn.TabIndex = 4
+        EditBtn.Text = "EDIT STAFF"
+        EditBtn.UseVisualStyleBackColor = False
+        ' 
+        ' ResidentListBtn
+        ' 
+        ResidentListBtn.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
+        ResidentListBtn.BackColor = Color.LightGreen
+        ResidentListBtn.Cursor = Cursors.Hand
+        ResidentListBtn.Font = New Font("Corbel", 18F, FontStyle.Bold)
+        ResidentListBtn.Location = New Point(21, 458)
+        ResidentListBtn.Name = "ResidentListBtn"
+        ResidentListBtn.Size = New Size(200, 42)
+        ResidentListBtn.TabIndex = 6
+        ResidentListBtn.Text = "RESIDENT LIST"
+        ResidentListBtn.UseVisualStyleBackColor = False
+        ' 
+        ' AddPositionBtn
+        ' 
+        AddPositionBtn.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
+        AddPositionBtn.BackColor = Color.LightGreen
+        AddPositionBtn.Cursor = Cursors.Hand
+        AddPositionBtn.Font = New Font("Corbel", 18F, FontStyle.Bold)
+        AddPositionBtn.Location = New Point(21, 516)
+        AddPositionBtn.Name = "AddPositionBtn"
+        AddPositionBtn.Size = New Size(143, 42)
+        AddPositionBtn.TabIndex = 7
+        AddPositionBtn.Text = "ADD POS"
+        AddPositionBtn.UseVisualStyleBackColor = False
+        ' 
         ' HRAdmin
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -213,4 +258,7 @@ Partial Class HRAdmin
     Friend WithEvents VSBtn As Button
     Friend WithEvents SecurityBtn As LinkLabel
     Friend WithEvents LogOutBtn As Button
+    Friend WithEvents EditBtn As Button
+    Friend WithEvents ResidentListBtn As Button
+    Friend WithEvents AddPositionBtn As Button
 End Class

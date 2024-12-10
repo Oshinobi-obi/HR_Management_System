@@ -183,14 +183,12 @@ Public Class HRAddStaff
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
                 Dim query As String = "INSERT INTO employee (" &
-                      """EmployeeID"", ""EmployeeName"", ""EmployeeAge"", ""Sex"", ""EmployeePosition"", " &
-                      """EmployeeDaySchedule"", ""EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"", " &
-                      """EmployedDate"", ""EmployeeCardNumber"", ""EmployeeStatus"", ""Resident_ID"") " &
-                      "VALUES (@EmployeeID, @EmployeeName, @EmployeeAge, @Sex, @EmployeePosition, @EmployeeDaySchedule, " &
-                      "@EmployeeTimeShift, @EmployeeMobile, @EmployeeAddress, CURRENT_DATE, @EmployeeCardNumber, " &
-                      "'EMPLOYED', @Resident_ID)"
-
-
+                """EmployeeID"", ""EmployeeName"", ""EmployeeAge"", ""Sex"", ""EmployeePosition"", " &
+                """EmployeeDaySchedule"", ""EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"", " &
+                """EmployedDate"", ""EmployeeCardNumber"", ""EmployeeStatus"", ""Resident_ID"") " &
+                "VALUES (@EmployeeID, @EmployeeName, @EmployeeAge, @Sex, @EmployeePosition, @EmployeeDaySchedule, " &
+                "@EmployeeTimeShift, @EmployeeMobile, @EmployeeAddress, CURRENT_DATE, @EmployeeCardNumber, " &
+                "'EMPLOYED', @Resident_ID)"
 
                 Using cmd As New NpgsqlCommand(query, conn)
                     cmd.Parameters.AddWithValue("@EmployeeID", EmIDTxt.Text.Trim())
@@ -206,8 +204,15 @@ Public Class HRAddStaff
                     cmd.Parameters.AddWithValue("@Resident_ID", Integer.Parse(ResidentIDTxt.Text.Trim()))
 
                     cmd.ExecuteNonQuery()
+
+                    ' Show success message
                     MessageBox.Show("Staff added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                    ' After adding, clear fields and reload the form
                     ClearFields()
+                    ' Optionally, reload positions or other data if needed
+                    LoadPositions()
+
                 End Using
             End Using
         Catch ex As Exception
@@ -216,6 +221,13 @@ Public Class HRAddStaff
     End Sub
 
     Public Sub SetResidentData(residentId As String, firstName As String, middleName As String, lastName As String, age As String, gender As String, contactNumber As String, address As String)
+        Try
+            ' Validate inputs
+            If String.IsNullOrWhiteSpace(residentId) Then Throw New ArgumentException("Resident ID cannot be empty.")
+            If String.IsNullOrWhiteSpace(firstName) Then Throw New ArgumentException("First Name cannot be empty.")
+            If String.IsNullOrWhiteSpace(lastName) Then Throw New ArgumentException("Last Name cannot be empty.")
+
+            ' Populate the fields with the passed data
             ResidentIDTxt.Text = residentId
             FirstNameTxt.Text = firstName
             MiddleNameTxt.Text = middleName
@@ -224,9 +236,20 @@ Public Class HRAddStaff
             GenderTxt.Text = gender
             ContactTxt.Text = contactNumber
             AddressTxt.Text = address
+
+            ' Disable the controls so user can't modify resident information
             ToggleControls(False)
+
+            ' Enable the work-related details section
             EnableWorkDetails()
-        End Sub
+
+            ' Optional: Log success
+            Console.WriteLine("Resident data loaded successfully for Resident ID: " & residentId)
+        Catch ex As Exception
+            MessageBox.Show("Error setting resident data: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
 
     Private Sub OpenBtn_Click(sender As Object, e As EventArgs) Handles OpenBtn.Click
         SelectImage.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif"
@@ -238,8 +261,12 @@ Public Class HRAddStaff
     End Sub
 
     Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
-        Dim residentDBForm As New HRResidentDB()
-        CType(Me.MdiParent, MDIParent).LoadFormInMDI(residentDBForm)
-        Me.Close()
+        ' Get the parent form (HRResidentDB) and load it as an MDI child
+        Dim residentForm As New HRResidentDB()
+        CType(Me.MdiParent, MDIParent).LoadFormInMDI(residentForm)
+
+        ' Hide the current form to maintain the MDI setup
+        Me.Hide()
     End Sub
+
 End Class

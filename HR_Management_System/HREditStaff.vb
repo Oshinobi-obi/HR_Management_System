@@ -8,7 +8,6 @@ Public Class HREditStaff
                                    "Database=defaultdb;SSL Mode=Require"
 
     Public Sub EditStaff_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        InitializeButton(ReturnBtn, "RETURN", Color.LightCoral)
         InitializeButton(UpdateStaffBtn, "UPDATE", Color.LightGreen)
         InitializeButton(OpenBtn, "ADD", Color.LightGreen)
 
@@ -247,12 +246,6 @@ Public Class HREditStaff
         End If
     End Sub
 
-    Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
-        Dim staffDBForm As New HRStaffDB()
-        CType(Me.MdiParent, MDIParent).LoadFormInMDI(staffDBForm)
-        Me.Close()
-    End Sub
-
     Private Sub UpdateEmployeeData()
         Dim employeeID As String = EmIDCmb.SelectedItem.ToString().Trim()
 
@@ -302,10 +295,48 @@ Public Class HREditStaff
     End Sub
 
     Private Sub UpdateStaffBtn_Click(sender As Object, e As EventArgs) Handles UpdateStaffBtn.Click
-        UpdateEmployeeData()
-        Dim staffDBForm As New HRStaffDB()
-        CType(Me.MdiParent, MDIParent).LoadFormInMDI(staffDBForm)
-        Me.Close()
+        Try
+            ' Update the employee data
+            UpdateEmployeeData()
+
+            ' Clear all fields after the update
+            ClearFields()
+
+            ' Reinitialize the form to reset it, keeping it on the MainPanel
+            InitializeForm()
+
+        Catch ex As Exception
+            ' Handle any exceptions that occur
+            MessageBox.Show("Error: " & ex.Message)
+        End Try
     End Sub
+
+    Private Sub InitializeForm()
+        ' Clear all the text fields and reset ComboBoxes
+        FirstNameTxt.Clear()
+        MiddleNameTxt.Clear()
+        LastNameTxt.Clear()
+        AgeTxt.Clear()
+        StatusCmb.SelectedIndex = -1
+        ContactTxt.Clear()
+        AddressTxt.Clear()
+        WorkDayTxt.Clear()
+        HrShiftTxt.Clear()
+        PictureTxt.Clear()
+        CardNumberTxt.Clear()
+        PosCmb.SelectedIndex = -1
+
+        ' Disable controls, as you may not want them active until an employee is selected again
+        ToggleControls(False)
+
+        ' Optionally, you can reload employee IDs or positions
+        LoadEmployeeIDs()
+        LoadPositionItems()
+
+        ' Reset the form to the initial state without closing it
+        EmIDCmb.SelectedIndex = -1
+    End Sub
+
+
 
 End Class

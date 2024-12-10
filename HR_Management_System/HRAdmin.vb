@@ -156,20 +156,45 @@ Public Class HRAdmin
     End Sub
 
     Private Sub AttBtn_Click(sender As Object, e As EventArgs) Handles AttBtn.Click
-        Dim attRecordForm As New HRAttRecord
-        LoadFormInPanel(attRecordForm)
-        Me.Close()
+        Try
+            Dim attRecordForm As New HRAttRecord()
+            LoadFormInPanel(attRecordForm)
+        Catch ex As Exception
+            MessageBox.Show("Error loading Attendance Record: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     Private Sub VSBtn_Click(sender As Object, e As EventArgs) Handles VSBtn.Click
-        Dim staffDBForm As New HRStaffDB(MainPanel)
-        LoadFormInPanel(staffDBForm)
-        Me.Close()
+        Try
+            ' Pass MainPanel to the new form to ensure it gets loaded properly
+            Dim staffDBForm As New HRStaffDB(MainPanel)
+            LoadFormInPanel(staffDBForm)
+        Catch ex As Exception
+            MessageBox.Show("Error loading Staff Database: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     Private Sub SecurityBtn_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles SecurityBtn.LinkClicked
-        Dim securitySettingsForm As New HRSecuritySettings(HRLogin.LoggedInEmployeeID)
-        LoadFormInPanel(securitySettingsForm)
+        Try
+            Dim securitySettingsForm As New HRSecuritySettings(HRLogin.LoggedInEmployeeID)
+            LoadFormInPanel(securitySettingsForm)
+        Catch ex As Exception
+            MessageBox.Show("Error loading Security Settings: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
+    Private Sub EditBtn_Click(sender As Object, e As EventArgs) Handles EditBtn.Click
+        Dim editForm As New HREditStaff()
+        LoadFormInPanel(editForm)
+    End Sub
+
+    Private Sub ResidentListBtn_Click(sender As Object, e As EventArgs) Handles ResidentListBtn.Click
+        Dim residentListForm As New HRResidentDB()
+        LoadFormInPanel(residentListForm)
+    End Sub
+
+    Private Sub AddPositionBtn_Click(sender As Object, e As EventArgs) Handles AddPositionBtn.Click
+        Dim addPositionForm As New HRAddPosition()
+        LoadFormInPanel(addPositionForm)
+    End Sub
 End Class
