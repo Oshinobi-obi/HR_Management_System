@@ -7,7 +7,7 @@ Public Class HREditStaff
                                    "Port=25060;Username=doadmin;Password=AVNS_TVTvL-Hw2xMPJMthE_2;" &
                                    "Database=defaultdb;SSL Mode=Require"
 
-    Public Sub EditStaff_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub HREditStaff_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitializeButton(UpdateStaffBtn, "UPDATE", Color.LightGreen)
         InitializeButton(OpenBtn, "ADD", Color.LightGreen)
 
@@ -18,10 +18,16 @@ Public Class HREditStaff
         AddHandler PosCmb.KeyPress, AddressOf DisableKeyPress
         AddHandler PosCmb.MouseDown, AddressOf DisableMouseClick
         AddHandler PosCmb.MouseWheel, AddressOf DisableMouseWheel
-        AddHandler StatusCmb.KeyPress, AddressOf DisableKeyPress
-        AddHandler StatusCmb.MouseDown, AddressOf DisableMouseClick
-        AddHandler StatusCmb.MouseDown, AddressOf DisableMouseClick
-        AddHandler StatusCmb.MouseWheel, AddressOf DisableMouseWheel
+        AddHandler HrShiftCmb.KeyPress, AddressOf DisableKeyPress
+        AddHandler HrShiftCmb.MouseDown, AddressOf DisableMouseClick
+        AddHandler HrShiftCmb.MouseWheel, AddressOf DisableMouseWheel
+
+        AddHandler EmIDCmb.SelectedIndexChanged, AddressOf EmIDCmb_SelectedIndexChanged
+    End Sub
+
+    Private Sub LoadHrShiftItems()
+        HrShiftCmb.Items.Clear()
+        HrShiftCmb.Items.AddRange(New String() {"1 Hour", "2 Hours", "3 Hours", "4 Hours", "5 Hours", "6 Hours", "7 Hours", "8 Hours", "9 Hours", "10 Hours", "11 Hours", "12 Hours"})
     End Sub
 
     Private Sub DisableKeyPress(sender As Object, e As KeyPressEventArgs)
@@ -34,7 +40,7 @@ Public Class HREditStaff
         End If
     End Sub
 
-    Private Sub DisableMouseWheel(sender As Object, e As MouseEventArgs) Handles PosCmb.MouseWheel, StatusCmb.MouseWheel
+    Private Sub DisableMouseWheel(sender As Object, e As MouseEventArgs) Handles HrShiftCmb.MouseWheel, PosCmb.MouseWheel
         Dim mouseEvent = TryCast(e, HandledMouseEventArgs)
         If mouseEvent IsNot Nothing Then
             mouseEvent.Handled = True
@@ -49,10 +55,9 @@ Public Class HREditStaff
         AgeTxt.Enabled = isEnabled
         ContactTxt.Enabled = isEnabled
         AddressTxt.Enabled = isEnabled
-        WorkDayTxt.Enabled = isEnabled
-        HrShiftTxt.Enabled = isEnabled
+        WorkDayChkBox.Enabled = isEnabled
+        HrShiftCmb.Enabled = isEnabled
         PictureTxt.Enabled = isEnabled
-        StatusCmb.Enabled = isEnabled
         PosCmb.Enabled = isEnabled
         CardNumberTxt.Enabled = isEnabled
 
@@ -64,10 +69,7 @@ Public Class HREditStaff
         AgeTxt.BackColor = backColor
         ContactTxt.BackColor = backColor
         AddressTxt.BackColor = backColor
-        WorkDayTxt.BackColor = backColor
-        HrShiftTxt.BackColor = backColor
         PictureTxt.BackColor = backColor
-        StatusCmb.BackColor = backColor
         PosCmb.BackColor = backColor
         CardNumberTxt.BackColor = backColor
     End Sub
@@ -77,15 +79,19 @@ Public Class HREditStaff
         MiddleNameTxt.Clear()
         LastNameTxt.Clear()
         AgeTxt.Clear()
-        StatusCmb.SelectedIndex = -1
         ContactTxt.Clear()
         AddressTxt.Clear()
-        WorkDayTxt.Clear()
-        HrShiftTxt.Clear()
         PictureTxt.Clear()
         CardNumberTxt.Clear()
+
+        HrShiftCmb.SelectedIndex = -1
         PosCmb.SelectedIndex = -1
+
+        For index As Integer = 0 To WorkDayChkBox.Items.Count - 1
+            WorkDayChkBox.SetItemChecked(index, False)
+        Next
     End Sub
+
 
     Private Sub LoadPositionItems()
         PosCmb.Items.Clear()
@@ -107,7 +113,6 @@ Public Class HREditStaff
         End Try
     End Sub
 
-
     Private Sub LoadEmployeeIDs()
         Try
             Using conn As New NpgsqlConnection(connString)
@@ -127,8 +132,8 @@ Public Class HREditStaff
         End Try
     End Sub
 
-    Private Sub EmIDCmb_SelectedIndexChanged(sender As Object, e As EventArgs) Handles EmIDCmb.SelectedIndexChanged
-        If EmIDCmb.SelectedItem IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(EmIDCmb.SelectedItem.ToString().Trim()) Then
+    Private Sub EmIDCmb_SelectedIndexChanged(sender As Object, e As EventArgs)
+        If EmIDCmb.SelectedItem IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(EmIDCmb.SelectedItem.ToString.Trim) Then
             ToggleControls(True)
             Dim selectedID = EmIDCmb.SelectedItem.ToString.Trim
             LoadEmployeeData(selectedID)
@@ -142,8 +147,8 @@ Public Class HREditStaff
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
                 Dim sql As String = "SELECT ""EmployeeName"", ""EmployeeAge"", ""EmployeePosition"", ""EmployeeDaySchedule"", " &
-                                    """EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployeeImage"", ""EmployeeCardNumber"", ""EmployeeStatus"", ""Resident_ID"" " &
-                                    "FROM employee WHERE ""EmployeeID"" = @EmployeeID"
+                                """EmployeeTimeShift"", ""EmployeeMobile"", ""Sex"", ""EmployeeAddress"", ""EmployeeImage"", ""EmployeeCardNumber"", ""Resident_ID"", ""EmployeeAddress""" &
+                                "FROM employee WHERE ""EmployeeID"" = @EmployeeID"
                 Using cmd As New NpgsqlCommand(sql, conn)
                     cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
                     Using reader As NpgsqlDataReader = cmd.ExecuteReader()
@@ -157,18 +162,15 @@ Public Class HREditStaff
 
                             ResidentIDTxt.Text = reader("Resident_ID").ToString()
                             AgeTxt.Text = reader("EmployeeAge").ToString()
-                            WorkDayTxt.Text = reader("EmployeeDaySchedule").ToString()
-                            HrShiftTxt.Text = reader("EmployeeTimeShift").ToString()
+                            GenderTxt.Text = reader("Sex").ToString()
+
+                            Dim employeeDaySchedule As Boolean = Boolean.Parse(reader("EmployeeDaySchedule").ToString())
+                            WorkDayChkBox.SetItemChecked(0, employeeDaySchedule)
+
+                            HrShiftCmb.SelectedItem = reader("EmployeeTimeShift").ToString().Trim()
                             ContactTxt.Text = reader("EmployeeMobile").ToString()
                             AddressTxt.Text = reader("EmployeeAddress").ToString()
                             CardNumberTxt.Text = reader("EmployeeCardNumber").ToString()
-
-                            Dim status As String = reader("EmployeeStatus").ToString().Trim()
-                            If StatusCmb.Items.Contains(status) Then
-                                StatusCmb.SelectedItem = status
-                            Else
-                                MessageBox.Show("Status '" & status & "' not found in StatusCmb.")
-                            End If
 
                             LoadPositionItems()
                             Dim position As String = reader("EmployeePosition").ToString().Trim()
@@ -257,21 +259,20 @@ Public Class HREditStaff
         Dim employeeName As String = $"{FirstNameTxt.Text.Trim()} {MiddleNameTxt.Text.Trim()} {LastNameTxt.Text.Trim()}".Trim()
         Dim employeeAge As Integer = Integer.Parse(AgeTxt.Text.Trim())
         Dim employeePosition As String = PosCmb.SelectedItem.ToString()
-        Dim employeeDaySchedule As String = WorkDayTxt.Text.Trim()
-        Dim employeeTimeShift As String = HrShiftTxt.Text.Trim()
+        Dim employeeDaySchedule As Boolean = WorkDayChkBox.GetItemChecked(0)
+        Dim employeeTimeShift As String = HrShiftCmb.SelectedItem.ToString()
         Dim employeeMobile As String = ContactTxt.Text.Trim()
         Dim employeeAddress As String = AddressTxt.Text.Trim()
         Dim employeeCardNumber As String = CardNumberTxt.Text.Trim()
-        Dim employeeStatus As String = StatusCmb.SelectedItem.ToString()
 
         Try
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
                 Dim updateQuery As String = "UPDATE employee SET ""EmployeeName"" = @EmployeeName, ""EmployeeAge"" = @EmployeeAge, " &
-                                        """EmployeePosition"" = @EmployeePosition, ""EmployeeDaySchedule"" = @EmployeeDaySchedule, " &
-                                        """EmployeeTimeShift"" = @EmployeeTimeShift, ""EmployeeMobile"" = @EmployeeMobile, " &
-                                        """EmployeeAddress"" = @EmployeeAddress, ""EmployeeCardNumber"" = @EmployeeCardNumber, ""EmployeeStatus"" = @EmployeeStatus " &
-                                        "WHERE ""EmployeeID"" = @EmployeeID"
+                                    """EmployeePosition"" = @EmployeePosition, ""EmployeeDaySchedule"" = @EmployeeDaySchedule, " &
+                                    """EmployeeTimeShift"" = @EmployeeTimeShift, ""EmployeeMobile"" = @EmployeeMobile, " &
+                                    """EmployeeAddress"" = @EmployeeAddress, ""EmployeeCardNumber"" = @EmployeeCardNumber " &
+                                    "WHERE ""EmployeeID"" = @EmployeeID"
 
                 Using cmd As New NpgsqlCommand(updateQuery, conn)
                     cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
@@ -283,7 +284,6 @@ Public Class HREditStaff
                     cmd.Parameters.AddWithValue("@EmployeeMobile", employeeMobile)
                     cmd.Parameters.AddWithValue("@EmployeeAddress", employeeAddress)
                     cmd.Parameters.AddWithValue("@EmployeeCardNumber", employeeCardNumber)
-                    cmd.Parameters.AddWithValue("@EmployeeStatus", employeeStatus)
 
                     cmd.ExecuteNonQuery()
                     MessageBox.Show("Employee data updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -296,47 +296,20 @@ Public Class HREditStaff
 
     Private Sub UpdateStaffBtn_Click(sender As Object, e As EventArgs) Handles UpdateStaffBtn.Click
         Try
-            ' Update the employee data
             UpdateEmployeeData()
-
-            ' Clear all fields after the update
             ClearFields()
-
-            ' Reinitialize the form to reset it, keeping it on the MainPanel
             InitializeForm()
-
         Catch ex As Exception
-            ' Handle any exceptions that occur
-            MessageBox.Show("Error: " & ex.Message)
+            MessageBox.Show("Error updating staff: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
     Private Sub InitializeForm()
-        ' Clear all the text fields and reset ComboBoxes
-        FirstNameTxt.Clear()
-        MiddleNameTxt.Clear()
-        LastNameTxt.Clear()
-        AgeTxt.Clear()
-        StatusCmb.SelectedIndex = -1
-        ContactTxt.Clear()
-        AddressTxt.Clear()
-        WorkDayTxt.Clear()
-        HrShiftTxt.Clear()
-        PictureTxt.Clear()
-        CardNumberTxt.Clear()
-        PosCmb.SelectedIndex = -1
-
-        ' Disable controls, as you may not want them active until an employee is selected again
+        ClearFields()
         ToggleControls(False)
-
-        ' Optionally, you can reload employee IDs or positions
         LoadEmployeeIDs()
         LoadPositionItems()
-
-        ' Reset the form to the initial state without closing it
         EmIDCmb.SelectedIndex = -1
     End Sub
-
-
 
 End Class

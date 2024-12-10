@@ -10,82 +10,97 @@ Public Class HRAddStaff
                                    "SSL Mode=Require"
 
 
-    Private positionMap As New Dictionary(Of String, String)() ' Map to store position names and codes
+    Private positionMap As New Dictionary(Of String, String)()
 
-        Public Sub AddStaff_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-            InitializeButton(ReturnBtn, "RETURN", Color.LightCoral)
-            InitializeButton(AddStaffBtn, "ADD STAFF", Color.LightGreen)
-            InitializeButton(OpenBtn, "ADD", Color.LightGreen)
-            ToggleControls(True)
-            LoadPositions() ' Load positions dynamically
-        End Sub
+    Public Sub AddStaff_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        InitializeButton(AddStaffBtn, "ADD STAFF", Color.LightGreen)
+        InitializeButton(OpenBtn, "ADD", Color.LightGreen)
+        ToggleControls(True)
+        LoadPositions()
+        InitializeHrShiftComboBox()
+        InitializeWorkDayCheckedListBox()
+    End Sub
 
-        Private Sub ToggleControls(isEnabled As Boolean)
-            ' Enable or disable controls based on isEnabled
-            Dim controls As Control() = {ResidentIDTxt, FirstNameTxt, MiddleNameTxt, LastNameTxt, AgeTxt, GenderTxt, ContactTxt, AddressTxt, EmIDTxt}
-            Dim backColor As Color = If(isEnabled, Color.White, Color.LightGray)
+    Private Sub ToggleControls(isEnabled As Boolean)
+        Dim controls As Control() = {ResidentIDTxt, FirstNameTxt, MiddleNameTxt, LastNameTxt, AgeTxt, GenderTxt, ContactTxt, AddressTxt, EmIDTxt}
+        Dim backColor As Color = If(isEnabled, Color.White, Color.LightGray)
 
-            For Each ctrl As Control In controls
-                ctrl.Enabled = isEnabled
-                ctrl.BackColor = backColor
-            Next
-        End Sub
+        For Each ctrl As Control In controls
+            ctrl.Enabled = isEnabled
+            ctrl.BackColor = backColor
+        Next
+    End Sub
 
-        Private Sub ClearFields()
-            ' Clear input fields
-            Dim controls As Control() = {ResidentIDTxt, FirstNameTxt, MiddleNameTxt, LastNameTxt, AgeTxt, GenderTxt, ContactTxt, AddressTxt, EmIDTxt, WorkDayTxt, HrShiftTxt, PictureTxt, CardNumberTxt}
-            For Each ctrl As Control In controls
-                ctrl.Text = String.Empty
-            Next
-            PosCmb.SelectedIndex = -1
-        End Sub
+    Private Sub ClearFields()
+        Dim controls As Control() = {ResidentIDTxt, FirstNameTxt, MiddleNameTxt, LastNameTxt, AgeTxt, GenderTxt, ContactTxt, AddressTxt, EmIDTxt, PictureTxt, CardNumberTxt}
+        For Each ctrl As Control In controls
+            ctrl.Text = String.Empty
+        Next
+        PosCmb.SelectedIndex = -1
+        HrShiftCmb.SelectedIndex = -1
+        For i As Integer = 0 To WorkDayChkBox.Items.Count - 1
+            WorkDayChkBox.SetItemChecked(i, False)
+        Next
+    End Sub
 
-        Private Sub EnableWorkDetails()
-            ' Enable work-related fields
-            Dim controls As Control() = {WorkDayTxt, HrShiftTxt, PosCmb}
-            For Each ctrl As Control In controls
-                ctrl.Enabled = True
-                ctrl.BackColor = Color.White
-            Next
-        End Sub
+    Private Sub EnableWorkDetails()
+        Dim controls As Control() = {HrShiftCmb, PosCmb, WorkDayChkBox}
+        For Each ctrl As Control In controls
+            ctrl.Enabled = True
+            ctrl.BackColor = Color.White
+        Next
+    End Sub
 
-        Private Sub InitializeButton(button As Button, text As String, backColor As Color)
-            button.FlatStyle = FlatStyle.Flat
-            button.FlatAppearance.BorderSize = 0
-            button.BackColor = Color.Transparent
-            button.Text = text
-            AddHandler button.Paint, Sub(sender, e) PaintRoundedButton(button, e, backColor)
-        End Sub
+    Private Sub InitializeButton(button As Button, text As String, backColor As Color)
+        button.FlatStyle = FlatStyle.Flat
+        button.FlatAppearance.BorderSize = 0
+        button.BackColor = Color.Transparent
+        button.Text = text
+        AddHandler button.Paint, Sub(sender, e) PaintRoundedButton(button, e, backColor)
+    End Sub
 
-        Private Sub PaintRoundedButton(button As Button, e As PaintEventArgs, color As Color)
-            Dim graphics As Graphics = e.Graphics
-            Dim rect As New Rectangle(0, 0, button.Width - 1, button.Height - 1)
-            graphics.SmoothingMode = SmoothingMode.AntiAlias
+    Private Sub InitializeHrShiftComboBox()
+        HrShiftCmb.Items.Clear()
+        For i As Integer = 1 To 12
+            HrShiftCmb.Items.Add($"{i} Hours")
+        Next
+    End Sub
 
-            Using path As New GraphicsPath()
-                Dim radius As Integer = 20
-                path.AddArc(rect.X, rect.Y, radius, radius, 180, 90)
-                path.AddArc(rect.Right - radius, rect.Y, radius, radius, 270, 90)
-                path.AddArc(rect.Right - radius, rect.Bottom - radius, radius, radius, 0, 90)
-                path.AddArc(rect.X, rect.Bottom - radius, radius, radius, 90, 90)
-                path.CloseFigure()
+    Private Sub InitializeWorkDayCheckedListBox()
+        WorkDayChkBox.Items.Clear()
+        Dim days As String() = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"}
+        WorkDayChkBox.Items.AddRange(days)
+    End Sub
 
-                Using brush As New SolidBrush(color)
-                    graphics.FillPath(brush, path)
-                End Using
+    Private Sub PaintRoundedButton(button As Button, e As PaintEventArgs, color As Color)
+        Dim graphics As Graphics = e.Graphics
+        Dim rect As New Rectangle(0, 0, button.Width - 1, button.Height - 1)
+        graphics.SmoothingMode = SmoothingMode.AntiAlias
 
-                Using borderPen As New Pen(Color.Black, 2)
-                    graphics.DrawPath(borderPen, path)
-                End Using
+        Using path As New GraphicsPath()
+            Dim radius As Integer = 20
+            path.AddArc(rect.X, rect.Y, radius, radius, 180, 90)
+            path.AddArc(rect.Right - radius, rect.Y, radius, radius, 270, 90)
+            path.AddArc(rect.Right - radius, rect.Bottom - radius, radius, radius, 0, 90)
+            path.AddArc(rect.X, rect.Bottom - radius, radius, radius, 90, 90)
+            path.CloseFigure()
 
-                Dim textBrush As New SolidBrush(button.ForeColor)
-                Dim textFormat As New StringFormat() With {
-                .Alignment = StringAlignment.Center,
-                .LineAlignment = StringAlignment.Center
-            }
-                graphics.DrawString(button.Text, button.Font, textBrush, rect, textFormat)
+            Using brush As New SolidBrush(color)
+                graphics.FillPath(brush, path)
             End Using
-        End Sub
+
+            Using borderPen As New Pen(Color.Black, 2)
+                graphics.DrawPath(borderPen, path)
+            End Using
+
+            Dim textBrush As New SolidBrush(button.ForeColor)
+            Dim textFormat As New StringFormat() With {
+            .Alignment = StringAlignment.Center,
+            .LineAlignment = StringAlignment.Center
+        }
+            graphics.DrawString(button.Text, button.Font, textBrush, rect, textFormat)
+        End Using
+    End Sub
 
     Public Sub LoadPositions()
         Try
@@ -100,8 +115,6 @@ Public Class HRAddStaff
                         While reader.Read()
                             Dim positionName As String = reader("positionname").ToString().Trim()
                             Dim positionCode As String = reader("positioncode").ToString().Trim()
-
-                            ' Add position name to ComboBox and map its code
                             PosCmb.Items.Add(positionName)
                             positionMap(positionName) = positionCode
                         End While
@@ -126,7 +139,6 @@ Public Class HRAddStaff
                 Dim incrementingNumber As Integer = GetNextEmployeeID()
                 Dim employeeID As String = $"{positionCode}-{firstLetterNumber}-{age}-{incrementingNumber:D2}"
 
-                ' Check if the EmployeeID already exists in the database
                 If Not EmployeeIDExists(employeeID) Then
                     EmIDTxt.Text = employeeID
                 Else
@@ -149,15 +161,13 @@ Public Class HRAddStaff
         End Using
     End Function
 
-
     Private Function GetAlphabetPosition(letter As String) As String
-            Return (Asc(letter.ToUpper()) - Asc("A"c) + 1).ToString("D2")
-        End Function
+        Return (Asc(letter.ToUpper()) - Asc("A"c) + 1).ToString("D2")
+    End Function
 
     Private Function GetNextEmployeeID() As Integer
         Using conn As New NpgsqlConnection(connString)
             conn.Open()
-            ' Query to get the last numeric part of the EmployeeID
             Dim query As String = "SELECT COALESCE(MAX(CAST(SUBSTRING(""EmployeeID"" FROM '[0-9]+$') AS INTEGER)), 0) + 1 FROM employee"
             Using cmd As New NpgsqlCommand(query, conn)
                 Return CInt(cmd.ExecuteScalar())
@@ -165,17 +175,22 @@ Public Class HRAddStaff
         End Using
     End Function
 
-
     Private Sub AddStaffBtn_Click(sender As Object, e As EventArgs) Handles AddStaffBtn.Click
         If String.IsNullOrWhiteSpace(FirstNameTxt.Text) OrElse String.IsNullOrWhiteSpace(AgeTxt.Text) OrElse PosCmb.SelectedIndex = -1 Then
             MessageBox.Show("Please fill in all required fields.", "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
 
-        ' Ensure the selected position exists in positionMap
-        Dim positionCode As String = If(positionMap.ContainsKey(PosCmb.SelectedItem.ToString()), positionMap(PosCmb.SelectedItem.ToString()), String.Empty)
-        If String.IsNullOrEmpty(positionCode) Then
-            MessageBox.Show("Selected position is invalid.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Dim selectedDays As String = String.Join(", ", WorkDayChkBox.CheckedItems.Cast(Of String)())
+        Dim selectedShift As String = If(HrShiftCmb.SelectedItem?.ToString(), String.Empty)
+
+        If String.IsNullOrEmpty(selectedDays) Then
+            MessageBox.Show("Please select at least one workday.", "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        If String.IsNullOrEmpty(selectedShift) Then
+            MessageBox.Show("Please select a shift duration.", "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
 
@@ -183,21 +198,21 @@ Public Class HRAddStaff
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
                 Dim query As String = "INSERT INTO employee (" &
-                """EmployeeID"", ""EmployeeName"", ""EmployeeAge"", ""Sex"", ""EmployeePosition"", " &
-                """EmployeeDaySchedule"", ""EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"", " &
-                """EmployedDate"", ""EmployeeCardNumber"", ""EmployeeStatus"", ""Resident_ID"") " &
-                "VALUES (@EmployeeID, @EmployeeName, @EmployeeAge, @Sex, @EmployeePosition, @EmployeeDaySchedule, " &
-                "@EmployeeTimeShift, @EmployeeMobile, @EmployeeAddress, CURRENT_DATE, @EmployeeCardNumber, " &
-                "'EMPLOYED', @Resident_ID)"
+                    """EmployeeID"", ""EmployeeName"", ""EmployeeAge"", ""Sex"", ""EmployeePosition"", " &
+                    """EmployeeDaySchedule"", ""EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"", " &
+                    """EmployedDate"", ""EmployeeCardNumber"", ""EmployeeStatus"", ""Resident_ID"") " &
+                    "VALUES (@EmployeeID, @EmployeeName, @EmployeeAge, @Sex, @EmployeePosition, @EmployeeDaySchedule, " &
+                    "@EmployeeTimeShift, @EmployeeMobile, @EmployeeAddress, CURRENT_DATE, @EmployeeCardNumber, " &
+                    "'EMPLOYED', @Resident_ID)"
 
                 Using cmd As New NpgsqlCommand(query, conn)
                     cmd.Parameters.AddWithValue("@EmployeeID", EmIDTxt.Text.Trim())
                     cmd.Parameters.AddWithValue("@EmployeeName", $"{FirstNameTxt.Text.Trim()} {MiddleNameTxt.Text.Trim()} {LastNameTxt.Text.Trim()}")
                     cmd.Parameters.AddWithValue("@EmployeeAge", Integer.Parse(AgeTxt.Text))
                     cmd.Parameters.AddWithValue("@Sex", GenderTxt.Text.Trim())
-                    cmd.Parameters.AddWithValue("@EmployeePosition", PosCmb.SelectedItem.ToString()) ' Store position name
-                    cmd.Parameters.AddWithValue("@EmployeeDaySchedule", WorkDayTxt.Text.Trim())
-                    cmd.Parameters.AddWithValue("@EmployeeTimeShift", HrShiftTxt.Text.Trim())
+                    cmd.Parameters.AddWithValue("@EmployeePosition", PosCmb.SelectedItem.ToString())
+                    cmd.Parameters.AddWithValue("@EmployeeDaySchedule", selectedDays)
+                    cmd.Parameters.AddWithValue("@EmployeeTimeShift", selectedShift)
                     cmd.Parameters.AddWithValue("@EmployeeMobile", ContactTxt.Text.Trim())
                     cmd.Parameters.AddWithValue("@EmployeeAddress", AddressTxt.Text.Trim())
                     cmd.Parameters.AddWithValue("@EmployeeCardNumber", CardNumberTxt.Text.Trim())
@@ -205,14 +220,9 @@ Public Class HRAddStaff
 
                     cmd.ExecuteNonQuery()
 
-                    ' Show success message
                     MessageBox.Show("Staff added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-                    ' After adding, clear fields and reload the form
                     ClearFields()
-                    ' Optionally, reload positions or other data if needed
                     LoadPositions()
-
                 End Using
             End Using
         Catch ex As Exception
@@ -222,12 +232,10 @@ Public Class HRAddStaff
 
     Public Sub SetResidentData(residentId As String, firstName As String, middleName As String, lastName As String, age As String, gender As String, contactNumber As String, address As String)
         Try
-            ' Validate inputs
             If String.IsNullOrWhiteSpace(residentId) Then Throw New ArgumentException("Resident ID cannot be empty.")
             If String.IsNullOrWhiteSpace(firstName) Then Throw New ArgumentException("First Name cannot be empty.")
             If String.IsNullOrWhiteSpace(lastName) Then Throw New ArgumentException("Last Name cannot be empty.")
 
-            ' Populate the fields with the passed data
             ResidentIDTxt.Text = residentId
             FirstNameTxt.Text = firstName
             MiddleNameTxt.Text = middleName
@@ -237,19 +245,14 @@ Public Class HRAddStaff
             ContactTxt.Text = contactNumber
             AddressTxt.Text = address
 
-            ' Disable the controls so user can't modify resident information
             ToggleControls(False)
-
-            ' Enable the work-related details section
             EnableWorkDetails()
 
-            ' Optional: Log success
             Console.WriteLine("Resident data loaded successfully for Resident ID: " & residentId)
         Catch ex As Exception
             MessageBox.Show("Error setting resident data: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
-
 
     Private Sub OpenBtn_Click(sender As Object, e As EventArgs) Handles OpenBtn.Click
         SelectImage.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif"
@@ -258,15 +261,6 @@ Public Class HRAddStaff
         If SelectImage.ShowDialog() = DialogResult.OK Then
             PictureTxt.Text = SelectImage.FileName
         End If
-    End Sub
-
-    Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
-        ' Get the parent form (HRResidentDB) and load it as an MDI child
-        Dim residentForm As New HRResidentDB()
-        CType(Me.MdiParent, MDIParent).LoadFormInMDI(residentForm)
-
-        ' Hide the current form to maintain the MDI setup
-        Me.Hide()
     End Sub
 
 End Class

@@ -9,8 +9,14 @@ Public Class HRResidentDB
                                    "Database=defaultdb;" &
                                    "SSL Mode=Require"
 
+    Private mainPanel As Panel
+
+    Public Sub New(parentPanel As Panel)
+        InitializeComponent()
+        mainPanel = parentPanel
+    End Sub
+
     Public Sub HRResidentDB_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        InitializeButton(ReturnBtn, "RETURN", Color.LightCoral)
         SetupResidentView()
         PopulateResidentView()
     End Sub
@@ -52,14 +58,6 @@ Public Class HRResidentDB
             graphics.DrawString(button.Text, button.Font, textBrush, rect, textFormat)
         End Using
     End Sub
-
-    Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
-        ' Return to HRAdmin form and load in the ButtonPanel or wherever it should appear
-        Dim adminForm As New HRAdmin()
-        CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
-        Me.Close()
-    End Sub
-
 
     Private Sub PopulateResidentView()
         ResidentView.Rows.Clear()
@@ -129,7 +127,6 @@ Public Class HRResidentDB
 
     Private Function IsResidentAlreadyEmployed(residentId As String) As Boolean
         Dim query As String = "SELECT COUNT(*) FROM employee WHERE ""Resident_ID"" = @ResidentID;"
-
         Try
             Using connection As New NpgsqlConnection(connString)
                 connection.Open()
@@ -148,7 +145,6 @@ Public Class HRResidentDB
     Private Sub ResidentView_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles ResidentView.CellClick
         If e.ColumnIndex = ResidentView.Columns("HireBtnColumn").Index Then
             Try
-                ' Get the selected resident's data
                 Dim selectedRow As DataGridViewRow = ResidentView.Rows(e.RowIndex)
                 Dim residentId As String = selectedRow.Cells("Resident_ID").Value.ToString()
 
@@ -157,13 +153,11 @@ Public Class HRResidentDB
                     Return
                 End If
 
-                ' Check if the resident is already employed
                 If IsResidentAlreadyEmployed(residentId) Then
                     MessageBox.Show("This resident is already employed! Please choose another resident.", "Employment Check", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                     Return
                 End If
 
-                ' Retrieve other data (first name, last name, age, etc.)
                 Dim firstName As String = selectedRow.Cells("First_Name").Value.ToString()
                 Dim middleName As String = selectedRow.Cells("Middle_Name").Value.ToString()
                 Dim lastName As String = selectedRow.Cells("Last_Name").Value.ToString()
@@ -172,7 +166,6 @@ Public Class HRResidentDB
                 Dim contactNumber As String = selectedRow.Cells("Contact_Number").Value.ToString()
                 Dim address As String = selectedRow.Cells("Address").Value.ToString()
 
-                ' Convert age to integer and validate legal age
                 Dim age As Integer
                 If Not Integer.TryParse(ageString, age) Then
                     MessageBox.Show("Invalid age value for the selected resident. Unable to proceed.", "Data Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -184,30 +177,19 @@ Public Class HRResidentDB
                     Return
                 End If
 
-                ' Pass data to the HRAddStaff form
                 Dim addStaffForm As New HRAddStaff()
                 addStaffForm.SetResidentData(residentId, firstName, middleName, lastName, ageString, gender, contactNumber, address)
 
-                ' Ensure MdiParent is set before proceeding
-                If Me.MdiParent IsNot Nothing Then
-                    ' Check if MainPanel exists
-                    Dim mainPanel As Panel = CType(Me.MdiParent.Controls("MainPanel"), Panel)
-                    If mainPanel Is Nothing Then
-                        MessageBox.Show("MainPanel not found in MdiParent.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        Return
-                    End If
-
-                    ' Clear the current form in MainPanel
+                If mainPanel IsNot Nothing Then
                     mainPanel.Controls.Clear()
-                    ' Add the HRAddStaff form to MainPanel
                     addStaffForm.TopLevel = False
                     mainPanel.Controls.Add(addStaffForm)
                     addStaffForm.Show()
-
-                    ' Optionally, close the HRResidentDB form if needed
+                    addStaffForm.FormBorderStyle = FormBorderStyle.None
+                    addStaffForm.Dock = DockStyle.Fill
                     Me.Close()
                 Else
-                    MessageBox.Show("MdiParent is not set.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    MessageBox.Show("MainPanel is not set.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End If
 
             Catch ex As Exception
@@ -215,6 +197,5 @@ Public Class HRResidentDB
             End Try
         End If
     End Sub
-
 
 End Class

@@ -53,11 +53,11 @@ Public Class HRAddPosition
         AddPosition(positionName, positionCode)
     End Sub
 
-    Private Sub ReturnBtn_Click(sender As Object, e As EventArgs) Handles ReturnBtn.Click
+    Private Sub ReturnBtn_Click(sender As Object, e As EventArgs)
         ' Return to HRAdmin form and load in the ButtonPanel or wherever it should appear
-        Dim adminForm As New HRAdmin()
-        CType(Me.MdiParent, MDIParent).LoadFormInMDI(adminForm)
-        Me.Close()
+        Dim adminForm As New HRAdmin
+        CType(MdiParent, MDIParent).LoadFormInMDI(adminForm)
+        Close
     End Sub
 
 

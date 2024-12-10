@@ -12,26 +12,6 @@ Public Class HRStaffDB
     Private targetPanel As Panel
 
     Private Sub StaffDB_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-        ResidentListBtn.FlatStyle = FlatStyle.Flat
-        ResidentListBtn.FlatAppearance.BorderSize = 0
-        ResidentListBtn.BackColor = Color.Transparent
-        ResidentListBtn.Text = "RESIDENT LIST"
-
-        EditBtn.FlatStyle = FlatStyle.Flat
-        EditBtn.FlatAppearance.BorderSize = 0
-        EditBtn.BackColor = Color.Transparent
-        EditBtn.Text = "EDIT STAFF"
-
-        AddPositionBtn.FlatStyle = FlatStyle.Flat
-        AddPositionBtn.FlatAppearance.BorderSize = 0
-        AddPositionBtn.BackColor = Color.Transparent
-        AddPositionBtn.Text = "ADD POS"
-
-        AddHandler ResidentListBtn.Paint, AddressOf AddBtn_Paint
-        AddHandler EditBtn.Paint, AddressOf EditBtn_Paint
-        AddHandler AddPositionBtn.Paint, AddressOf AddPositionBtn_Paint
-
         RefreshTimer.Interval = 5000
         RefreshTimer.Enabled = True
     End Sub
@@ -175,9 +155,9 @@ Public Class HRStaffDB
                 Dim query As String
 
                 If String.IsNullOrEmpty(positionFilter) OrElse positionFilter = "All" Then
-                    query = "SELECT ""EmployeeID"", ""EmployeeName"", ""EmployeePosition"", ""EmployeeDaySchedule"", ""EmployeeAge"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployedDate"" FROM public.employee"
+                    query = "SELECT ""EmployeeID"", ""EmployeeName"", ""EmployeePosition"", ""EmployeeDaySchedule"", ""EmployeeTimeShift"",""EmployeeAge"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployedDate"" FROM public.employee"
                 Else
-                    query = "SELECT ""EmployeeID"", ""EmployeeName"", ""EmployeePosition"", ""EmployeeDaySchedule"", ""EmployeeAge"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployedDate"" FROM public.employee WHERE ""EmployeePosition"" = @position"
+                    query = "SELECT ""EmployeeID"", ""EmployeeName"", ""EmployeePosition"", ""EmployeeDaySchedule"", ""EmployeeTimeShift"",""EmployeeAge"", ""EmployeeMobile"", ""EmployeeAddress"", ""EmployedDate"" FROM public.employee WHERE ""EmployeePosition"" = @position"
                 End If
 
                 Using cmd As New NpgsqlCommand(query, conn)
@@ -195,6 +175,7 @@ Public Class HRStaffDB
                         StaffGrid.Columns("EmployeeName").HeaderText = "NAME"
                         StaffGrid.Columns("EmployeePosition").HeaderText = "POSITION"
                         StaffGrid.Columns("EmployeeDaySchedule").HeaderText = "SCHEDULE"
+                        StaffGrid.Columns("EmployeeTimeShift").HeaderText = "HOUR SHIFT"
                         StaffGrid.Columns("EmployeeAge").HeaderText = "AGE"
                         StaffGrid.Columns("EmployeeMobile").HeaderText = "CONTACT"
                         StaffGrid.Columns("EmployeeAddress").HeaderText = "ADDRESS"
@@ -224,11 +205,6 @@ Public Class HRStaffDB
         form.Show()
     End Sub
 
-    Private Sub ResidentListBtn_Click(sender As Object, e As EventArgs) Handles ResidentListBtn.Click
-        Dim residentListForm As New HRResidentDB()
-        LoadFormInPanel(residentListForm)
-    End Sub
-
     Private Sub FilterBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles FilterBox.SelectedIndexChanged
         Dim selectedPosition As String = FilterBox.SelectedItem.ToString()
 
@@ -237,16 +213,6 @@ Public Class HRStaffDB
         Else
             LoadEmployeeRecords(selectedPosition)
         End If
-    End Sub
-
-    Private Sub EditBtn_Click(sender As Object, e As EventArgs) Handles EditBtn.Click
-        Dim editForm As New HREditStaff()
-        LoadFormInPanel(editForm)
-    End Sub
-
-    Private Sub AddPositionBtn_Click(sender As Object, e As EventArgs) Handles AddPositionBtn.Click
-        Dim addPositionForm As New HRAddPosition()
-        LoadFormInPanel(addPositionForm)
     End Sub
 
     Private Function GetNextPositionId() As Integer

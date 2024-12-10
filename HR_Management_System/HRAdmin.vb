@@ -15,9 +15,24 @@ Public Class HRAdmin
         VSBtn.FlatAppearance.BorderSize = 0
         VSBtn.BackColor = Color.Transparent
 
+        AddPositionBtn.FlatStyle = FlatStyle.Flat
+        AddPositionBtn.FlatAppearance.BorderSize = 0
+        AddPositionBtn.BackColor = Color.Transparent
+
+        EditBtn.FlatStyle = FlatStyle.Flat
+        EditBtn.FlatAppearance.BorderSize = 0
+        EditBtn.BackColor = Color.Transparent
+
+        ResidentListBtn.FlatStyle = FlatStyle.Flat
+        ResidentListBtn.FlatAppearance.BorderSize = 0
+        ResidentListBtn.BackColor = Color.Transparent
+
         AddHandler LogOutBtn.Paint, AddressOf LogOutBtn_Paint
         AddHandler AttBtn.Paint, AddressOf AttBtn_Paint
         AddHandler VSBtn.Paint, AddressOf VSBtn_Paint
+        AddHandler AddPositionBtn.Paint, AddressOf AddPositionBtn_Paint
+        AddHandler EditBtn.Paint, AddressOf EditBtn_Paint
+        AddHandler ResidentListBtn.Paint, AddressOf ResidentListBtn_Paint
 
     End Sub
 
@@ -68,6 +83,108 @@ Public Class HRAdmin
     End Sub
 
     Private Sub AttBtn_Paint(sender As Object, e As PaintEventArgs)
+        Dim button As Button = CType(sender, Button)
+        Dim graphics As Graphics = e.Graphics
+        Dim rect As New Rectangle(0, 0, button.Width - 1, button.Height - 1)
+
+        graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+
+        Dim path As New Drawing2D.GraphicsPath()
+        Dim radius As Integer = 20
+        path.AddArc(rect.X, rect.Y, radius, radius, 180, 90)
+        path.AddArc(rect.Right - radius, rect.Y, radius, radius, 270, 90)
+        path.AddArc(rect.Right - radius, rect.Bottom - radius, radius, radius, 0, 90)
+        path.AddArc(rect.X, rect.Bottom - radius, radius, radius, 90, 90)
+        path.CloseFigure()
+
+        Using brush As New SolidBrush(Color.White)
+            graphics.FillPath(brush, path)
+        End Using
+
+        Using borderPen As New Pen(Color.Black, 2)
+            graphics.DrawPath(borderPen, path)
+        End Using
+
+        Dim textBrush As New SolidBrush(button.ForeColor)
+        Dim textFormat As New StringFormat() With {
+        .Alignment = StringAlignment.Center,
+        .LineAlignment = StringAlignment.Center
+    }
+        graphics.DrawString(button.Text, button.Font, textBrush, rect, textFormat)
+
+        textBrush.Dispose()
+        path.Dispose()
+    End Sub
+
+    Private Sub AddPositionBtn_Paint(sender As Object, e As PaintEventArgs)
+        Dim button As Button = CType(sender, Button)
+        Dim graphics As Graphics = e.Graphics
+        Dim rect As New Rectangle(0, 0, button.Width - 1, button.Height - 1)
+
+        graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+
+        Dim path As New Drawing2D.GraphicsPath()
+        Dim radius As Integer = 20
+        path.AddArc(rect.X, rect.Y, radius, radius, 180, 90)
+        path.AddArc(rect.Right - radius, rect.Y, radius, radius, 270, 90)
+        path.AddArc(rect.Right - radius, rect.Bottom - radius, radius, radius, 0, 90)
+        path.AddArc(rect.X, rect.Bottom - radius, radius, radius, 90, 90)
+        path.CloseFigure()
+
+        Using brush As New SolidBrush(Color.White)
+            graphics.FillPath(brush, path)
+        End Using
+
+        Using borderPen As New Pen(Color.Black, 2)
+            graphics.DrawPath(borderPen, path)
+        End Using
+
+        Dim textBrush As New SolidBrush(button.ForeColor)
+        Dim textFormat As New StringFormat() With {
+        .Alignment = StringAlignment.Center,
+        .LineAlignment = StringAlignment.Center
+    }
+        graphics.DrawString(button.Text, button.Font, textBrush, rect, textFormat)
+
+        textBrush.Dispose()
+        path.Dispose()
+    End Sub
+
+    Private Sub EditBtn_Paint(sender As Object, e As PaintEventArgs)
+        Dim button As Button = CType(sender, Button)
+        Dim graphics As Graphics = e.Graphics
+        Dim rect As New Rectangle(0, 0, button.Width - 1, button.Height - 1)
+
+        graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+
+        Dim path As New Drawing2D.GraphicsPath()
+        Dim radius As Integer = 20
+        path.AddArc(rect.X, rect.Y, radius, radius, 180, 90)
+        path.AddArc(rect.Right - radius, rect.Y, radius, radius, 270, 90)
+        path.AddArc(rect.Right - radius, rect.Bottom - radius, radius, radius, 0, 90)
+        path.AddArc(rect.X, rect.Bottom - radius, radius, radius, 90, 90)
+        path.CloseFigure()
+
+        Using brush As New SolidBrush(Color.White)
+            graphics.FillPath(brush, path)
+        End Using
+
+        Using borderPen As New Pen(Color.Black, 2)
+            graphics.DrawPath(borderPen, path)
+        End Using
+
+        Dim textBrush As New SolidBrush(button.ForeColor)
+        Dim textFormat As New StringFormat() With {
+        .Alignment = StringAlignment.Center,
+        .LineAlignment = StringAlignment.Center
+    }
+        graphics.DrawString(button.Text, button.Font, textBrush, rect, textFormat)
+
+        textBrush.Dispose()
+        path.Dispose()
+    End Sub
+
+    Private Sub ResidentListBtn_Paint(sender As Object, e As PaintEventArgs)
         Dim button As Button = CType(sender, Button)
         Dim graphics As Graphics = e.Graphics
         Dim rect As New Rectangle(0, 0, button.Width - 1, button.Height - 1)
@@ -166,7 +283,6 @@ Public Class HRAdmin
 
     Private Sub VSBtn_Click(sender As Object, e As EventArgs) Handles VSBtn.Click
         Try
-            ' Pass MainPanel to the new form to ensure it gets loaded properly
             Dim staffDBForm As New HRStaffDB(MainPanel)
             LoadFormInPanel(staffDBForm)
         Catch ex As Exception
@@ -189,8 +305,19 @@ Public Class HRAdmin
     End Sub
 
     Private Sub ResidentListBtn_Click(sender As Object, e As EventArgs) Handles ResidentListBtn.Click
-        Dim residentListForm As New HRResidentDB()
-        LoadFormInPanel(residentListForm)
+        Try
+            Dim residentDbForm As New HRResidentDB(MainPanel)
+            MainPanel.Controls.Clear()
+
+            residentDbForm.TopLevel = False
+            residentDbForm.FormBorderStyle = FormBorderStyle.None
+            residentDbForm.Dock = DockStyle.Fill
+            MainPanel.Controls.Add(residentDbForm)
+
+            residentDbForm.Show()
+        Catch ex As Exception
+            MessageBox.Show("Error loading Resident Database: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     Private Sub AddPositionBtn_Click(sender As Object, e As EventArgs) Handles AddPositionBtn.Click

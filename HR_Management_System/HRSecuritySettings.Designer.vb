@@ -22,8 +22,6 @@ Partial Class HRSecuritySettings
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        PictureBox1 = New PictureBox()
-        PictureBox2 = New PictureBox()
         Label1 = New Label()
         PictureBox3 = New PictureBox()
         OldPassTxt = New TextBox()
@@ -35,43 +33,19 @@ Partial Class HRSecuritySettings
         TableLayoutPanel1 = New TableLayoutPanel()
         Panel1 = New Panel()
         SecurityPanel = New Panel()
-        CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
-        CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox3, ComponentModel.ISupportInitialize).BeginInit()
         TableLayoutPanel1.SuspendLayout()
         Panel1.SuspendLayout()
         SecurityPanel.SuspendLayout()
         SuspendLayout()
         ' 
-        ' PictureBox1
-        ' 
-        PictureBox1.Dock = DockStyle.Fill
-        PictureBox1.Image = My.Resources.Resources.St__Monica_Logo
-        PictureBox1.Location = New Point(3, 3)
-        PictureBox1.Name = "PictureBox1"
-        PictureBox1.Size = New Size(104, 94)
-        PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage
-        PictureBox1.TabIndex = 6
-        PictureBox1.TabStop = False
-        ' 
-        ' PictureBox2
-        ' 
-        PictureBox2.Dock = DockStyle.Fill
-        PictureBox2.Image = My.Resources.Resources.SPLQ_100x95_
-        PictureBox2.Location = New Point(776, 3)
-        PictureBox2.Name = "PictureBox2"
-        PictureBox2.Size = New Size(105, 94)
-        PictureBox2.SizeMode = PictureBoxSizeMode.StretchImage
-        PictureBox2.TabIndex = 5
-        PictureBox2.TabStop = False
-        ' 
         ' Label1
         ' 
         Label1.Dock = DockStyle.Fill
-        Label1.Font = New Font("Segoe UI", 30F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label1.Font = New Font("Segoe UI", 25.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label1.Location = New Point(0, 0)
         Label1.Name = "Label1"
-        Label1.Size = New Size(657, 94)
+        Label1.Size = New Size(789, 44)
         Label1.TabIndex = 7
         Label1.Text = "SECURITY SETTINGS"
         Label1.TextAlign = ContentAlignment.MiddleCenter
@@ -81,9 +55,10 @@ Partial Class HRSecuritySettings
         PictureBox3.Anchor = AnchorStyles.None
         PictureBox3.BackColor = Color.Transparent
         PictureBox3.Image = My.Resources.Resources.Security_Lock
-        PictureBox3.Location = New Point(298, 61)
+        PictureBox3.Location = New Point(334, 33)
         PictureBox3.Name = "PictureBox3"
-        PictureBox3.Size = New Size(60, 60)
+        PictureBox3.Size = New Size(120, 120)
+        PictureBox3.SizeMode = PictureBoxSizeMode.StretchImage
         PictureBox3.TabIndex = 8
         PictureBox3.TabStop = False
         ' 
@@ -91,20 +66,20 @@ Partial Class HRSecuritySettings
         ' 
         OldPassTxt.Anchor = AnchorStyles.None
         OldPassTxt.BorderStyle = BorderStyle.FixedSingle
-        OldPassTxt.Font = New Font("Corbel", 25.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        OldPassTxt.Location = New Point(128, 180)
+        OldPassTxt.Font = New Font("Corbel", 28.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        OldPassTxt.Location = New Point(94, 206)
         OldPassTxt.Name = "OldPassTxt"
-        OldPassTxt.Size = New Size(400, 49)
+        OldPassTxt.Size = New Size(600, 53)
         OldPassTxt.TabIndex = 9
         ' 
         ' NewPassTxt
         ' 
         NewPassTxt.Anchor = AnchorStyles.None
         NewPassTxt.BorderStyle = BorderStyle.FixedSingle
-        NewPassTxt.Font = New Font("Corbel", 25.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        NewPassTxt.Location = New Point(128, 280)
+        NewPassTxt.Font = New Font("Corbel", 28.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        NewPassTxt.Location = New Point(94, 318)
         NewPassTxt.Name = "NewPassTxt"
-        NewPassTxt.Size = New Size(400, 49)
+        NewPassTxt.Size = New Size(600, 53)
         NewPassTxt.TabIndex = 10
         ' 
         ' Label2
@@ -112,7 +87,7 @@ Partial Class HRSecuritySettings
         Label2.Anchor = AnchorStyles.None
         Label2.AutoSize = True
         Label2.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label2.Location = New Point(128, 144)
+        Label2.Location = New Point(94, 170)
         Label2.Name = "Label2"
         Label2.Size = New Size(220, 33)
         Label2.TabIndex = 11
@@ -123,7 +98,7 @@ Partial Class HRSecuritySettings
         Label3.Anchor = AnchorStyles.None
         Label3.AutoSize = True
         Label3.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label3.Location = New Point(128, 244)
+        Label3.Location = New Point(94, 282)
         Label3.Name = "Label3"
         Label3.Size = New Size(226, 33)
         Label3.TabIndex = 12
@@ -136,7 +111,7 @@ Partial Class HRSecuritySettings
         SaveBtn.BackColor = Color.LightGreen
         SaveBtn.Cursor = Cursors.Hand
         SaveBtn.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        SaveBtn.Location = New Point(192, 346)
+        SaveBtn.Location = New Point(210, 397)
         SaveBtn.Name = "SaveBtn"
         SaveBtn.Size = New Size(110, 43)
         SaveBtn.TabIndex = 13
@@ -149,7 +124,7 @@ Partial Class HRSecuritySettings
         ReturnBtn.BackColor = Color.LightCoral
         ReturnBtn.Cursor = Cursors.Hand
         ReturnBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        ReturnBtn.Location = New Point(328, 346)
+        ReturnBtn.Location = New Point(481, 398)
         ReturnBtn.Name = "ReturnBtn"
         ReturnBtn.Size = New Size(150, 43)
         ReturnBtn.TabIndex = 14
@@ -159,19 +134,18 @@ Partial Class HRSecuritySettings
         ' TableLayoutPanel1
         ' 
         TableLayoutPanel1.ColumnCount = 3
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 12.5F))
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 75F))
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 12.5F))
-        TableLayoutPanel1.Controls.Add(PictureBox1, 0, 0)
-        TableLayoutPanel1.Controls.Add(PictureBox2, 2, 0)
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 5F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 90F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 5F))
         TableLayoutPanel1.Controls.Add(Panel1, 1, 0)
         TableLayoutPanel1.Controls.Add(SecurityPanel, 1, 1)
         TableLayoutPanel1.Dock = DockStyle.Fill
         TableLayoutPanel1.Location = New Point(0, 0)
         TableLayoutPanel1.Name = "TableLayoutPanel1"
-        TableLayoutPanel1.RowCount = 2
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 18F))
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 82F))
+        TableLayoutPanel1.RowCount = 3
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 9.090909F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 86.36364F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 4.5454545F))
         TableLayoutPanel1.Size = New Size(884, 557)
         TableLayoutPanel1.TabIndex = 15
         ' 
@@ -179,9 +153,9 @@ Partial Class HRSecuritySettings
         ' 
         Panel1.Controls.Add(Label1)
         Panel1.Dock = DockStyle.Fill
-        Panel1.Location = New Point(113, 3)
+        Panel1.Location = New Point(47, 3)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(657, 94)
+        Panel1.Size = New Size(789, 44)
         Panel1.TabIndex = 7
         ' 
         ' SecurityPanel
@@ -194,9 +168,9 @@ Partial Class HRSecuritySettings
         SecurityPanel.Controls.Add(NewPassTxt)
         SecurityPanel.Controls.Add(Label2)
         SecurityPanel.Dock = DockStyle.Fill
-        SecurityPanel.Location = New Point(113, 103)
+        SecurityPanel.Location = New Point(47, 53)
         SecurityPanel.Name = "SecurityPanel"
-        SecurityPanel.Size = New Size(657, 451)
+        SecurityPanel.Size = New Size(789, 475)
         SecurityPanel.TabIndex = 8
         ' 
         ' HRSecuritySettings
@@ -214,8 +188,6 @@ Partial Class HRSecuritySettings
         SizeGripStyle = SizeGripStyle.Hide
         StartPosition = FormStartPosition.CenterScreen
         Text = "."
-        CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
-        CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox3, ComponentModel.ISupportInitialize).EndInit()
         TableLayoutPanel1.ResumeLayout(False)
         Panel1.ResumeLayout(False)
@@ -223,9 +195,6 @@ Partial Class HRSecuritySettings
         SecurityPanel.PerformLayout()
         ResumeLayout(False)
     End Sub
-
-    Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents Label1 As Label
     Friend WithEvents PictureBox3 As PictureBox
     Friend WithEvents OldPassTxt As TextBox

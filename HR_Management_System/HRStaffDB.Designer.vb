@@ -23,25 +23,23 @@ Partial Class HRStaffDB
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         components = New ComponentModel.Container()
-        Dim DataGridViewCellStyle5 As DataGridViewCellStyle = New DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As DataGridViewCellStyle = New DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As DataGridViewCellStyle = New DataGridViewCellStyle()
         StaffGrid = New DataGridView()
-        EID = New DataGridViewTextBoxColumn()
-        EN = New DataGridViewTextBoxColumn()
-        EP = New DataGridViewTextBoxColumn()
-        ESCHED = New DataGridViewTextBoxColumn()
-        EAGE = New DataGridViewTextBoxColumn()
-        ECONTACT = New DataGridViewTextBoxColumn()
-        EADD = New DataGridViewTextBoxColumn()
-        EDOE = New DataGridViewTextBoxColumn()
-        ResidentListBtn = New Button()
         FilterBox = New ComboBox()
         TableLayoutPanel1 = New TableLayoutPanel()
         Panel1 = New Panel()
         Panel3 = New Panel()
-        AddPositionBtn = New Button()
-        EditBtn = New Button()
         RefreshTimer = New Timer(components)
+        EID = New DataGridViewTextBoxColumn()
+        EN = New DataGridViewTextBoxColumn()
+        EP = New DataGridViewTextBoxColumn()
+        ESCHED = New DataGridViewTextBoxColumn()
+        EHRSHIFT = New DataGridViewTextBoxColumn()
+        EAGE = New DataGridViewTextBoxColumn()
+        ECONTACT = New DataGridViewTextBoxColumn()
+        EADD = New DataGridViewTextBoxColumn()
+        EDOE = New DataGridViewTextBoxColumn()
         CType(StaffGrid, ComponentModel.ISupportInitialize).BeginInit()
         TableLayoutPanel1.SuspendLayout()
         Panel1.SuspendLayout()
@@ -53,82 +51,29 @@ Partial Class HRStaffDB
         StaffGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         StaffGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
         StaffGrid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single
-        DataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle5.BackColor = SystemColors.Control
-        DataGridViewCellStyle5.Font = New Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        DataGridViewCellStyle5.ForeColor = SystemColors.WindowText
-        DataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText
-        DataGridViewCellStyle5.WrapMode = DataGridViewTriState.True
-        StaffGrid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.BackColor = SystemColors.Control
+        DataGridViewCellStyle1.Font = New Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        DataGridViewCellStyle1.ForeColor = SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = DataGridViewTriState.True
+        StaffGrid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         StaffGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        StaffGrid.Columns.AddRange(New DataGridViewColumn() {EID, EN, EP, ESCHED, EAGE, ECONTACT, EADD, EDOE})
+        StaffGrid.Columns.AddRange(New DataGridViewColumn() {EID, EN, EP, ESCHED, EHRSHIFT, EAGE, ECONTACT, EADD, EDOE})
         StaffGrid.Dock = DockStyle.Fill
         StaffGrid.Location = New Point(0, 0)
         StaffGrid.Name = "StaffGrid"
-        DataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = SystemColors.Control
-        DataGridViewCellStyle6.Font = New Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        DataGridViewCellStyle6.ForeColor = SystemColors.WindowText
-        DataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText
-        DataGridViewCellStyle6.WrapMode = DataGridViewTriState.True
-        StaffGrid.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = SystemColors.Control
+        DataGridViewCellStyle2.Font = New Font("Corbel", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        DataGridViewCellStyle2.ForeColor = SystemColors.WindowText
+        DataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = DataGridViewTriState.True
+        StaffGrid.RowHeadersDefaultCellStyle = DataGridViewCellStyle2
         StaffGrid.Size = New Size(1146, 589)
         StaffGrid.TabIndex = 18
-        ' 
-        ' EID
-        ' 
-        EID.HeaderText = "EMPLOYEE ID"
-        EID.Name = "EID"
-        ' 
-        ' EN
-        ' 
-        EN.HeaderText = "NAME"
-        EN.Name = "EN"
-        ' 
-        ' EP
-        ' 
-        EP.HeaderText = "POSITION"
-        EP.Name = "EP"
-        ' 
-        ' ESCHED
-        ' 
-        ESCHED.HeaderText = "SCHEDULE"
-        ESCHED.Name = "ESCHED"
-        ' 
-        ' EAGE
-        ' 
-        EAGE.HeaderText = "AGE"
-        EAGE.Name = "EAGE"
-        ' 
-        ' ECONTACT
-        ' 
-        ECONTACT.HeaderText = "CONTACT"
-        ECONTACT.Name = "ECONTACT"
-        ' 
-        ' EADD
-        ' 
-        EADD.HeaderText = "ADDRESS"
-        EADD.Name = "EADD"
-        ' 
-        ' EDOE
-        ' 
-        EDOE.HeaderText = "DOE"
-        EDOE.Name = "EDOE"
-        ' 
-        ' ResidentListBtn
-        ' 
-        ResidentListBtn.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
-        ResidentListBtn.BackColor = Color.LightGreen
-        ResidentListBtn.Cursor = Cursors.Hand
-        ResidentListBtn.Font = New Font("Corbel", 18F, FontStyle.Bold)
-        ResidentListBtn.Location = New Point(438, 21)
-        ResidentListBtn.Name = "ResidentListBtn"
-        ResidentListBtn.Size = New Size(200, 42)
-        ResidentListBtn.TabIndex = 1
-        ResidentListBtn.Text = "RESIDENT LIST"
-        ResidentListBtn.UseVisualStyleBackColor = False
         ' 
         ' FilterBox
         ' 
@@ -172,44 +117,60 @@ Partial Class HRStaffDB
         ' 
         ' Panel3
         ' 
-        Panel3.Controls.Add(AddPositionBtn)
-        Panel3.Controls.Add(EditBtn)
         Panel3.Controls.Add(FilterBox)
-        Panel3.Controls.Add(ResidentListBtn)
         Panel3.Dock = DockStyle.Fill
         Panel3.Location = New Point(67, 3)
         Panel3.Name = "Panel3"
         Panel3.Size = New Size(1146, 68)
         Panel3.TabIndex = 23
         ' 
-        ' AddPositionBtn
-        ' 
-        AddPositionBtn.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
-        AddPositionBtn.BackColor = Color.LightGreen
-        AddPositionBtn.Cursor = Cursors.Hand
-        AddPositionBtn.Font = New Font("Corbel", 18F, FontStyle.Bold)
-        AddPositionBtn.Location = New Point(644, 21)
-        AddPositionBtn.Name = "AddPositionBtn"
-        AddPositionBtn.Size = New Size(143, 42)
-        AddPositionBtn.TabIndex = 4
-        AddPositionBtn.Text = "ADD POS"
-        AddPositionBtn.UseVisualStyleBackColor = False
-        ' 
-        ' EditBtn
-        ' 
-        EditBtn.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
-        EditBtn.BackColor = Color.LightGreen
-        EditBtn.Cursor = Cursors.Hand
-        EditBtn.Font = New Font("Corbel", 18F, FontStyle.Bold)
-        EditBtn.Location = New Point(232, 21)
-        EditBtn.Name = "EditBtn"
-        EditBtn.Size = New Size(200, 42)
-        EditBtn.TabIndex = 3
-        EditBtn.Text = "EDIT STAFF"
-        EditBtn.UseVisualStyleBackColor = False
-        ' 
         ' RefreshTimer
         ' 
+        ' 
+        ' EID
+        ' 
+        EID.HeaderText = "EMPLOYEE ID"
+        EID.Name = "EID"
+        ' 
+        ' EN
+        ' 
+        EN.HeaderText = "NAME"
+        EN.Name = "EN"
+        ' 
+        ' EP
+        ' 
+        EP.HeaderText = "POSITION"
+        EP.Name = "EP"
+        ' 
+        ' ESCHED
+        ' 
+        ESCHED.HeaderText = "SCHEDULE"
+        ESCHED.Name = "ESCHED"
+        ' 
+        ' EHRSHIFT
+        ' 
+        EHRSHIFT.HeaderText = "HOUR SHIFT"
+        EHRSHIFT.Name = "EHRSHIFT"
+        ' 
+        ' EAGE
+        ' 
+        EAGE.HeaderText = "AGE"
+        EAGE.Name = "EAGE"
+        ' 
+        ' ECONTACT
+        ' 
+        ECONTACT.HeaderText = "CONTACT"
+        ECONTACT.Name = "ECONTACT"
+        ' 
+        ' EADD
+        ' 
+        EADD.HeaderText = "ADDRESS"
+        EADD.Name = "EADD"
+        ' 
+        ' EDOE
+        ' 
+        EDOE.HeaderText = "DOE"
+        EDOE.Name = "EDOE"
         ' 
         ' HRStaffDB
         ' 
@@ -233,20 +194,18 @@ Partial Class HRStaffDB
         ResumeLayout(False)
     End Sub
     Friend WithEvents StaffGrid As DataGridView
-    Friend WithEvents ResidentListBtn As Button
     Friend WithEvents FilterBox As ComboBox
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Panel3 As Panel
+    Friend WithEvents RefreshTimer As Timer
     Friend WithEvents EID As DataGridViewTextBoxColumn
     Friend WithEvents EN As DataGridViewTextBoxColumn
     Friend WithEvents EP As DataGridViewTextBoxColumn
     Friend WithEvents ESCHED As DataGridViewTextBoxColumn
+    Friend WithEvents EHRSHIFT As DataGridViewTextBoxColumn
     Friend WithEvents EAGE As DataGridViewTextBoxColumn
     Friend WithEvents ECONTACT As DataGridViewTextBoxColumn
     Friend WithEvents EADD As DataGridViewTextBoxColumn
     Friend WithEvents EDOE As DataGridViewTextBoxColumn
-    Friend WithEvents EditBtn As Button
-    Friend WithEvents AddPositionBtn As Button
-    Friend WithEvents RefreshTimer As Timer
 End Class
