@@ -142,6 +142,7 @@ Public Class HRResidentDB
             Return False
         End Try
     End Function
+
     Private Sub ResidentView_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles ResidentView.CellClick
         If e.ColumnIndex = ResidentView.Columns("HireBtnColumn").Index Then
             Try
@@ -175,6 +176,8 @@ Public Class HRResidentDB
                 If age < 18 Then
                     MessageBox.Show("This resident is not of legal age! Unable to hire.", "Age Restriction", MessageBoxButtons.OK, MessageBoxIcon.Warning)
                     Return
+                Else
+                    MessageBox.Show("This resident is in legal age! Proceeding to hiring.", "Age Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End If
 
                 Dim addStaffForm As New HRAddStaff()

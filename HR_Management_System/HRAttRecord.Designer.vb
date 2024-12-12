@@ -26,14 +26,14 @@ Partial Class HRAttRecord
         Dim DataGridViewCellStyle2 As DataGridViewCellStyle = New DataGridViewCellStyle()
         Label1 = New Label()
         TableLayoutPanel1 = New TableLayoutPanel()
+        Panel2 = New Panel()
         Panel1 = New Panel()
         AttendanceYear = New ComboBox()
-        Panel2 = New Panel()
         Panel3 = New Panel()
         AttendanceGrid = New DataGridView()
         TableLayoutPanel1.SuspendLayout()
-        Panel1.SuspendLayout()
         Panel2.SuspendLayout()
+        Panel1.SuspendLayout()
         Panel3.SuspendLayout()
         CType(AttendanceGrid, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -44,7 +44,7 @@ Partial Class HRAttRecord
         Label1.Font = New Font("Corbel", 34.8F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label1.Location = New Point(0, 0)
         Label1.Name = "Label1"
-        Label1.Size = New Size(834, 96)
+        Label1.Size = New Size(834, 70)
         Label1.TabIndex = 5
         Label1.Text = "ATTENDANCE RECORD"
         Label1.TextAlign = ContentAlignment.MiddleCenter
@@ -62,18 +62,27 @@ Partial Class HRAttRecord
         TableLayoutPanel1.Location = New Point(0, 0)
         TableLayoutPanel1.Name = "TableLayoutPanel1"
         TableLayoutPanel1.RowCount = 4
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 20F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 15F))
         TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 12.5F))
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 57.5F))
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 10F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 67.5F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 5F))
         TableLayoutPanel1.Size = New Size(934, 511)
         TableLayoutPanel1.TabIndex = 16
+        ' 
+        ' Panel2
+        ' 
+        Panel2.Controls.Add(Label1)
+        Panel2.Dock = DockStyle.Fill
+        Panel2.Location = New Point(49, 3)
+        Panel2.Name = "Panel2"
+        Panel2.Size = New Size(834, 70)
+        Panel2.TabIndex = 8
         ' 
         ' Panel1
         ' 
         Panel1.Controls.Add(AttendanceYear)
         Panel1.Dock = DockStyle.Fill
-        Panel1.Location = New Point(49, 105)
+        Panel1.Location = New Point(49, 79)
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(834, 57)
         Panel1.TabIndex = 7
@@ -91,22 +100,13 @@ Partial Class HRAttRecord
         AttendanceYear.Size = New Size(314, 49)
         AttendanceYear.TabIndex = 2
         ' 
-        ' Panel2
-        ' 
-        Panel2.Controls.Add(Label1)
-        Panel2.Dock = DockStyle.Fill
-        Panel2.Location = New Point(49, 3)
-        Panel2.Name = "Panel2"
-        Panel2.Size = New Size(834, 96)
-        Panel2.TabIndex = 8
-        ' 
         ' Panel3
         ' 
         Panel3.Controls.Add(AttendanceGrid)
         Panel3.Dock = DockStyle.Fill
-        Panel3.Location = New Point(49, 168)
+        Panel3.Location = New Point(49, 142)
         Panel3.Name = "Panel3"
-        Panel3.Size = New Size(834, 287)
+        Panel3.Size = New Size(834, 338)
         Panel3.TabIndex = 16
         ' 
         ' AttendanceGrid
@@ -133,7 +133,7 @@ Partial Class HRAttRecord
         DataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText
         DataGridViewCellStyle2.WrapMode = DataGridViewTriState.True
         AttendanceGrid.RowHeadersDefaultCellStyle = DataGridViewCellStyle2
-        AttendanceGrid.Size = New Size(834, 287)
+        AttendanceGrid.Size = New Size(834, 338)
         AttendanceGrid.TabIndex = 0
         ' 
         ' HRAttRecord
@@ -153,8 +153,8 @@ Partial Class HRAttRecord
         Text = "."
         WindowState = FormWindowState.Maximized
         TableLayoutPanel1.ResumeLayout(False)
-        Panel1.ResumeLayout(False)
         Panel2.ResumeLayout(False)
+        Panel1.ResumeLayout(False)
         Panel3.ResumeLayout(False)
         CType(AttendanceGrid, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)

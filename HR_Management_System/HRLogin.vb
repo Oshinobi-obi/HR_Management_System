@@ -6,6 +6,7 @@ Public Class HRLogin
     Public Shared LoggedInEmployeeID As String
 
     Private Const SystemID As Integer = 2
+    Private loginAttempts As Integer = 0
 
     Private Sub StaffLogin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         DatabaseConnection.OpenConnection()
@@ -150,9 +151,8 @@ Public Class HRLogin
     End Sub
 
     Private Sub ResetLoginFields()
-        StaffIDtxt.Clear()
         Passtxt.Clear()
-        StaffIDtxt.Focus()
+        Passtxt.Focus()
     End Sub
 
     Private Sub Clock_Tick(sender As Object, e As EventArgs) Handles Clock.Tick
@@ -176,29 +176,59 @@ Public Class HRLogin
         End If
     End Sub
 
+    Private Sub DisableAccount(employeeID As String)
+        Try
+            DatabaseConnection.OpenConnection()
+
+            Dim query As String = "UPDATE ""Account"" SET ""Status"" = 'DISABLED' WHERE ""EmployeeID"" = @EmployeeID"
+            Using cmd As New NpgsqlCommand(query, DatabaseConnection.conn)
+                cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
+                cmd.ExecuteNonQuery()
+            End Using
+        Catch ex As Exception
+            MsgBox("Error disabling account: " & ex.Message, MsgBoxStyle.Critical, "Database Error")
+        Finally
+            DatabaseConnection.CloseConnection()
+        End Try
+    End Sub
+
+    Private Function IsAccountDisabled(employeeID As String) As Boolean
+        Try
+            DatabaseConnection.OpenConnection()
+
+            Dim query As String = "SELECT ""Status"" FROM ""Account"" WHERE ""EmployeeID"" = @EmployeeID"
+            Using cmd As New NpgsqlCommand(query, DatabaseConnection.conn)
+                cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
+
+                Dim status As String = cmd.ExecuteScalar()?.ToString()
+                Return status = "DISABLED"
+            End Using
+        Catch ex As Exception
+            MsgBox("Error checking account status: " & ex.Message, MsgBoxStyle.Critical, "Database Error")
+            Return True
+        Finally
+            DatabaseConnection.CloseConnection()
+        End Try
+    End Function
+
     Private Sub LoginBtn_Click(sender As Object, e As EventArgs) Handles LoginBtn.Click
         Dim employeeID = StaffIDtxt.Text.Trim()
         Dim password = Passtxt.Text.Trim()
         Dim loginStatus = "INCORRECT PASSWORD"
 
         Try
-            ' Validate EmployeeID format
-            If Not System.Text.RegularExpressions.Regex.IsMatch(employeeID, "^02-\d{2}-\d{2}-\d{2}$") Then
-                MsgBox("Invalid EmployeeID format.", MsgBoxStyle.Exclamation, "Validation Error")
-                LogLoginAttempt(employeeID, password, "NO PERMISSION")
-                ResetLoginFields()
+            If IsAccountDisabled(employeeID) Then
+                MsgBox("Your account has been suspended due to multiple login errors! Please go to the administration to re-activate your account.", MsgBoxStyle.Critical, "Account Suspended")
                 Return
             End If
 
-            ' Validate credentials
             If ValidateCredentials(employeeID, password) Then
-                ' Check permissions
+                loginAttempts = 0
                 Dim permission As String = GetUserPermission(employeeID)
                 If String.IsNullOrEmpty(permission) Then
                     MsgBox("You do not have permission to access the Human Resources System.", MsgBoxStyle.Exclamation, "Access Denied")
                     loginStatus = "NO PERMISSION"
                 Else
-                    ' Successful login
                     Dim employeeName As String = GetEmployeeName(employeeID)
                     If String.IsNullOrEmpty(employeeName) Then
                         MsgBox("Failed to retrieve employee name.", MsgBoxStyle.Critical, "Error")
@@ -210,13 +240,18 @@ Public Class HRLogin
 
                     LoggedInEmployeeID = employeeID
 
-                    ' Pass employee name to HRAdmin
                     Dim hrForm As New HRAdmin(employeeName)
                     CType(MdiParent, MDIParent).LoadFormInMDI(hrForm)
                     Close()
                 End If
             Else
-                MsgBox("Invalid credentials. Please try again.", MsgBoxStyle.Exclamation, "Login Failed")
+                loginAttempts += 1
+                If loginAttempts >= 4 Then
+                    DisableAccount(employeeID)
+                    MsgBox("Your account has been suspended due to multiple login errors! Please go to the administration to re-activate your account.", MsgBoxStyle.Critical, "Account Suspended")
+                Else
+                    MsgBox($"Invalid credentials. You have {4 - loginAttempts} attempt(s) remaining.", MsgBoxStyle.Exclamation, "Login Failed")
+                End If
             End If
         Catch ex As Exception
             MsgBox("Error during login: " & ex.Message, MsgBoxStyle.Critical, "Error")
@@ -226,12 +261,10 @@ Public Class HRLogin
         End Try
     End Sub
 
-
     Private Function GetEmployeeName(employeeID As String) As String
         Try
             DatabaseConnection.OpenConnection()
 
-            ' Query to fetch the employee name
             Dim query As String = "SELECT ""EmployeeName"" FROM public.employee WHERE ""EmployeeID"" = @EmployeeID"
             Using cmd As New NpgsqlCommand(query, DatabaseConnection.conn)
                 cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
@@ -251,7 +284,6 @@ Public Class HRLogin
             DatabaseConnection.CloseConnection()
         End Try
     End Function
-
 
     Private Function IsDefaultPassword(employeeID As String) As Boolean
         Try

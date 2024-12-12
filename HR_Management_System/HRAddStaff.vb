@@ -175,9 +175,19 @@ Public Class HRAddStaff
         End Using
     End Function
 
+    Private Function IsValidEmail(email As String) As Boolean
+        Dim emailRegex As New Text.RegularExpressions.Regex("^[^@\s]+@[^@\s]+\.[^@\s]+$")
+        Return emailRegex.IsMatch(email)
+    End Function
+
     Private Sub AddStaffBtn_Click(sender As Object, e As EventArgs) Handles AddStaffBtn.Click
         If String.IsNullOrWhiteSpace(FirstNameTxt.Text) OrElse String.IsNullOrWhiteSpace(AgeTxt.Text) OrElse PosCmb.SelectedIndex = -1 Then
             MessageBox.Show("Please fill in all required fields.", "Missing Information", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        If Not IsValidEmail(EmailTxt.Text.Trim()) Then
+            MessageBox.Show("Please enter a valid email address.", "Invalid Email", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
 
@@ -200,10 +210,10 @@ Public Class HRAddStaff
                 Dim query As String = "INSERT INTO employee (" &
                     """EmployeeID"", ""EmployeeName"", ""EmployeeAge"", ""Sex"", ""EmployeePosition"", " &
                     """EmployeeDaySchedule"", ""EmployeeTimeShift"", ""EmployeeMobile"", ""EmployeeAddress"", " &
-                    """EmployedDate"", ""EmployeeCardNumber"", ""EmployeeStatus"", ""Resident_ID"") " &
+                    """EmployedDate"", ""EmployeeCardNumber"", ""EmployeeStatus"", ""Resident_ID"", ""EmployeeEmail"") " &
                     "VALUES (@EmployeeID, @EmployeeName, @EmployeeAge, @Sex, @EmployeePosition, @EmployeeDaySchedule, " &
                     "@EmployeeTimeShift, @EmployeeMobile, @EmployeeAddress, CURRENT_DATE, @EmployeeCardNumber, " &
-                    "'EMPLOYED', @Resident_ID)"
+                    "'EMPLOYED', @Resident_ID, @EmployeeEmail)"
 
                 Using cmd As New NpgsqlCommand(query, conn)
                     cmd.Parameters.AddWithValue("@EmployeeID", EmIDTxt.Text.Trim())
@@ -217,6 +227,7 @@ Public Class HRAddStaff
                     cmd.Parameters.AddWithValue("@EmployeeAddress", AddressTxt.Text.Trim())
                     cmd.Parameters.AddWithValue("@EmployeeCardNumber", CardNumberTxt.Text.Trim())
                     cmd.Parameters.AddWithValue("@Resident_ID", Integer.Parse(ResidentIDTxt.Text.Trim()))
+                    cmd.Parameters.AddWithValue("@EmployeeEmail", EmailTxt.Text.Trim())
 
                     cmd.ExecuteNonQuery()
 

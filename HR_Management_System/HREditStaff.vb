@@ -18,9 +18,6 @@ Public Class HREditStaff
         AddHandler PosCmb.KeyPress, AddressOf DisableKeyPress
         AddHandler PosCmb.MouseDown, AddressOf DisableMouseClick
         AddHandler PosCmb.MouseWheel, AddressOf DisableMouseWheel
-        AddHandler HrShiftCmb.KeyPress, AddressOf DisableKeyPress
-        AddHandler HrShiftCmb.MouseDown, AddressOf DisableMouseClick
-        AddHandler HrShiftCmb.MouseWheel, AddressOf DisableMouseWheel
 
         AddHandler EmIDCmb.SelectedIndexChanged, AddressOf EmIDCmb_SelectedIndexChanged
     End Sub
@@ -40,7 +37,7 @@ Public Class HREditStaff
         End If
     End Sub
 
-    Private Sub DisableMouseWheel(sender As Object, e As MouseEventArgs) Handles HrShiftCmb.MouseWheel, PosCmb.MouseWheel
+    Private Sub DisableMouseWheel(sender As Object, e As MouseEventArgs) Handles PosCmb.MouseWheel
         Dim mouseEvent = TryCast(e, HandledMouseEventArgs)
         If mouseEvent IsNot Nothing Then
             mouseEvent.Handled = True
@@ -60,6 +57,7 @@ Public Class HREditStaff
         PictureTxt.Enabled = isEnabled
         PosCmb.Enabled = isEnabled
         CardNumberTxt.Enabled = isEnabled
+        EmailTxt.Enabled = isEnabled
 
         Dim backColor As Color = If(isEnabled, Color.White, Color.LightGray)
         ResidentIDTxt.BackColor = backColor
@@ -72,6 +70,7 @@ Public Class HREditStaff
         PictureTxt.BackColor = backColor
         PosCmb.BackColor = backColor
         CardNumberTxt.BackColor = backColor
+        EmailTxt.BackColor = backColor
     End Sub
 
     Private Sub ClearFields()
@@ -83,6 +82,7 @@ Public Class HREditStaff
         AddressTxt.Clear()
         PictureTxt.Clear()
         CardNumberTxt.Clear()
+        EmailTxt.Clear()
 
         HrShiftCmb.SelectedIndex = -1
         PosCmb.SelectedIndex = -1
@@ -147,7 +147,7 @@ Public Class HREditStaff
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
                 Dim sql As String = "SELECT ""EmployeeName"", ""EmployeeAge"", ""EmployeePosition"", ""EmployeeDaySchedule"", " &
-                                """EmployeeTimeShift"", ""EmployeeMobile"", ""Sex"", ""EmployeeAddress"", ""EmployeeImage"", ""EmployeeCardNumber"", ""Resident_ID"", ""EmployeeAddress""" &
+                                """EmployeeTimeShift"", ""EmployeeMobile"", ""Sex"", ""EmployeeAddress"", ""EmployeeImage"", ""EmployeeCardNumber"", ""Resident_ID"", ""EmployeeEmail""" &
                                 "FROM employee WHERE ""EmployeeID"" = @EmployeeID"
                 Using cmd As New NpgsqlCommand(sql, conn)
                     cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
@@ -163,32 +163,32 @@ Public Class HREditStaff
                             ResidentIDTxt.Text = reader("Resident_ID").ToString()
                             AgeTxt.Text = reader("EmployeeAge").ToString()
                             GenderTxt.Text = reader("Sex").ToString()
-
-                            Dim employeeDaySchedule As Boolean = Boolean.Parse(reader("EmployeeDaySchedule").ToString())
-                            WorkDayChkBox.SetItemChecked(0, employeeDaySchedule)
-
                             HrShiftCmb.SelectedItem = reader("EmployeeTimeShift").ToString().Trim()
-                            ContactTxt.Text = reader("EmployeeMobile").ToString()
-                            AddressTxt.Text = reader("EmployeeAddress").ToString()
-                            CardNumberTxt.Text = reader("EmployeeCardNumber").ToString()
+                            ContactTxt.Text = reader("EmployeeMobile").ToString().Trim()
+                            AddressTxt.Text = reader("EmployeeAddress").ToString().Trim()
+                            CardNumberTxt.Text = reader("EmployeeCardNumber").ToString().Trim()
+                            EmailTxt.Text = reader("EmployeeEmail").ToString().Trim()
 
-                            LoadPositionItems()
-                            Dim position As String = reader("EmployeePosition").ToString().Trim()
+                            Dim daySchedule As String = reader("EmployeeDaySchedule").ToString().Trim()
+                            For index As Integer = 0 To WorkDayChkBox.Items.Count - 1
+                                Dim day As String = WorkDayChkBox.Items(index).ToString()
+                                WorkDayChkBox.SetItemChecked(index, daySchedule.Contains(day))
+                            Next
 
-                            Dim index As Integer = PosCmb.Items.IndexOf(position)
-                            If index >= 0 Then
-                                PosCmb.SelectedIndex = index
-                            Else
-                                MessageBox.Show("Position '" & position & "' not found in PosCmb.")
+                            If Not IsDBNull(reader("EmployeeImage")) Then
+                                Dim imageBytes As Byte() = CType(reader("EmployeeImage"), Byte())
+                                If imageBytes.Length > 0 Then
+                                    Dim tempImagePath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "tempImage.png")
+                                    System.IO.File.WriteAllBytes(tempImagePath, imageBytes)
+                                    PictureTxt.Text = tempImagePath
+                                Else
+                                    PictureTxt.Text = String.Empty
+                                End If
                             End If
 
-                            Dim imageBytes As Byte() = CType(reader("EmployeeImage"), Byte())
-                            If imageBytes IsNot Nothing AndAlso imageBytes.Length > 0 Then
-                                Dim imageFilePath As String = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "tempImage.png")
-                                System.IO.File.WriteAllBytes(imageFilePath, imageBytes)
-                                PictureTxt.Text = imageFilePath
-                            Else
-                                PictureTxt.Text = String.Empty
+                            Dim position As String = reader("EmployeePosition").ToString().Trim()
+                            If PosCmb.Items.Contains(position) Then
+                                PosCmb.SelectedItem = position
                             End If
                         Else
                             MessageBox.Show("No data found for the selected EmployeeID.")
@@ -248,6 +248,11 @@ Public Class HREditStaff
         End If
     End Sub
 
+    Private Function IsValidEmail(email As String) As Boolean
+        Dim emailRegex As New Text.RegularExpressions.Regex("^[^@\s]+@[^@\s]+\.[^@\s]+$")
+        Return emailRegex.IsMatch(email)
+    End Function
+
     Private Sub UpdateEmployeeData()
         Dim employeeID As String = EmIDCmb.SelectedItem.ToString().Trim()
 
@@ -256,23 +261,29 @@ Public Class HREditStaff
             Return
         End If
 
+        If Not IsValidEmail(EmailTxt.Text.Trim()) Then
+            MessageBox.Show("Please enter a valid email address.", "Invalid Email", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
         Dim employeeName As String = $"{FirstNameTxt.Text.Trim()} {MiddleNameTxt.Text.Trim()} {LastNameTxt.Text.Trim()}".Trim()
         Dim employeeAge As Integer = Integer.Parse(AgeTxt.Text.Trim())
         Dim employeePosition As String = PosCmb.SelectedItem.ToString()
-        Dim employeeDaySchedule As Boolean = WorkDayChkBox.GetItemChecked(0)
+        Dim employeeDaySchedule As String = String.Join(",", WorkDayChkBox.CheckedItems.Cast(Of String)())
         Dim employeeTimeShift As String = HrShiftCmb.SelectedItem.ToString()
         Dim employeeMobile As String = ContactTxt.Text.Trim()
         Dim employeeAddress As String = AddressTxt.Text.Trim()
         Dim employeeCardNumber As String = CardNumberTxt.Text.Trim()
+        Dim employeeEmail As String = EmailTxt.Text.Trim()
 
         Try
             Using conn As New NpgsqlConnection(connString)
                 conn.Open()
                 Dim updateQuery As String = "UPDATE employee SET ""EmployeeName"" = @EmployeeName, ""EmployeeAge"" = @EmployeeAge, " &
-                                    """EmployeePosition"" = @EmployeePosition, ""EmployeeDaySchedule"" = @EmployeeDaySchedule, " &
-                                    """EmployeeTimeShift"" = @EmployeeTimeShift, ""EmployeeMobile"" = @EmployeeMobile, " &
-                                    """EmployeeAddress"" = @EmployeeAddress, ""EmployeeCardNumber"" = @EmployeeCardNumber " &
-                                    "WHERE ""EmployeeID"" = @EmployeeID"
+                                        """EmployeePosition"" = @EmployeePosition, ""EmployeeDaySchedule"" = @EmployeeDaySchedule, " &
+                                        """EmployeeTimeShift"" = @EmployeeTimeShift, ""EmployeeMobile"" = @EmployeeMobile, " &
+                                        """EmployeeAddress"" = @EmployeeAddress, ""EmployeeCardNumber"" = @EmployeeCardNumber, ""EmployeeImage"" = @EmployeeImage , ""EmployeeEmail"" = @EmployeeEmail" &
+                                        "WHERE ""EmployeeID"" = @EmployeeID"
 
                 Using cmd As New NpgsqlCommand(updateQuery, conn)
                     cmd.Parameters.AddWithValue("@EmployeeID", employeeID)
@@ -284,6 +295,14 @@ Public Class HREditStaff
                     cmd.Parameters.AddWithValue("@EmployeeMobile", employeeMobile)
                     cmd.Parameters.AddWithValue("@EmployeeAddress", employeeAddress)
                     cmd.Parameters.AddWithValue("@EmployeeCardNumber", employeeCardNumber)
+                    cmd.Parameters.AddWithValue("@EmployeeEmail", employeeEmail)
+
+                    If Not String.IsNullOrWhiteSpace(PictureTxt.Text) AndAlso System.IO.File.Exists(PictureTxt.Text) Then
+                        Dim imageBytes As Byte() = System.IO.File.ReadAllBytes(PictureTxt.Text)
+                        cmd.Parameters.AddWithValue("@EmployeeImage", imageBytes)
+                    Else
+                        cmd.Parameters.AddWithValue("@EmployeeImage", DBNull.Value)
+                    End If
 
                     cmd.ExecuteNonQuery()
                     MessageBox.Show("Employee data updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)

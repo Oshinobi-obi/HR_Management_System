@@ -240,7 +240,7 @@ Partial Class HRAdmin
         Name = "HRAdmin"
         SizeGripStyle = SizeGripStyle.Hide
         StartPosition = FormStartPosition.CenterScreen
-        Text = "."
+        Text = "HR Admin"
         WindowState = FormWindowState.Maximized
         TableLayoutPanel1.ResumeLayout(False)
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()

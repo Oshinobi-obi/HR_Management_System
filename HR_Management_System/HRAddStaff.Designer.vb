@@ -24,6 +24,8 @@ Partial Class HRAddStaff
     Private Sub InitializeComponent()
         components = New ComponentModel.Container()
         AddStaffPanel = New Panel()
+        EmailTxt = New TextBox()
+        Label16 = New Label()
         WorkDayChkBox = New CheckedListBox()
         HrShiftCmb = New ComboBox()
         GenderTxt = New TextBox()
@@ -46,6 +48,7 @@ Partial Class HRAddStaff
         Label3 = New Label()
         FirstNameTxt = New TextBox()
         Label2 = New Label()
+        EmIDTxt = New TextBox()
         Label1 = New Label()
         CardNumberTxt = New TextBox()
         Label10 = New Label()
@@ -54,15 +57,19 @@ Partial Class HRAddStaff
         Label9 = New Label()
         AddStaffBtn = New Button()
         TableLayoutPanel1 = New TableLayoutPanel()
+        Panel1 = New Panel()
+        Label15 = New Label()
         SelectImage = New OpenFileDialog()
         NotifyIcon1 = New NotifyIcon(components)
-        EmIDTxt = New TextBox()
         AddStaffPanel.SuspendLayout()
         TableLayoutPanel1.SuspendLayout()
+        Panel1.SuspendLayout()
         SuspendLayout()
         ' 
         ' AddStaffPanel
         ' 
+        AddStaffPanel.Controls.Add(EmailTxt)
+        AddStaffPanel.Controls.Add(Label16)
         AddStaffPanel.Controls.Add(WorkDayChkBox)
         AddStaffPanel.Controls.Add(HrShiftCmb)
         AddStaffPanel.Controls.Add(GenderTxt)
@@ -94,10 +101,33 @@ Partial Class HRAddStaff
         AddStaffPanel.Controls.Add(Label9)
         AddStaffPanel.Controls.Add(AddStaffBtn)
         AddStaffPanel.Dock = DockStyle.Fill
-        AddStaffPanel.Location = New Point(67, 3)
+        AddStaffPanel.Location = New Point(67, 87)
         AddStaffPanel.Name = "AddStaffPanel"
-        AddStaffPanel.Size = New Size(1146, 835)
+        AddStaffPanel.Size = New Size(1146, 751)
         AddStaffPanel.TabIndex = 0
+        ' 
+        ' EmailTxt
+        ' 
+        EmailTxt.Anchor = AnchorStyles.None
+        EmailTxt.BackColor = Color.White
+        EmailTxt.BorderStyle = BorderStyle.FixedSingle
+        EmailTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
+        EmailTxt.ForeColor = Color.Black
+        EmailTxt.Location = New Point(588, 485)
+        EmailTxt.Name = "EmailTxt"
+        EmailTxt.Size = New Size(528, 45)
+        EmailTxt.TabIndex = 29
+        ' 
+        ' Label16
+        ' 
+        Label16.Anchor = AnchorStyles.None
+        Label16.AutoSize = True
+        Label16.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label16.Location = New Point(588, 449)
+        Label16.Name = "Label16"
+        Label16.Size = New Size(89, 33)
+        Label16.TabIndex = 30
+        Label16.Text = "Email:"
         ' 
         ' WorkDayChkBox
         ' 
@@ -108,7 +138,7 @@ Partial Class HRAddStaff
         WorkDayChkBox.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         WorkDayChkBox.FormattingEnabled = True
         WorkDayChkBox.Items.AddRange(New Object() {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"})
-        WorkDayChkBox.Location = New Point(309, 440)
+        WorkDayChkBox.Location = New Point(309, 348)
         WorkDayChkBox.Name = "WorkDayChkBox"
         WorkDayChkBox.ScrollAlwaysVisible = True
         WorkDayChkBox.Size = New Size(250, 107)
@@ -125,7 +155,7 @@ Partial Class HRAddStaff
         HrShiftCmb.FormattingEnabled = True
         HrShiftCmb.IntegralHeight = False
         HrShiftCmb.Items.AddRange(New Object() {"1 Hour", "2 Hours", "3 Hours", "4 Hours", "5 Hours", "6 Hours", "7 Hours", "8 Hours", "9 Hours", "10 Hours", "11 Hours", "12 Hours"})
-        HrShiftCmb.Location = New Point(587, 440)
+        HrShiftCmb.Location = New Point(587, 348)
         HrShiftCmb.Name = "HrShiftCmb"
         HrShiftCmb.Size = New Size(250, 45)
         HrShiftCmb.TabIndex = 27
@@ -136,7 +166,7 @@ Partial Class HRAddStaff
         GenderTxt.BackColor = Color.White
         GenderTxt.BorderStyle = BorderStyle.FixedSingle
         GenderTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
-        GenderTxt.Location = New Point(309, 311)
+        GenderTxt.Location = New Point(309, 219)
         GenderTxt.Name = "GenderTxt"
         GenderTxt.ReadOnly = True
         GenderTxt.Size = New Size(250, 45)
@@ -147,11 +177,11 @@ Partial Class HRAddStaff
         Label14.Anchor = AnchorStyles.None
         Label14.AutoSize = True
         Label14.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label14.Location = New Point(309, 275)
+        Label14.Location = New Point(309, 183)
         Label14.Name = "Label14"
-        Label14.Size = New Size(59, 33)
+        Label14.Size = New Size(67, 33)
         Label14.TabIndex = 26
-        Label14.Text = "Sex"
+        Label14.Text = "Sex:"
         ' 
         ' ResidentIDTxt
         ' 
@@ -159,7 +189,7 @@ Partial Class HRAddStaff
         ResidentIDTxt.BackColor = Color.White
         ResidentIDTxt.BorderStyle = BorderStyle.FixedSingle
         ResidentIDTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
-        ResidentIDTxt.Location = New Point(31, 182)
+        ResidentIDTxt.Location = New Point(31, 90)
         ResidentIDTxt.Name = "ResidentIDTxt"
         ResidentIDTxt.ReadOnly = True
         ResidentIDTxt.Size = New Size(250, 45)
@@ -170,11 +200,11 @@ Partial Class HRAddStaff
         Label13.Anchor = AnchorStyles.None
         Label13.AutoSize = True
         Label13.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label13.Location = New Point(31, 146)
+        Label13.Location = New Point(31, 54)
         Label13.Name = "Label13"
-        Label13.Size = New Size(149, 33)
+        Label13.Size = New Size(157, 33)
         Label13.TabIndex = 24
-        Label13.Text = "Resident ID"
+        Label13.Text = "Resident ID:"
         ' 
         ' LastNameTxt
         ' 
@@ -182,7 +212,7 @@ Partial Class HRAddStaff
         LastNameTxt.BackColor = Color.White
         LastNameTxt.BorderStyle = BorderStyle.FixedSingle
         LastNameTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
-        LastNameTxt.Location = New Point(865, 182)
+        LastNameTxt.Location = New Point(865, 90)
         LastNameTxt.Name = "LastNameTxt"
         LastNameTxt.ReadOnly = True
         LastNameTxt.Size = New Size(250, 45)
@@ -193,11 +223,11 @@ Partial Class HRAddStaff
         Label11.Anchor = AnchorStyles.None
         Label11.AutoSize = True
         Label11.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label11.Location = New Point(865, 146)
+        Label11.Location = New Point(865, 54)
         Label11.Name = "Label11"
-        Label11.Size = New Size(142, 33)
+        Label11.Size = New Size(150, 33)
         Label11.TabIndex = 22
-        Label11.Text = "Last Name"
+        Label11.Text = "Last Name:"
         ' 
         ' MiddleNameTxt
         ' 
@@ -205,7 +235,7 @@ Partial Class HRAddStaff
         MiddleNameTxt.BackColor = Color.White
         MiddleNameTxt.BorderStyle = BorderStyle.FixedSingle
         MiddleNameTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
-        MiddleNameTxt.Location = New Point(587, 182)
+        MiddleNameTxt.Location = New Point(587, 90)
         MiddleNameTxt.Name = "MiddleNameTxt"
         MiddleNameTxt.ReadOnly = True
         MiddleNameTxt.Size = New Size(250, 45)
@@ -216,22 +246,22 @@ Partial Class HRAddStaff
         Label12.Anchor = AnchorStyles.None
         Label12.AutoSize = True
         Label12.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label12.Location = New Point(587, 146)
+        Label12.Location = New Point(587, 54)
         Label12.Name = "Label12"
-        Label12.Size = New Size(172, 33)
+        Label12.Size = New Size(180, 33)
         Label12.TabIndex = 21
-        Label12.Text = "Middle Name"
+        Label12.Text = "Middle Name:"
         ' 
         ' Label8
         ' 
         Label8.Anchor = AnchorStyles.None
         Label8.AutoSize = True
         Label8.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label8.Location = New Point(587, 404)
+        Label8.Location = New Point(587, 312)
         Label8.Name = "Label8"
-        Label8.Size = New Size(135, 33)
+        Label8.Size = New Size(143, 33)
         Label8.TabIndex = 13
-        Label8.Text = "Hour Shift"
+        Label8.Text = "Hour Shift:"
         ' 
         ' PosCmb
         ' 
@@ -246,7 +276,7 @@ Partial Class HRAddStaff
         PosCmb.IntegralHeight = False
         PosCmb.ItemHeight = 37
         PosCmb.Items.AddRange(New Object() {"Admin Staff", "BPSO", "Clerk", "Medical Aide", "Secretary (HRMO)"})
-        PosCmb.Location = New Point(865, 440)
+        PosCmb.Location = New Point(865, 348)
         PosCmb.Name = "PosCmb"
         PosCmb.Size = New Size(250, 45)
         PosCmb.Sorted = True
@@ -258,7 +288,7 @@ Partial Class HRAddStaff
         AddressTxt.BackColor = Color.White
         AddressTxt.BorderStyle = BorderStyle.FixedSingle
         AddressTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
-        AddressTxt.Location = New Point(865, 311)
+        AddressTxt.Location = New Point(865, 219)
         AddressTxt.Name = "AddressTxt"
         AddressTxt.ReadOnly = True
         AddressTxt.Size = New Size(250, 45)
@@ -269,11 +299,11 @@ Partial Class HRAddStaff
         Label7.Anchor = AnchorStyles.None
         Label7.AutoSize = True
         Label7.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label7.Location = New Point(865, 275)
+        Label7.Location = New Point(865, 183)
         Label7.Name = "Label7"
-        Label7.Size = New Size(108, 33)
+        Label7.Size = New Size(116, 33)
         Label7.TabIndex = 11
-        Label7.Text = "Address"
+        Label7.Text = "Address:"
         ' 
         ' ContactTxt
         ' 
@@ -281,7 +311,7 @@ Partial Class HRAddStaff
         ContactTxt.BackColor = Color.White
         ContactTxt.BorderStyle = BorderStyle.FixedSingle
         ContactTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
-        ContactTxt.Location = New Point(587, 311)
+        ContactTxt.Location = New Point(587, 219)
         ContactTxt.Name = "ContactTxt"
         ContactTxt.ReadOnly = True
         ContactTxt.Size = New Size(250, 45)
@@ -292,18 +322,18 @@ Partial Class HRAddStaff
         Label6.Anchor = AnchorStyles.None
         Label6.AutoSize = True
         Label6.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label6.Location = New Point(587, 275)
+        Label6.Location = New Point(587, 183)
         Label6.Name = "Label6"
-        Label6.Size = New Size(107, 33)
+        Label6.Size = New Size(115, 33)
         Label6.TabIndex = 9
-        Label6.Text = "Contact"
+        Label6.Text = "Contact:"
         ' 
         ' Label5
         ' 
         Label5.Anchor = AnchorStyles.None
         Label5.AutoSize = True
         Label5.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label5.Location = New Point(309, 404)
+        Label5.Location = New Point(309, 312)
         Label5.Name = "Label5"
         Label5.Size = New Size(130, 33)
         Label5.TabIndex = 7
@@ -314,11 +344,11 @@ Partial Class HRAddStaff
         Label4.Anchor = AnchorStyles.None
         Label4.AutoSize = True
         Label4.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label4.Location = New Point(865, 404)
+        Label4.Location = New Point(865, 312)
         Label4.Name = "Label4"
-        Label4.Size = New Size(110, 33)
+        Label4.Size = New Size(118, 33)
         Label4.TabIndex = 6
-        Label4.Text = "Position"
+        Label4.Text = "Position:"
         ' 
         ' AgeTxt
         ' 
@@ -326,7 +356,7 @@ Partial Class HRAddStaff
         AgeTxt.BackColor = Color.White
         AgeTxt.BorderStyle = BorderStyle.FixedSingle
         AgeTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
-        AgeTxt.Location = New Point(31, 311)
+        AgeTxt.Location = New Point(31, 219)
         AgeTxt.Name = "AgeTxt"
         AgeTxt.ReadOnly = True
         AgeTxt.Size = New Size(250, 45)
@@ -337,11 +367,11 @@ Partial Class HRAddStaff
         Label3.Anchor = AnchorStyles.None
         Label3.AutoSize = True
         Label3.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label3.Location = New Point(31, 275)
+        Label3.Location = New Point(31, 183)
         Label3.Name = "Label3"
-        Label3.Size = New Size(62, 33)
+        Label3.Size = New Size(70, 33)
         Label3.TabIndex = 4
-        Label3.Text = "Age"
+        Label3.Text = "Age:"
         ' 
         ' FirstNameTxt
         ' 
@@ -349,7 +379,7 @@ Partial Class HRAddStaff
         FirstNameTxt.BackColor = Color.White
         FirstNameTxt.BorderStyle = BorderStyle.FixedSingle
         FirstNameTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
-        FirstNameTxt.Location = New Point(309, 182)
+        FirstNameTxt.Location = New Point(309, 90)
         FirstNameTxt.Name = "FirstNameTxt"
         FirstNameTxt.ReadOnly = True
         FirstNameTxt.Size = New Size(250, 45)
@@ -360,22 +390,34 @@ Partial Class HRAddStaff
         Label2.Anchor = AnchorStyles.None
         Label2.AutoSize = True
         Label2.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label2.Location = New Point(309, 146)
+        Label2.Location = New Point(309, 54)
         Label2.Name = "Label2"
-        Label2.Size = New Size(143, 33)
+        Label2.Size = New Size(151, 33)
         Label2.TabIndex = 2
-        Label2.Text = "First Name"
+        Label2.Text = "First Name:"
+        ' 
+        ' EmIDTxt
+        ' 
+        EmIDTxt.Anchor = AnchorStyles.None
+        EmIDTxt.BackColor = Color.White
+        EmIDTxt.BorderStyle = BorderStyle.FixedSingle
+        EmIDTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
+        EmIDTxt.Location = New Point(31, 348)
+        EmIDTxt.Name = "EmIDTxt"
+        EmIDTxt.ReadOnly = True
+        EmIDTxt.Size = New Size(250, 45)
+        EmIDTxt.TabIndex = 17
         ' 
         ' Label1
         ' 
         Label1.Anchor = AnchorStyles.None
         Label1.AutoSize = True
         Label1.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label1.Location = New Point(31, 404)
+        Label1.Location = New Point(31, 312)
         Label1.Name = "Label1"
-        Label1.Size = New Size(164, 33)
+        Label1.Size = New Size(172, 33)
         Label1.TabIndex = 0
-        Label1.Text = "Employee ID"
+        Label1.Text = "Employee ID:"
         ' 
         ' CardNumberTxt
         ' 
@@ -384,7 +426,7 @@ Partial Class HRAddStaff
         CardNumberTxt.BorderStyle = BorderStyle.FixedSingle
         CardNumberTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
         CardNumberTxt.ForeColor = Color.Black
-        CardNumberTxt.Location = New Point(587, 569)
+        CardNumberTxt.Location = New Point(31, 485)
         CardNumberTxt.Name = "CardNumberTxt"
         CardNumberTxt.Size = New Size(528, 45)
         CardNumberTxt.TabIndex = 14
@@ -394,11 +436,11 @@ Partial Class HRAddStaff
         Label10.Anchor = AnchorStyles.None
         Label10.AutoSize = True
         Label10.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label10.Location = New Point(587, 533)
+        Label10.Location = New Point(31, 449)
         Label10.Name = "Label10"
-        Label10.Size = New Size(171, 33)
+        Label10.Size = New Size(179, 33)
         Label10.TabIndex = 17
-        Label10.Text = "Card Number"
+        Label10.Text = "Card Number:"
         ' 
         ' OpenBtn
         ' 
@@ -406,7 +448,7 @@ Partial Class HRAddStaff
         OpenBtn.BackColor = Color.LightGreen
         OpenBtn.Cursor = Cursors.Hand
         OpenBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        OpenBtn.Location = New Point(31, 638)
+        OpenBtn.Location = New Point(31, 647)
         OpenBtn.Name = "OpenBtn"
         OpenBtn.Size = New Size(120, 50)
         OpenBtn.TabIndex = 16
@@ -420,7 +462,7 @@ Partial Class HRAddStaff
         PictureTxt.BorderStyle = BorderStyle.FixedSingle
         PictureTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
         PictureTxt.ForeColor = Color.Black
-        PictureTxt.Location = New Point(31, 569)
+        PictureTxt.Location = New Point(31, 587)
         PictureTxt.Name = "PictureTxt"
         PictureTxt.ReadOnly = True
         PictureTxt.Size = New Size(528, 45)
@@ -431,11 +473,11 @@ Partial Class HRAddStaff
         Label9.Anchor = AnchorStyles.None
         Label9.AutoSize = True
         Label9.Font = New Font("Corbel", 20.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label9.Location = New Point(31, 533)
+        Label9.Location = New Point(31, 551)
         Label9.Name = "Label9"
-        Label9.Size = New Size(98, 33)
+        Label9.Size = New Size(106, 33)
         Label9.TabIndex = 14
-        Label9.Text = "Picture"
+        Label9.Text = "Picture:"
         ' 
         ' AddStaffBtn
         ' 
@@ -444,7 +486,7 @@ Partial Class HRAddStaff
         AddStaffBtn.Cursor = Cursors.Hand
         AddStaffBtn.Font = New Font("Corbel", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         AddStaffBtn.ForeColor = Color.Black
-        AddStaffBtn.Location = New Point(915, 638)
+        AddStaffBtn.Location = New Point(916, 587)
         AddStaffBtn.Name = "AddStaffBtn"
         AddStaffBtn.Size = New Size(200, 50)
         AddStaffBtn.TabIndex = 15
@@ -457,32 +499,41 @@ Partial Class HRAddStaff
         TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 5F))
         TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 90F))
         TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 5F))
-        TableLayoutPanel1.Controls.Add(AddStaffPanel, 1, 0)
+        TableLayoutPanel1.Controls.Add(AddStaffPanel, 1, 1)
+        TableLayoutPanel1.Controls.Add(Panel1, 1, 0)
         TableLayoutPanel1.Dock = DockStyle.Fill
         TableLayoutPanel1.Location = New Point(0, 0)
         TableLayoutPanel1.Name = "TableLayoutPanel1"
-        TableLayoutPanel1.RowCount = 1
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 100F))
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Absolute, 20F))
+        TableLayoutPanel1.RowCount = 2
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 10F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 90F))
         TableLayoutPanel1.Size = New Size(1280, 841)
         TableLayoutPanel1.TabIndex = 23
+        ' 
+        ' Panel1
+        ' 
+        Panel1.Controls.Add(Label15)
+        Panel1.Dock = DockStyle.Fill
+        Panel1.Location = New Point(67, 3)
+        Panel1.Name = "Panel1"
+        Panel1.Size = New Size(1146, 78)
+        Panel1.TabIndex = 1
+        ' 
+        ' Label15
+        ' 
+        Label15.Dock = DockStyle.Fill
+        Label15.Font = New Font("Corbel", 30F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        Label15.Location = New Point(0, 0)
+        Label15.Name = "Label15"
+        Label15.Size = New Size(1146, 78)
+        Label15.TabIndex = 1
+        Label15.Text = "ADD STAFF"
+        Label15.TextAlign = ContentAlignment.MiddleCenter
         ' 
         ' NotifyIcon1
         ' 
         NotifyIcon1.Text = "NotifyIcon1"
         NotifyIcon1.Visible = True
-        ' 
-        ' EmIDTxt
-        ' 
-        EmIDTxt.Anchor = AnchorStyles.None
-        EmIDTxt.BackColor = Color.White
-        EmIDTxt.BorderStyle = BorderStyle.FixedSingle
-        EmIDTxt.Font = New Font("Corbel", 22.8000011F, FontStyle.Bold)
-        EmIDTxt.Location = New Point(31, 440)
-        EmIDTxt.Name = "EmIDTxt"
-        EmIDTxt.ReadOnly = True
-        EmIDTxt.Size = New Size(250, 45)
-        EmIDTxt.TabIndex = 17
         ' 
         ' HRAddStaff
         ' 
@@ -502,6 +553,7 @@ Partial Class HRAddStaff
         AddStaffPanel.ResumeLayout(False)
         AddStaffPanel.PerformLayout()
         TableLayoutPanel1.ResumeLayout(False)
+        Panel1.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
     Friend WithEvents AddStaffPanel As Panel
@@ -538,4 +590,8 @@ Partial Class HRAddStaff
     Friend WithEvents HrShiftCmb As ComboBox
     Friend WithEvents WorkDayChkBox As CheckedListBox
     Friend WithEvents EmIDTxt As TextBox
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Label15 As Label
+    Friend WithEvents EmailTxt As TextBox
+    Friend WithEvents Label16 As Label
 End Class
